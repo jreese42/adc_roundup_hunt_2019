@@ -1,5 +1,40 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  nav.navbar.navbar-default
+  .container-fluid
+    // Brand and toggle get grouped for better mobile display
+    .navbar-header
+      a.navbar-brand(href='#') ADC RoundUP Hunt
+    // Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li.active
+          a(href='#')
+            | Blog 
+            span.sr-only (current)
+        li
+          a(href='#') Link
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(href='#') Link
+        li.dropdown
+          a.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
+            | Dropdown 
+            span.caret
+          ul.dropdown-menu
+            li
+              a(href='#') Action
+            li
+              a(href='#') Another action
+            li
+              a(href='#') Something else here
+            li.divider(role='separator')
+            li
+              a(href='#') Separated link
+    // /.navbar-collapse
+  // /.container-fluid
+
+  include game_info_page.pug
+
+  include footer.pug
