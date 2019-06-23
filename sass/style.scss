@@ -2,4 +2,8 @@
 @import "mixins/parallax.scss";
 @include parallax-init;
 
+@import "mixins/fontawesome/fontawesome.scss";
+@import "mixins/fontawesome/solid.scss";
+
+@import "_global.scss";
 @import "_site.scss";

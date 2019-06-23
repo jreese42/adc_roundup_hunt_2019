@@ -1,16 +1,3 @@
-$font-stack: "Lucida Grande", Helvetica, Arial, sans-serif;
-
-$color-darkgray: #1E252D; //These 4 are from Roundup branding
-$color-darkblue: #3D6EB5;
-$color-brightblue2: #52BFDF;
-$color-orange: #C56D34;
-$color-brightred: #F20986; //These 3 are from the sticker, they're bright so best used as accents
-$color-brightblue: #00D9FC;
-$color-brightyellow: #FBE202;
-$color-offwhite: #E6ECF4;
-$color-white: #FFF;
-$color-black: #000;
-
 body {
     // padding: 50px;
     font: 14px $font-stack;
@@ -21,21 +8,91 @@ a {
     color: #00B7FF;
 }
 
+h1 {
+    font: 48px $font-title-marker;
+}
+
+p {
+    font: 18px $font-paragraph-main;
+}
+
+.help-text-dark {
+    font: 20px $font-paragraph-main;
+    color: $color-black;
+    vertical-align: middle;
+    line-height: inherit !important;
+}
+
+.help-text-light {
+    font: 20px $font-paragraph-main;
+    color: $color-offwhite;
+    vertical-align: middle;
+    line-height: inherit !important;
+}
+
+.circle-icon-dark {
+    background: $color-darkgray;
+    color: $color-offwhite;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 100px;
+    vertical-align: middle;
+    padding: 30px;
+    margin: 10px;
+    display:inline-block;
+    i:first-of-type {
+        // line-height: inherit !important;
+        color: $color-offwhite;
+    }
+}
+
+.circle-icon-light {
+    background: $color-offwhite;
+    color: $color-darkgray;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 100px;
+    vertical-align: middle;
+    padding: 30px;
+    margin: 10px;
+    display:inline-block;
+    i:first-of-type {
+        // line-height: inherit !important;
+        color: $color-darkgray;
+    }
+}
+
 .angled-jumbotron {
     color: #fff;
     background-color: $color-brightblue2;
+    font-family: $font-title-marker;
     text-align: center;
     padding: 10% 0;
     @include angle-edge($angle: 2, $angle-position-y: 'bottom', $angle-position-x: 'right');
 }
 
 .slide_section {
-    &.title-red {  
+    #titlebar-rules {
+        padding: 3% 0 1% 0;
         text-align: center;
-        padding: 3% 0;
         @include angle-edge($angle: 2, $angle-position-y: 'top', $angle-position-x: 'left');
         color: $color-offwhite;
         background-color: $color-brightred;
+    }
+    #titlebar-tips {
+        padding: 3% 0 1% 0;
+        text-align: center;
+        @include angle-edge($angle: 2, $angle-position-y: 'top', $angle-position-x: 'left');
+        color: $color-offwhite;
+        background-color: $color-orange;
+    }
+    #section-tips {
+        background-color: $color-darkgray;
+
     }
     &.slide-box-gray {
         text-align: center;
@@ -44,6 +101,12 @@ a {
         color: $color-offwhite;
         background-color: $color-darkgray;
     }
+}
+
+.container-dark {
+    background-color: $color-darkgray;
+    @include angle-edge($angle: 2, $angle-position-y: 'both', $angle-position-x: 'left');
+    padding: 0 0 5% 0;
 }
 
 .game_info_container {
@@ -57,15 +120,15 @@ a {
         z-index: 100;
     }
     .slide_section:nth-child(2) {
-        @include parallax(.4);
+        @include parallax(.1);
         // padding: 300px;
-        top: -130px;
+        // top: -230px;
     }
     .slide_section:nth-child(3) {
-        @include parallax(.1);
-        padding: 300px;
-        top: 200px;
-        z-index: 50;
+        @include parallax(.3);
+        // padding: 300px;
+        // top: 200px;
+        // z-index: 50;
     }
     .slide_section:nth-child(4) {
         @include parallax(.3);
