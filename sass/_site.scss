@@ -1,0 +1,75 @@
+$font-stack: "Lucida Grande", Helvetica, Arial, sans-serif;
+
+$color-darkgray: #1E252D; //These 4 are from Roundup branding
+$color-darkblue: #3D6EB5;
+$color-brightblue2: #52BFDF;
+$color-orange: #C56D34;
+$color-brightred: #F20986; //These 3 are from the sticker, they're bright so best used as accents
+$color-brightblue: #00D9FC;
+$color-brightyellow: #FBE202;
+$color-offwhite: #E6ECF4;
+$color-white: #FFF;
+$color-black: #000;
+
+body {
+    // padding: 50px;
+    font: 14px $font-stack;
+    background-color: $color-darkgray;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.angled-jumbotron {
+    color: #fff;
+    background-color: $color-brightblue2;
+    text-align: center;
+    padding: 10% 0;
+    @include angle-edge($angle: 2, $angle-position-y: 'bottom', $angle-position-x: 'right');
+}
+
+.slide_section {
+    &.title-red {  
+        text-align: center;
+        padding: 3% 0;
+        @include angle-edge($angle: 2, $angle-position-y: 'top', $angle-position-x: 'left');
+        color: $color-offwhite;
+        background-color: $color-brightred;
+    }
+    &.slide-box-gray {
+        text-align: center;
+        padding: 10% 0;
+        @include angle-edge($angle: 2, $angle-position-y: 'top', $angle-position-x: 'left');
+        color: $color-offwhite;
+        background-color: $color-darkgray;
+    }
+}
+
+.game_info_container {
+    color: #fff;
+    background-color: $color-offwhite;
+    text-align: center;
+    // padding: 10% 0;
+
+    .slide_section:nth-child(1) {
+        @include parallax(.3);
+        z-index: 100;
+    }
+    .slide_section:nth-child(2) {
+        @include parallax(.4);
+        // padding: 300px;
+        top: -130px;
+    }
+    .slide_section:nth-child(3) {
+        @include parallax(.1);
+        padding: 300px;
+        top: 200px;
+        z-index: 50;
+    }
+    .slide_section:nth-child(4) {
+        @include parallax(.3);
+        top: -500px;
+        z-index: -1;
+    }
+}

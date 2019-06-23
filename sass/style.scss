@@ -1,20 +1,5 @@
-$font-stack: "Lucida Grande", Helvetica, Arial, sans-serif;
+@import "mixins/angled-edges.scss";
+@import "mixins/parallax.scss";
+@include parallax-init;
 
-$color-darkgray: #1E252D; //These 4 are from Roundup branding
-$color-darkblue: #3D6EB5;
-$color-brightblue2: #52BFDF;
-$color-orange: #C56D34;
-$color-brightred: #F20986; //These 3 are from the sticker, they're bright so best used as accents
-$color-brightblue: #00D9FC;
-$color-brightyellow: #FBE202;
-
-body {
-    padding: 50px;
-    font: 14px $font-stack;
-    background-color: $color-darkgray;
-}
-
-a {
-    color: #00B7FF;
-}
-  
+@import "_site.scss";
