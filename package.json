@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "compile-sass": "node-sass sass/style.scss public/stylesheets/style.css"
+    "compile-sass": "node-sass sass/style.scss public/stylesheets/style.css",
+    "style-check": "eslint --ignore-path .gitignore . & stylelint \"**/*.scss\" --syntax scss --config .stylelintrc.json",
+    "style-fix": "eslint --ignore-path .gitignore . --fix & stylelint \"**/*.scss\" --syntax scss --config .stylelintrc.json --fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -15,7 +17,10 @@
     "pug": "^2.0.4"
   },
   "devDependencies": {
+    "eslint": "^6.1.0",
     "node-sass": "^4.12.0",
-    "node-sass-middleware": "^0.11.0"
+    "node-sass-middleware": "^0.11.0",
+    "stylelint": "^10.1.0",
+    "stylelint-scss": "^3.9.2"
   }
 }
