@@ -24,7 +24,7 @@ module.exports = {
     },
     // Queries the database to update the latest event ID and next event time based on current time/game
     // start time. This will be called in a setTimeout() loop from the main app to keep the cache fresh.
-    refreshLatestEvent: () => {
+    refresh: () => {
         const now = new Date();
         const gameDuration = Math.max(0, now - startTime);
         if (gameDuration === 0) {
