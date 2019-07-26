@@ -1,5 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container
+      .row.align-items-center
+          .col-2
+          .col
+            .blog_card.card
+              img.card-img-top(src="img/puppy1.jpg")
+              .card-body
+                p.card-title Does Anyone Have Any Laser Parts?
+                p.card-subtitle Asking for a friend
+                p.card-metadata 
+                  | Posted on September 27, 2019 at 10:56 am by 
+                  a(href="#") @bbg
+                p.card-text
+                  | So the original laser company I was working with on my Super Duper Laser Ray Gun (SDLRG) was acquired by another larger company … a company called Alarm.com. They also acquired the laser parts that I need to complete my SDLRG, so I attempted...
+                  a(href="#") (Read More)
+          .col-2

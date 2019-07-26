@@ -4380,6 +4380,12 @@ a {
 h1 {
   font: 48px "Permanent Marker", cursive; }
 
+h2 {
+  font: 24px "Permanent Marker", cursive; }
+
+h3 {
+  font: 18px "Permanent Marker", cursive; }
+
 p {
   font: 18px "Tajawal", sans-serif; }
 
@@ -4551,3 +4557,20 @@ p {
     transform: translateZ(0.3px) scale(0.7);
     top: -500px;
     z-index: -1; }
+
+.blog_card .card-title {
+  font: 22px "Rubik", sans-serif; }
+
+.blog_card .card-subtitle {
+  font: 16px "Tajawal", sans-serif;
+  color: #666; }
+
+.blog_card .card-metadata {
+  font: 13px "Tajawal", sans-serif;
+  color: #999; }
+  .blog_card .card-metadata a {
+    font: 15px "Tajawal", sans-serif; }
+
+.blog_card .card-text {
+  font: 15px "Tajawal", sans-serif;
+  color: #333; }

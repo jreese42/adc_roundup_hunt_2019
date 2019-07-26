@@ -12,6 +12,14 @@ h1 {
     font: 48px $font-title-marker;
 }
 
+h2 {
+    font: 24px $font-title-marker;
+}
+
+h3 {
+    font: 18px $font-title-marker;
+}
+
 p {
     font: 18px $font-paragraph-main;
 }
@@ -134,5 +142,28 @@ p {
         @include parallax(.3);
         top: -500px;
         z-index: -1;
+    }
+}
+
+.blog_card {
+    .card-title {
+        font: 22px $font-title-main;
+    }
+    
+    .card-subtitle {
+        font: 16px $font-paragraph-main;
+        color: $color-gray-60;
+    }
+    .card-metadata {
+        font: 13px $font-paragraph-main;
+        color: $color-gray-40;
+        a {
+            font: 15px $font-paragraph-main;
+        }
+    }
+
+    .card-text {
+        font: 15px $font-paragraph-main;
+        color: $color-gray-80;
     }
 }
