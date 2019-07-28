@@ -1,5 +1,7 @@
 extends layout
 
+include mixins/blog_card.pug
+
 block content
   .container
       .row.align-items-center
@@ -16,4 +18,17 @@ block content
                 p.card-text
                   | So the original laser company I was working with on my Super Duper Laser Ray Gun (SDLRG) was acquired by another larger company … a company called Alarm.com. They also acquired the laser parts that I need to complete my SDLRG, so I attempted...
                   a(href="#") (Read More)
+          .col-2
+      .row.align-items-center
+          .col-2
+          .col
+            +blog_card(
+              "Does Anyone Have Any Laser Parts???",
+              "Asking for a friend",
+              "img/puppy1.jpg", 
+              "September 27, 2019", 
+              "99:99 am", 
+              "bbg", 
+              "So the original laser company I was working with on my Super Duper Laser Ray Gun (SDLRG) was acquired by another larger company … a company called Alarm.com. They also acquired the laser parts that I need to complete my SDLRG, so I attempted..."
+              )
           .col-2
