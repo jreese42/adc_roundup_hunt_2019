@@ -1,6 +1,9 @@
-mixin blog_card(title, subtitle, imagePath, dateString, timeString, author, teaserText)
+mixin blog_card(title, subtitle, imagePath, dateString, timeString, author, teaserText, isNew)
   .blog_card.card
     img.card-img-top(src= imagePath)
+    if isNew
+      .ribbon
+        span New
     .card-body
       p.card-title #{title}
       p.card-subtitle #{subtitle}
@@ -9,4 +12,4 @@ mixin blog_card(title, subtitle, imagePath, dateString, timeString, author, teas
         a(href="#") @#{author}
       p.card-text
         | #{teaserText}
-        a(href="#") (Read More)
+        a(href="#")  (Read More)

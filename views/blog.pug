@@ -5,57 +5,40 @@ include mixins/blog_card.pug
 block content
   .container
     .row.align-items-center
-    .col-2
-      .blog_header.text-center
-        h1 My Blog
-    .col-2
-  .navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 Bursting at the Schemes
+          h2 A blog about humanity, culture, and death lasers.
+  .navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.pl-12
+    .navbar-brand
+      img.navbar-logo(src="img/gun_logo.png")
     ul.navbar-nav
       li.nav-item
-        a.nav-link(href="#") One
+        a#nav-link-home.nav-link.active(href="/") Home
       li.nav-item
-        a.nav-link(href="#") Two
+        a#nav-link-about.nav-link(href="/about") About
       li.nav-item
-        a.nav-link(href="#") Three
+        a#nav-link-laser.nav-link(href="#") Death Laser Management
   .container
-      .row.align-items-center
-          .col-2
-          .col
-            .blog_card.card
-              img.card-img-top(src="img/puppy1.jpg")
-              .card-body
-                p.card-title Does Anyone Have Any Laser Parts?
-                p.card-subtitle Asking for a friend
-                p.card-metadata 
-                  | Posted on September 27, 2019 at 10:56 am by 
-                  a(href="#") @bbg
-                p.card-text
-                  | So the original laser company I was working with on my Super Duper Laser Ray Gun (SDLRG) was acquired by another larger company … a company called Alarm.com. They also acquired the laser parts that I need to complete my SDLRG, so I attempted...
-                  a(href="#") (Read More)
-          .col-2
-      .row.align-items-center
-          .col-2
-          .col
-            +blog_card(
-              "Does Anyone Have Any Laser Parts???",
-              "Asking for a friend",
-              "img/puppy1.jpg", 
-              "September 27, 2019", 
-              "99:99 am", 
-              "bbg", 
-              "So the original laser company I was working with on my Super Duper Laser Ray Gun (SDLRG) was acquired by another larger company … a company called Alarm.com. They also acquired the laser parts that I need to complete my SDLRG, so I attempted..."
-              )
-          .col-2
-      .row.align-items-center
-          .col-2
-          .col
-            +blog_card(
-              "First blog post please ignore",
-              "Just getting started",
-              "img/puppy1.jpg", 
-              "September 27, 2019", 
-              "99:99 am", 
-              "bbg", 
-              "So the original laser company I was working with on my Super Duper Laser Ray Gun (SDLRG) was acquired by another larger company … a company called Alarm.com. They also acquired the laser parts that I need to complete my SDLRG, so I attempted..."
-              )
-          .col-2
+    each blog in blog_posts
+      .row.align-items-center 
+        .col-md-10.col-center
+          +blog_card(
+            blog.title,
+            blog.subtitle,
+            blog.imagePath, 
+            blog.dateString, 
+            blog.timeString, 
+            blog.author, 
+            blog.teaserText,
+            blog.isNew
+            )
+
+  footer.page-footer.blog-style
+    .container-fluid.text-center.text-md-left
+      .row
+        .col-md-4.mt-md-0.mt-3
+          h3 About
+        .col-md-4.mt-md-0.mt-3
+          h3 Links
+    .footer-copyright.text-center.py-3 © 2019 Copyright BBG Enterprises
