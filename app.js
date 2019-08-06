@@ -3,7 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var sassMiddleware = require('node-sass-middleware');
+
+var sassMiddleware;
+try {
+    sassMiddleware = require('node-sass-middleware');
+    console.log("Running with node-sass-middleware");
+}
+catch (e) {
+    console.log("Running without node-sass-middleware");
+}
 
 var indexRouter = require('./routes/index');
 var twilioRouter = require('./routes/twilio');
@@ -13,17 +21,19 @@ var app = express();
 /* eslint-disable no-undef */
 
 //SASS middleware. Ideally, SASS is precompiled to css, but this is easier for dev.
-//See the "compile-sass" build script in package.json, and remember to remove this for release.
+//See the "compile-sass" build script in package.json
 //This version serves css on the fly, compiling it upon request so that changes
-//will be reflected without restarting.  The compiled css should be committed to the repo so this
-//can be easily removed for release.
-app.use(sassMiddleware({
-    src: path.join(__dirname, 'sass'),
-    dest: path.join(__dirname, 'public', 'stylesheets'),
-    prefix:  '/stylesheets', //a request for public/stylesheets/*.css should route back to sass/*.css
-    debug: true
-})
-);
+//will be reflected without restarting.  The compiled css should be committed to the repo because
+//this middleware is automatically disabled when deployed.
+if (sassMiddleware) {
+    app.use(sassMiddleware({
+        src: path.join(__dirname, 'sass'),
+        dest: path.join(__dirname, 'public', 'stylesheets'),
+        prefix:  '/stylesheets', //a request for public/stylesheets/*.css should route back to sass/*.css
+        debug: true
+    })
+    );
+}
 
 app.use(express.static(path.join(__dirname, 'public')));
 
