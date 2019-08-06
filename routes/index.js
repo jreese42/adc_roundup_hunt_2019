@@ -7,16 +7,6 @@ router.get('/', function(req, res, next) {
     var locals = {
         blog_posts: [
             {
-                title: "The Title",
-                subtitle: "The subtitle",
-                imagePath: "img/puppy1.jpg", 
-                dateString: "Morched 33 2024", 
-                timeString: "98:98 pm", 
-                author: "bbg", 
-                teaserText: "This is the teaser",
-                isNew: true
-            },
-            {
                 title: "Does Anyone Have Any Laser Parts?",
                 subtitle: "Asking for a friend",
                 imagePath: "img/puppy1.jpg", 
@@ -37,6 +27,16 @@ router.get('/', function(req, res, next) {
                 isNew: false
             },
             {
+                title: "The Title",
+                subtitle: "The subtitle",
+                imagePath: "img/puppy1.jpg", 
+                dateString: "Morched 33 2024", 
+                timeString: "98:98 pm", 
+                author: "bbg", 
+                teaserText: "This is the teaser",
+                isNew: true
+            },
+            {
                 title: "First Blog Post Please Ignore",
                 subtitle: "Just testing for now",
                 imagePath: "img/puppy1.jpg", 
@@ -48,17 +48,7 @@ router.get('/', function(req, res, next) {
             },
         ]
     };
-    // express.locals.blog_posts = [
-    //     {
-    //         title: "The Title",
-    //         subtitle: "The subtitle",
-    //         imagePath: "img/puppy1.jpg", 
-    //         dateString: "Morched 33 2024", 
-    //         timeString: "98:98 pm", 
-    //         author: "bbg", 
-    //         teaserText: "This is the teaser"
-    //     }
-    // ];
+
     res.render('blog', locals);
 });
 

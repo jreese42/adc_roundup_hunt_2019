@@ -4371,22 +4371,37 @@ readers do not read off random characters that represent icons */
   font-weight: 900; }
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #1E252D; }
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  body .light {
+    background-color: #E6ECF4; }
+  body .dark {
+    background-color: #1E252D; }
 
 a {
   color: #00B7FF; }
 
-h1 {
+.blog_style h1 {
+  font: 24px "Rubik", sans-serif; }
+
+.blog_style h2 {
+  font: 16px "Rubik", sans-serif; }
+
+.blog_style h3 {
+  font: 12px "Rubik", sans-serif; }
+
+.blog_style p {
+  font: 12px "Tajawal", sans-serif; }
+
+.game-info-container h1 {
   font: 48px "Permanent Marker", cursive; }
 
-h2 {
+.game-info-container h2 {
   font: 24px "Permanent Marker", cursive; }
 
-h3 {
+.game-info-container h3 {
   font: 18px "Permanent Marker", cursive; }
 
-p {
+.game-info-container p {
   font: 18px "Tajawal", sans-serif; }
 
 .help-text-dark {
@@ -4558,19 +4573,100 @@ p {
     top: -500px;
     z-index: -1; }
 
-.blog_card .card-title {
-  font: 22px "Rubik", sans-serif; }
+.blog_header {
+  margin-top: 3rem;
+  margin-bottom: 3rem; }
+  .blog_header h1 {
+    font: 32px "Rubik", sans-serif;
+    color: #1E252D; }
+  .blog_header h2 {
+    font: 18px "Tajawal", sans-serif;
+    color: #666; }
 
-.blog_card .card-subtitle {
-  font: 16px "Tajawal", sans-serif;
-  color: #666; }
+.blog_card {
+  margin-top: 2rem; }
+  .blog_card .card-img-top {
+    width: 100%;
+    height: 7rem;
+    object-fit: cover; }
+  .blog_card .card-title {
+    font: 22px "Rubik", sans-serif; }
+  .blog_card .card-subtitle {
+    font: 16px "Tajawal", sans-serif;
+    color: #666; }
+  .blog_card .card-metadata {
+    font: 13px "Tajawal", sans-serif;
+    color: #999; }
+    .blog_card .card-metadata a {
+      font: 15px "Tajawal", sans-serif; }
+  .blog_card .card-text {
+    font: 15px "Tajawal", sans-serif;
+    color: #333; }
 
-.blog_card .card-metadata {
-  font: 13px "Tajawal", sans-serif;
-  color: #999; }
-  .blog_card .card-metadata a {
-    font: 15px "Tajawal", sans-serif; }
+img.navbar-logo {
+  width: 60px; }
 
-.blog_card .card-text {
-  font: 15px "Tajawal", sans-serif;
-  color: #333; }
+.page-footer {
+  font: 12px "Tajawal", sans-serif;
+  color: #E6ECF4;
+  background-color: #2e3945;
+  margin-top: 1.5rem; }
+  .page-footer h3 {
+    font: 16px "Rubik", sans-serif; }
+  .page-footer p {
+    font: 12px "Tajawal", sans-serif; }
+  .page-footer .footer-copyright {
+    background-color: #1E252D; }
+
+.col-center {
+  float: none;
+  margin: 0 auto; }
+
+.ribbon {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  text-align: right; }
+
+.ribbon span {
+  font-size: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  line-height: 20px;
+  transform: rotate(45deg);
+  width: 100px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+  box-shadow: 0 3px 10px -5px black;
+  position: absolute;
+  top: 20px;
+  right: -20px; }
+
+.ribbon span::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid #79A70A;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #79A70A; }
+
+.ribbon span::after {
+  content: '';
+  position: absolute;
+  right: 0%;
+  top: 100%;
+  z-index: -1;
+  border-right: 3px solid #79A70A;
+  border-left: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #79A70A; }
