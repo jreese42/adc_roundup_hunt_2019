@@ -110,6 +110,9 @@ a {
 }
 
 .slide_section {
+    h1 {
+        font: 48px $font-title-marker;
+    }
     #titlebar-rules {
         padding: 3% 0 1% 0;
         text-align: center;
