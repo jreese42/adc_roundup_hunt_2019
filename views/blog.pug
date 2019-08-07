@@ -9,20 +9,24 @@ block content
         .blog_header.align-middle
           h1 Bursting at the Schemes
           h2 A blog about humanity, culture, and death lasers.
-  .navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.pl-12
+  nav.navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.pl-12
     .navbar-brand
       img.navbar-logo(src="img/gun_logo.png")
-    ul.navbar-nav
-      li.nav-item
-        a#nav-link-home.nav-link.active(href="/") Home
-      li.nav-item
-        a#nav-link-about.nav-link(href="/about") About
-      li.nav-item
-        a#nav-link-laser.nav-link(href="#") Death Laser Management
+    button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbar-content", aria-controls="navbar-content", aria-expanded="false", aria-label="Toggle navigation")
+      span.navbar-toggler-icon
+        i.fas.fa-bars
+    .collapse.navbar-collapse#navbar-content
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          a#nav-link-home.nav-link.active(href="/") Home
+        li.nav-item
+          a#nav-link-about.nav-link(href="/about") About
+        li.nav-item
+          a#nav-link-laser.nav-link(href="#") Death Laser Management
   .container
     each blog in blog_posts
       .row.align-items-center 
-        .col-md-10.col-center
+        .col-md-9.col-center
           +blog_card(
             blog.title,
             blog.subtitle,
