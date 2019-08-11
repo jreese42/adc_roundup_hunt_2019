@@ -67,12 +67,11 @@ a {
 .circle-icon-dark {
     background: $color-darkgray;
     color: $color-offwhite;
-    width: 120px;
-    height: 120px;
-    border-radius: 100%;
+    width: 8.5rem;
+    height: 8.5rem;
+    border-radius: 50%;
     text-align: center;
-    line-height: 100px;
-    vertical-align: middle;
+    line-height: 6.75rem;
     padding: 30px;
     margin: 10px;
     display:inline-block;
@@ -80,23 +79,28 @@ a {
         // line-height: inherit !important;
         color: $color-offwhite;
     }
+    i[class^="fa-"]{
+        line-height: inherit;
+    }
 }
 
 .circle-icon-light {
     background: $color-offwhite;
     color: $color-darkgray;
-    width: 120px;
-    height: 120px;
-    border-radius: 100%;
+    width: 8.5rem;
+    height: 8.5rem;
+    border-radius: 50%;
     text-align: center;
-    line-height: 100px;
-    vertical-align: middle;
+    line-height: 6.75rem;
     padding: 30px;
     margin: 10px;
     display:inline-block;
     i:first-of-type {
         // line-height: inherit !important;
         color: $color-darkgray;
+    }
+    i[class^="fa-"]{
+        line-height: inherit;
     }
 }
 
@@ -229,7 +233,7 @@ img.navbar-logo {
         font: 12px $font-paragraph-main;
     }
     color: $color-offwhite;
-    background-color: $color-medgray;
+    background-color: $color-gray-80;
     .footer-copyright {
         background-color: $color-darkgray;
     }

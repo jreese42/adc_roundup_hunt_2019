@@ -4373,7 +4373,7 @@ readers do not read off random characters that represent icons */
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
   body .light {
-    background-color: #E6ECF4; }
+    background-color: #eaebeb; }
   body .dark {
     background-color: #1E252D; }
 
@@ -4412,39 +4412,41 @@ a {
 
 .help-text-light {
   font: 20px "Tajawal", sans-serif;
-  color: #E6ECF4;
+  color: #eaebeb;
   vertical-align: middle;
   line-height: inherit !important; }
 
 .circle-icon-dark {
   background: #1E252D;
-  color: #E6ECF4;
-  width: 120px;
-  height: 120px;
-  border-radius: 100%;
+  color: #eaebeb;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
   text-align: center;
-  line-height: 100px;
-  vertical-align: middle;
+  line-height: 6.75rem;
   padding: 30px;
   margin: 10px;
   display: inline-block; }
   .circle-icon-dark i:first-of-type {
-    color: #E6ECF4; }
+    color: #eaebeb; }
+  .circle-icon-dark i[class^="fa-"] {
+    line-height: inherit; }
 
 .circle-icon-light {
-  background: #E6ECF4;
+  background: #eaebeb;
   color: #1E252D;
-  width: 120px;
-  height: 120px;
-  border-radius: 100%;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
   text-align: center;
-  line-height: 100px;
-  vertical-align: middle;
+  line-height: 6.75rem;
   padding: 30px;
   margin: 10px;
   display: inline-block; }
   .circle-icon-light i:first-of-type {
     color: #1E252D; }
+  .circle-icon-light i[class^="fa-"] {
+    line-height: inherit; }
 
 .angled-jumbotron {
   color: #fff;
@@ -4468,13 +4470,16 @@ a {
       border-width: 0 0 5vw 100vw;
       border-color: transparent transparent #fff transparent; } }
 
+.slide_section h1 {
+  font: 48px "Permanent Marker", cursive; }
+
 .slide_section #titlebar-rules {
   padding: 3% 0 1% 0;
   text-align: center;
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
-  color: #E6ECF4;
+  color: #eaebeb;
   background-color: #F20986; }
   @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
     .slide_section #titlebar-rules::before, .slide_section #titlebar-rules::after {
@@ -4495,7 +4500,7 @@ a {
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
-  color: #E6ECF4;
+  color: #eaebeb;
   background-color: #C56D34; }
   @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
     .slide_section #titlebar-tips::before, .slide_section #titlebar-tips::after {
@@ -4519,7 +4524,7 @@ a {
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
-  color: #E6ECF4;
+  color: #eaebeb;
   background-color: #1E252D; }
   @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
     .slide_section.slide-box-gray::before, .slide_section.slide-box-gray::after {
@@ -4559,7 +4564,7 @@ a {
 
 .game_info_container {
   color: #fff;
-  background-color: #E6ECF4;
+  background-color: #eaebeb;
   text-align: center; }
   .game_info_container .slide_section:nth-child(1) {
     transform: translateZ(0.3px) scale(0.7);
@@ -4581,7 +4586,7 @@ a {
     color: #1E252D; }
   .blog_header h2 {
     font: 18px "Tajawal", sans-serif;
-    color: #666; }
+    color: #6f7479; }
 
 .blog_card {
   margin-top: 2rem; }
@@ -4593,23 +4598,23 @@ a {
     font: 22px "Rubik", sans-serif; }
   .blog_card .card-subtitle {
     font: 16px "Tajawal", sans-serif;
-    color: #666; }
+    color: #6f7479; }
   .blog_card .card-metadata {
     font: 13px "Tajawal", sans-serif;
-    color: #999; }
+    color: #989b9f; }
     .blog_card .card-metadata a {
       font: 15px "Tajawal", sans-serif; }
   .blog_card .card-text {
     font: 15px "Tajawal", sans-serif;
-    color: #333; }
+    color: #323840; }
 
 img.navbar-logo {
   width: 60px; }
 
 .page-footer {
   font: 12px "Tajawal", sans-serif;
-  color: #E6ECF4;
-  background-color: #2e3945;
+  color: #eaebeb;
+  background-color: #323840;
   margin-top: 1.5rem; }
   .page-footer h3 {
     font: 16px "Rubik", sans-serif; }
