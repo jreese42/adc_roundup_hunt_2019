@@ -2,14 +2,17 @@ extends layout
 
 block content
     .game_info_container
-        .angled-jumbotron.slide_section
-            h1 Alarm.com RoundUP Hunt 2019
-            h1#countdownTimer 00:00:00
+        .angled-jumbotron
+            h1 
+                img(src="img/ADCLogo.svg", alt="Alarm.com").inline-logo
+                |  RoundUP Hunt 2019
+            h2#countdownTimer 00:00:00
+        //- .parallax-container(data-parallax="scroll", data-image-src="./img/puppy1.jpg", data-bleed="20")
         .slide_section#section-rules.container-dark
             #titlebar-rules
                 h1 Rules
             .container
-                .row.align-items-center.justify-content-center
+                .row.align-items-center.justify-content-center.mt-3
                     .col-sm-2
                         .circle-icon-light
                             i.fas.fa-search.fa-4x
@@ -34,12 +37,11 @@ block content
                             i.fas.fa-mobile-alt.fa-4x
                     .col-sm-7
                         p.help-text-light Mobile phone use is allowed (and in some cases required)
-
-        .slide_section#section-tips
+        .slide_section#section-tips.container-light
             #titlebar-tips
                 h1 Hints, Tips, and Tricks
             .container
-                .row.align-items-center
+                .row.align-items-center.mt-3
                     .col-sm-1.offset-sm-1.order-sm-last
                         .circle-icon-dark
                             i.fas.fa-lightbulb.fa-4x
@@ -58,13 +60,37 @@ block content
                             i.fas.fa-question.fa-4x
                     .col-sm-7
                         p.help-text-dark Quisque congue scelerisque semper. Morbi tellus ante, viverra luctus aliquet ac, commodo ac nisi.
+        .slide_section#section-contact.container-dark
+            #titlebar-contact
+                h1 Contact Us
+            .container
+                .row.align-items-center.justify-content-center.mt-3
+                    .col-sm-2
+                        .circle-icon-light.small
+                            i.fas.fa-paper-plane.fa-3x
+                    .col-sm-7
+                        p.help-text-light RoundUPHunt@alarm.com
+                .row.align-items-center
+                    .col-sm-1.offset-sm-1.order-sm-last
+                        .circle-icon-light.small
+                            i.fab.fa-twitter.fa-3x
+                    .col-sm-7
+                        p.help-text-light @rounduphunt
 
+                .row.align-items-center
+                    .col-sm-1.offset-sm-1
+                        .circle-icon-light.small
+                            i.fab.fa-instagram.fa-3x
+                    .col-sm-7
+                        p.help-text-light @rounduphunt
+                        .row.align-items-center
+                    .col-sm-1.offset-sm-1.order-sm-last
+                        .circle-icon-light.small
+                            i.fas.fa-users.fa-3x
+                    .col-sm-7
+                        p.help-text-light @rounduphunt
             
         .slide_section
             h1 One
         .slide_section.slide-box-gray
             h1 Two
-
-    h3 Countdown Timer
-    h3 About the RoundUP Hunt
-    h3 Hints, Tips, and Tricks
