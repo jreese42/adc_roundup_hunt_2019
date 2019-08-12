@@ -13,3 +13,18 @@ mixin blog_card(title, subtitle, imagePath, dateString, timeString, author, teas
       p.card-text
         | #{teaserText}
         a(href="#")  (Read More)
+
+mixin blog_entry_full(title, subtitle, imagePath, dateString, timeString, author, text, isNew)
+  .blog_card.card
+    img.card-img-top(src= imagePath)
+    if isNew
+      .ribbon
+        span New
+    .card-body
+      p.card-title #{title}
+      p.card-subtitle #{subtitle}
+      p.card-metadata 
+        | Posted on #{dateString} at #{timeString} by 
+        a(href="#") @#{author}
+      p.card-text
+        | #{text}

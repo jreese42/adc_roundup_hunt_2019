@@ -1,6 +1,21 @@
 extends layout
 
+include mixins/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog_card.pug
+include mixins/blog_footer.pug
+
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  +blog_header
+  +navbar_sticky
+  .container
+    .row.mt-5
+    .row.mt-3.mb-5
+      .col-md-1
+        i.fas.fa-exclamation-triangle.fa-4x.mt-2
+      .col-md-11
+        h2 Sorry, I couldn't find what you were looking for.
+        p The page you tried to reach does not exist.  Please go back and try again.
+    .row
+
+  +blog_footer
