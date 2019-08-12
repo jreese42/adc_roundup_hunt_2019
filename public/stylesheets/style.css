@@ -4370,65 +4370,114 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Free';
   font-weight: 900; }
 
+/*!
+ * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+@font-face {
+  font-family: 'Font Awesome 5 Brands';
+  font-style: normal;
+  font-weight: normal;
+  font-display: auto;
+  src: url("../webfonts/fa-brands-400.eot");
+  src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.woff") format("woff"), url("../webfonts/fa-brands-400.ttf") format("truetype"), url("../webfonts/fa-brands-400.svg#fontawesome") format("svg"); }
+
+.fab {
+  font-family: 'Font Awesome 5 Brands'; }
+
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #1E252D; }
+  font: 14px "Tajawal", sans-serif; }
+  body .light {
+    background-color: #eaebeb; }
+  body .dark {
+    background-color: #1E252D; }
 
 a {
   color: #00B7FF; }
 
-h1 {
-  font: 48px "Permanent Marker", cursive; }
+.blog_style h1 {
+  font: 24px "Rubik", sans-serif; }
 
-p {
+.blog_style h2 {
+  font: 16px "Rubik", sans-serif; }
+
+.blog_style h3 {
+  font: 12px "Rubik", sans-serif; }
+
+.blog_style p {
+  font: 12px "Tajawal", sans-serif; }
+
+.game-info-container h1 {
+  font: 48px "Rubik", sans-serif; }
+
+.game-info-container h2 {
+  font: 24px "Rubik", sans-serif; }
+
+.game-info-container h3 {
+  font: 18px "Permanent Marker", cursive; }
+
+.game-info-container p {
   font: 18px "Tajawal", sans-serif; }
 
 .help-text-dark {
   font: 20px "Tajawal", sans-serif;
   color: #000;
   vertical-align: middle;
-  line-height: inherit !important; }
+  line-height: inherit !important;
+  margin-bottom: 2rem; }
 
 .help-text-light {
   font: 20px "Tajawal", sans-serif;
-  color: #E6ECF4;
+  color: #eaebeb;
   vertical-align: middle;
-  line-height: inherit !important; }
+  line-height: inherit !important;
+  margin-bottom: 2rem; }
 
 .circle-icon-dark {
   background: #1E252D;
-  color: #E6ECF4;
-  width: 120px;
-  height: 120px;
-  border-radius: 100%;
+  color: #eaebeb;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
   text-align: center;
-  line-height: 100px;
-  vertical-align: middle;
+  line-height: 6.75rem;
   padding: 30px;
   margin: 10px;
   display: inline-block; }
   .circle-icon-dark i:first-of-type {
-    color: #E6ECF4; }
+    color: #eaebeb; }
+  .circle-icon-dark i[class^="fa-"] {
+    line-height: inherit; }
+  .small .circle-icon-dark {
+    width: 6rem;
+    height: 6rem;
+    line-height: 4rem; }
 
 .circle-icon-light {
-  background: #E6ECF4;
+  background: #eaebeb;
   color: #1E252D;
-  width: 120px;
-  height: 120px;
-  border-radius: 100%;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
   text-align: center;
-  line-height: 100px;
-  vertical-align: middle;
-  padding: 30px;
+  line-height: 6.75rem;
+  padding: 2em;
   margin: 10px;
   display: inline-block; }
   .circle-icon-light i:first-of-type {
     color: #1E252D; }
+  .circle-icon-light i[class^="fa-"] {
+    line-height: inherit; }
+  .circle-icon-light.small {
+    width: 4.2rem;
+    height: 4.2rem;
+    line-height: 3.8rem;
+    padding: 1.1em; }
 
 .angled-jumbotron {
   color: #fff;
   background-color: #52BFDF;
-  font-family: "Permanent Marker", cursive;
+  font-family: "Rubik", sans-serif;
   text-align: center;
   padding: 10% 0;
   position: relative;
@@ -4447,13 +4496,20 @@ p {
       border-width: 0 0 5vw 100vw;
       border-color: transparent transparent #fff transparent; } }
 
+img.inline-logo {
+  display: inline-block;
+  width: 18rem; }
+
+.slide_section h1 {
+  font: 36px "Permanent Marker", cursive; }
+
 .slide_section #titlebar-rules {
   padding: 3% 0 1% 0;
   text-align: center;
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
-  color: #E6ECF4;
+  color: #eaebeb;
   background-color: #F20986; }
   @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
     .slide_section #titlebar-rules::before, .slide_section #titlebar-rules::after {
@@ -4474,7 +4530,7 @@ p {
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
-  color: #E6ECF4;
+  color: #eaebeb;
   background-color: #C56D34; }
   @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
     .slide_section #titlebar-tips::before, .slide_section #titlebar-tips::after {
@@ -4489,6 +4545,27 @@ p {
       border-width: 5vw 100vw 0 0;
       border-color: #fff transparent transparent transparent; } }
 
+.slide_section #titlebar-contact {
+  padding: 3% 0 1% 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
+  color: #1E252D;
+  background-color: #00D9FC; }
+  @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
+    .slide_section #titlebar-contact::before, .slide_section #titlebar-contact::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      z-index: 10;
+      display: block;
+      border-style: solid; }
+    .slide_section #titlebar-contact::before {
+      top: 0;
+      border-width: 5vw 100vw 0 0;
+      border-color: #fff transparent transparent transparent; } }
+
 .slide_section #section-tips {
   background-color: #1E252D; }
 
@@ -4498,7 +4575,7 @@ p {
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
-  color: #E6ECF4;
+  color: #eaebeb;
   background-color: #1E252D; }
   @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
     .slide_section.slide-box-gray::before, .slide_section.slide-box-gray::after {
@@ -4512,6 +4589,29 @@ p {
       top: 0;
       border-width: 5vw 100vw 0 0;
       border-color: #fff transparent transparent transparent; } }
+
+.container-light {
+  background-color: #eaebeb;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 calc(100% - 4vw));
+  padding: 0 0 5% 0; }
+  @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 calc(100% - 4vw))) {
+    .container-light::before, .container-light::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      z-index: 10;
+      display: block;
+      border-style: solid; }
+    .container-light::before {
+      top: 0;
+      border-width: 5vw 100vw 0 0;
+      border-color: #fff transparent transparent transparent; }
+    .container-light::after {
+      bottom: 0;
+      border-width: 0 100vw 5vw 0;
+      border-color: transparent transparent #fff transparent; } }
 
 .container-dark {
   background-color: #1E252D;
@@ -4538,16 +4638,118 @@ p {
 
 .game_info_container {
   color: #fff;
-  background-color: #E6ECF4;
+  background-color: #eaebeb;
   text-align: center; }
-  .game_info_container .slide_section:nth-child(1) {
-    transform: translateZ(0.3px) scale(0.7);
-    z-index: 100; }
   .game_info_container .slide_section:nth-child(2) {
-    transform: translateZ(0.1px) scale(0.9); }
+    transform: translateZ(0.2px) scale(0.8);
+    position: relative;
+    top: -100px; }
   .game_info_container .slide_section:nth-child(3) {
-    transform: translateZ(0.3px) scale(0.7); }
+    transform: translateZ(0.3px) scale(0.7);
+    position: relative;
+    top: -20rem; }
   .game_info_container .slide_section:nth-child(4) {
     transform: translateZ(0.3px) scale(0.7);
     top: -500px;
     z-index: -1; }
+
+.parallax-container {
+  height: 10rem; }
+
+.blog_header {
+  margin-top: 3rem;
+  margin-bottom: 3rem; }
+  .blog_header h1 {
+    font: 32px "Rubik", sans-serif;
+    color: #1E252D; }
+  .blog_header h2 {
+    font: 18px "Tajawal", sans-serif;
+    color: #6f7479; }
+
+.blog_card {
+  margin-top: 2rem; }
+  .blog_card .card-img-top {
+    width: 100%;
+    height: 7rem;
+    object-fit: cover; }
+  .blog_card .card-title {
+    font: 22px "Rubik", sans-serif; }
+  .blog_card .card-subtitle {
+    font: 16px "Tajawal", sans-serif;
+    color: #6f7479; }
+  .blog_card .card-metadata {
+    font: 13px "Tajawal", sans-serif;
+    color: #989b9f; }
+    .blog_card .card-metadata a {
+      font: 15px "Tajawal", sans-serif; }
+  .blog_card .card-text {
+    font: 15px "Tajawal", sans-serif;
+    color: #323840; }
+
+img.navbar-logo {
+  width: 60px; }
+
+.page-footer {
+  font: 12px "Tajawal", sans-serif;
+  color: #eaebeb;
+  background-color: #323840;
+  margin-top: 1.5rem; }
+  .page-footer h3 {
+    font: 16px "Rubik", sans-serif; }
+  .page-footer p {
+    font: 12px "Tajawal", sans-serif; }
+  .page-footer .footer-copyright {
+    background-color: #1E252D; }
+
+.col-center {
+  float: none;
+  margin: 0 auto; }
+
+.ribbon {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  text-align: right; }
+
+.ribbon span {
+  font-size: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  line-height: 20px;
+  transform: rotate(45deg);
+  width: 100px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+  box-shadow: 0 3px 10px -5px black;
+  position: absolute;
+  top: 20px;
+  right: -20px; }
+
+.ribbon span::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid #79A70A;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #79A70A; }
+
+.ribbon span::after {
+  content: '';
+  position: absolute;
+  right: 0%;
+  top: 100%;
+  z-index: -1;
+  border-right: 3px solid #79A70A;
+  border-left: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #79A70A; }
