@@ -1,0 +1,27 @@
+extends layout
+
+include mixins/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog_card.pug
+include mixins/blog_footer.pug
+
+block content
+  +blog_header
+  +navbar_sticky
+  .container
+    each blog in blog_posts
+      .row.align-items-center 
+        .col-md-9.col-center
+          +blog_card(
+            blog.entryUrl,
+            blog.title,
+            blog.subtitle,
+            blog.imagePath, 
+            blog.dateString, 
+            blog.timeString, 
+            blog.author, 
+            blog.teaserText,
+            blog.isNew
+            )
+
+  +blog_footer
