@@ -18,8 +18,8 @@
     "sequelize": "^5.10.1",
     "sequelizer": "^1.1.3",
     "sqlite3": "^4.0.9",
+    "twilio": "^3.33.3",
     "wait-until": "0.0.2"
-    "twilio": "^3.33.3"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
