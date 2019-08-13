@@ -1,4 +1,4 @@
-$font-stack: "Lucida Grande", Helvetica, Arial, sans-serif;
+$font-stack: 'Tajawal', sans-serif;
 
 $color-darkgray: #1E252D; //These 4 are from Roundup branding
 $color-darkblue: #3D6EB5;
@@ -7,12 +7,20 @@ $color-orange: #C56D34;
 $color-brightred: #F20986; //These 3 are from the sticker, they're bright so best used as accents
 $color-brightblue: #00D9FC;
 $color-brightyellow: #FBE202;
-$color-offwhite: #E6ECF4;
 $color-white: #FFF;
 $color-black: #000;
+
+//These are derived from the darkgray color
+$color-offwhite: #eaebeb; //#E6ECF4;
+$color-gray-20: #c1c3c5;
+$color-gray-40: #989b9f;
+$color-gray-60: #6f7479;
+$color-gray-80: #323840;
+$color-gray-90: #060709;
    
 $font-title-main: 'Rubik', sans-serif;
 $font-title-marker: 'Permanent Marker', cursive;
 $font-paragraph-main: 'Tajawal', sans-serif;  
+$font-accent: 'Lexend Exa', sans-serif;
 
 $fa-font-path:        "../webfonts";
