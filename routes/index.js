@@ -73,7 +73,7 @@ router.get('/', function(req, res, next) {
             dateString: blog_posts[i].dateString, 
             timeString: blog_posts[i].timeString, 
             author: blog_posts[i].author, 
-            teaserText: blog_posts[i].text.substring(0, 200) + " ...",
+            teaserText: blog_posts[i].text.substring(0, 200) + " ... ",
             isNew: blog_posts[i].isNew
         };
         locals.blog_posts[i] = blog_post;
