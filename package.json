@@ -9,9 +9,11 @@
     "style-fix": "eslint --ignore-path .gitignore . --fix & stylelint \"**/*.scss\" --syntax scss --config .stylelintrc.json --fix"
   },
   "dependencies": {
+    "connect-session-sequelize": "^6.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-session": "^1.16.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "pug": "^2.0.4",

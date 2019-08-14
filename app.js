@@ -2,14 +2,20 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session')
 var logger = require('morgan');
+var SessionStore = require('connect-session-sequelize')(session.Store);
 
 var sassMiddleware;
-try {
-    sassMiddleware = require('node-sass-middleware');
-    console.log("Running with node-sass-middleware");
-}
-catch (e) {
+if (process.env.NODE_ENV !== 'production') {
+    try {
+        sassMiddleware = require('node-sass-middleware');
+        console.log("Running with node-sass-middleware");
+    }
+    catch (e) {
+        console.log("Running without node-sass-middleware");
+    }
+} else {
     console.log("Running without node-sass-middleware");
 }
 
@@ -17,6 +23,8 @@ var indexRouter = require('./routes/index');
 var twilioRouter = require('./routes/twilio');
 
 var app = express();
+
+app.set('db', require('./modules/db'));
 
 /* eslint-disable no-undef */
 
@@ -46,8 +54,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+var sessionStore = new SessionStore({
+    db: app.get('db').sequelize
+});
+
+app.use(session({
+    secret: 'aTtsPUsapSnYChdO99vzR7YjXuxS90',
+    store: sessionStore
+}));
+
+sessionStore.sync();
+
 app.use('/', indexRouter);
 app.use('/api/twilio', twilioRouter);
+app.use('/user', twilioRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
