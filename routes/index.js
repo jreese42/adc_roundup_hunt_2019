@@ -96,6 +96,15 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
         res.render('error');
     }
 });
+
+router.get('/user/login', function(req, res, next) {
+
+    req.session.attendeeId = req.query.attendeeId || 0;
+    req.session.firstName = req.query.firstName || "";
+    req.session.lastName = req.query.lastName || "";
+
+    res.redirect('/');
+});
 /* eslint-enable no-unused-vars */
 
 module.exports = router;
