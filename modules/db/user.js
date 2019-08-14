@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
   return User;
 }
 
+//TODO:  THe rest of this file is utility functions for working with Users.
+//This had to be restructured to support another feature, so they're disabled for now.
+//These will need to be ported into the sequelize.import() structure above, or into the db/index.js file.
+
 //adding fake users to the databases
 //DEV ONLY - REMOVE
 // let users = [
