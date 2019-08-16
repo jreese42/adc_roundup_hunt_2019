@@ -21,6 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 var indexRouter = require('./routes/index');
 var twilioRouter = require('./routes/twilio');
+var devRouter = require('./routes/dev');
 
 var app = express();
 
@@ -60,7 +61,9 @@ var sessionStore = new SessionStore({
 
 app.use(session({
     secret: 'aTtsPUsapSnYChdO99vzR7YjXuxS90',
-    store: sessionStore
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
 }));
 
 sessionStore.sync();
@@ -68,6 +71,7 @@ sessionStore.sync();
 app.use('/', indexRouter);
 app.use('/api/twilio', twilioRouter);
 app.use('/user', twilioRouter);
+app.use('/admin', devRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
