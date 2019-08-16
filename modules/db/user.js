@@ -1,13 +1,32 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Sequelize.Model { }
+  class User extends Sequelize.Model { 
+    get fullName() {
+      var displayNameFormat = this.getDataValue('DisplayNameFormat');
+      if (displayNameFormat == 'FirstName LastName')
+        return this.getDataValue('firstName') + " " + this.getDataValue('lastName');
+      else if (displayNameFormat == 'FirstInitialLastName')
+        return this.getDataValue('firstName')[0] + ". " + this.getDataValue('lastName');
+      else if (displayNameFormat == 'Custom')
+        return this.getDataValue('firstName');
+      else
+        return 'Anonymous';
+    }
+
+    set fullName(name) {
+      this.setDataValue('displaynameFormat', 'Custom');
+      this.setDataValue('firstName', name);
+    }
+  };
   User.init({
-    userId: {type: DataTypes.INTEGER, primaryKey: true},
+    attendeeId: {type: DataTypes.INTEGER, primaryKey: true},
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    displayNameFormat: DataTypes.ENUM('FirstName LastName', 'FirstInitialLastName', 'Anonymous'),
-    cookie: DataTypes.STRING,
+    displayNameFormat: {
+      type: DataTypes.ENUM('Unknown', 'FirstName LastName', 'FirstInitialLastName', 'Anonymous', 'Custom'),
+      defaultValue: 'Unknown'
+    },
     solution1: DataTypes.BOOLEAN,
     solution2: DataTypes.BOOLEAN,
     solution3: DataTypes.BOOLEAN,
@@ -20,7 +39,9 @@ module.exports = (sequelize, DataTypes) => {
     prizeLevel: DataTypes.ENUM('none', 'bluesticker', 'yellowsticker', 'starsticker'),
     score: DataTypes.INTEGER,
     hasClaimedSticker: DataTypes.BOOLEAN,
-  }, { sequelize });
+  }, { sequelize, modelName: 'User' });
+  User.sync({force: true}); //TODO: Remove this.  This wipes the user list on each start, which is good for dev.
+
   return User;
 }
 

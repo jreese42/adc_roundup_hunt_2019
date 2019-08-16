@@ -1,0 +1,23 @@
+extends layout
+
+include mixins/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog_card.pug
+include mixins/blog_footer.pug
+
+block content
+  .container
+    .row.align-items-center
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 Admin Tools
+  .container
+    .row
+      .col
+        h4 User Info
+    .row
+      .col
+        p Attendee Id: #{user.attendeeId}
+        p Name: #{user.fullName} (Display Option: #{user.displayOption})
+
+  +blog_footer

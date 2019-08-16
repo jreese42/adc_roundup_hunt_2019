@@ -69,9 +69,9 @@ router.get('/', function(req, res, next) {
             entryUrl: "/blog/entry/" + i,
             title: blog_posts[i].title,
             subtitle: blog_posts[i].subtitle,
-            imagePath: blog_posts[i].imagePath, 
-            dateString: blog_posts[i].dateString, 
-            timeString: blog_posts[i].timeString, 
+            imagePath: blog_posts[i].imagePath,
+            dateString: blog_posts[i].dateString,
+            timeString: blog_posts[i].timeString,
             author: blog_posts[i].author, 
             teaserText: blog_posts[i].text.substring(0, 200) + " ...",
             isNew: blog_posts[i].isNew
