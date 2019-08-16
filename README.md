@@ -51,3 +51,65 @@ git push                   //Pushes the changes to your fork
 ```
 
 You can also see how far behind your own fork is from trunk on github's webpage - it'll either tell you that your fork is even with trunk or that you're behind, in which case it mentions how many commits behind you are.
+
+# API
+## User Management
+---
+### Fetch User
+**URL** : `/api/user/<user>`
+
+**Method** : `GET`
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or "me" to select the current session user.
+
+**Details**
+    This command fetches user data.  If the user does not exist, it is created using the supplied attendeeId and the first/last names from the active session.  To make a user with a sepcified name and ID, see `Create User`.
+---    
+### Check User Exists
+**URL** : `/api/user/<user>/exists`
+
+**Method** : `GET`
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or "me" to select the current session user.
+    
+**Response**
+    `true` or `false`
+
+**Details**
+    Fetch a boolean value indicating if a user record exists.
+---
+### Create User
+**URL** : `/api/user/<user>/create?firstName=<firstName>&lastName=<lastName>`
+
+**Method** : `GET` or `POST`
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or "me" to select the current session user.
+    `<firstName>` The user's first name for the new user record.
+    `<lastName>` The user's last name for the new user record.
+    
+**Response**
+    A `User` record
+
+**Details**
+    Only the attendeeId, firstName, and lastName parameters are set in the new user.  The rest of the options have default values, including the displayNameFormat parameter, until manually set.
+---
+### Update User
+#### TBD
+---
+### Delete User
+**URL** : `/api/user/<user>/delete`
+
+**Method** : `GET` or `POST`
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or "me" to select the current session user.
+    
+**Response**
+    `true` if the user existed and was deleted, else `false`.
+
+**Details**
+    Delete a user record if it exists.
+---

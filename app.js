@@ -22,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 var indexRouter = require('./routes/index');
 var twilioRouter = require('./routes/twilio');
 var devRouter = require('./routes/dev');
+var apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -70,6 +71,7 @@ sessionStore.sync();
 
 app.use('/', indexRouter);
 app.use('/api/twilio', twilioRouter);
+app.use('/api', apiRouter);
 app.use('/user', twilioRouter);
 app.use('/admin', devRouter);
 
