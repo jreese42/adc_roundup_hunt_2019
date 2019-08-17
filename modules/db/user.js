@@ -14,12 +14,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get() {
         var displayNameFormat = this.getDataValue('displayNameFormat');
-        if (displayNameFormat == 'FirstNameLastName')
-          return this.getDataValue('firstName') + " " + this.getDataValue('lastName');
-        else if (displayNameFormat == 'FirstInitialLastName')
-          return this.getDataValue('firstName').charAt(0) + ". " + this.getDataValue('lastName');
+        console.log(this.getDataValue('displayNameFormat'));
+        var firstName = this.getDataValue('firstName');
+        var lastName = this.getDataValue('lastName');
+        if (!firstName) firstName = "";
+        if (!lastName) lastName = "";
+        if (displayNameFormat == 'FirstNameLastName'){
+          return firstName + " " + lastName;
+        }
+        else if (displayNameFormat == 'FirstInitialLastName') {
+          return firstName.charAt(0) + ". " + lastName;
+        }
         else if (displayNameFormat == 'Custom')
-          return this.getDataValue('firstName');
+          return firstName;
         else
           return 'Anonymous';
       },

@@ -97,8 +97,19 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
     }
 });
 
-router.get('/user/login', function(req, res, next) {
+router.get('/user/login', function(req, res) {
 
+    var db = req.app.get('db');
+
+    db.User.checkExists(req.query.attendeeId).then( exists => {
+        if (!exists) {
+            db.User.createUser(req.query.attendeeId, req.query.firstName, req.query.lastName).then( created => {
+                if (created)
+                    console.log("New User created: " + req.query.attendeeId);
+            });
+        }
+    });
+    
     req.session.attendeeId = req.query.attendeeId || 0;
     req.session.firstName = req.query.firstName || "";
     req.session.lastName = req.query.lastName || "";
