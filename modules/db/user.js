@@ -1,31 +1,33 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Sequelize.Model { 
-    get fullName() {
-      var displayNameFormat = this.getDataValue('DisplayNameFormat');
-      if (displayNameFormat == 'FirstName LastName')
-        return this.getDataValue('firstName') + " " + this.getDataValue('lastName');
-      else if (displayNameFormat == 'FirstInitialLastName')
-        return this.getDataValue('firstName')[0] + ". " + this.getDataValue('lastName');
-      else if (displayNameFormat == 'Custom')
-        return this.getDataValue('firstName');
-      else
-        return 'Anonymous';
-    }
-
-    set fullName(name) {
-      this.setDataValue('displaynameFormat', 'Custom');
-      this.setDataValue('firstName', name);
-    }
-  };
+  class User extends Sequelize.Model {};
   User.init({
     attendeeId: {type: DataTypes.INTEGER, primaryKey: true},
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     displayNameFormat: {
-      type: DataTypes.ENUM('Unknown', 'FirstName LastName', 'FirstInitialLastName', 'Anonymous', 'Custom'),
+      type: DataTypes.ENUM('Unknown', 'FirstNameLastName', 'FirstInitialLastName', 'Anonymous', 'Custom'),
       defaultValue: 'Unknown'
+    },
+    fullName: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        var displayNameFormat = this.getDataValue('displayNameFormat');
+        if (displayNameFormat == 'FirstNameLastName')
+          return this.getDataValue('firstName') + " " + this.getDataValue('lastName');
+        else if (displayNameFormat == 'FirstInitialLastName')
+          return this.getDataValue('firstName').charAt(0) + ". " + this.getDataValue('lastName');
+        else if (displayNameFormat == 'Custom')
+          return this.getDataValue('firstName');
+        else
+          return 'Anonymous';
+      },
+      set(name) {
+        this.setDataValue('displayNameFormat', 'Custom');
+        this.setDataValue('firstName', name);
+        this.setDataValue('lastName', "");
+      }
     },
     solution1: DataTypes.BOOLEAN,
     solution2: DataTypes.BOOLEAN,

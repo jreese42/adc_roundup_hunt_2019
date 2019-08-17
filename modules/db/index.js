@@ -25,7 +25,11 @@ sequelize.authenticate().then(() => {
 
 /* User Management */
 module.exports.User = {
-    findUserByAttendeeId: async (attendeeId, first, last) => {
+    findUser: async (attendeeId) => {
+        var user = await models.user.findByPk(parseInt(attendeeId));
+        return user;
+    },
+    createUser: async (attendeeId, first, last) => {
         var user = await models.user.findOrCreate(
             { 
                 where: { attendeeId: parseInt(attendeeId) },
@@ -46,6 +50,33 @@ module.exports.User = {
             where: { attendeeId: parseInt(attendeeId) }
         });
         return numDestroyed;
+    },
+    setFullName: async (attendeeId, fullName) => {
+        await models.user.update(
+        {
+            fullName: fullName
+        },
+        {
+            where: { attendeeId: parseInt(attendeeId) }
+        });
+        return true;
+    },
+    setDisplayNameFormat: async (attendeeId, displayNameFormat) => {
+        if (displayNameFormat != 'Unknown' &&
+            displayNameFormat != 'FirstNameLastName' &&
+            displayNameFormat != 'FirstInitialLastName' &&
+            displayNameFormat != 'Anonymous') {
+                return false;
+            }
+            
+        var result = await models.user.update(
+        {
+            displayNameFormat: displayNameFormat
+        },
+        {
+            where: { attendeeId: parseInt(attendeeId) }
+        });
+        return (result[0] > 0);
     } 
 }
 
