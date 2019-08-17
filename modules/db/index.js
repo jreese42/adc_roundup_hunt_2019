@@ -35,7 +35,7 @@ module.exports.User = {
                 where: { attendeeId: parseInt(attendeeId) },
                 defaults: {firstName:first, lastName: last}
             });
-        return user[0];
+        return user[1];
     },
     checkExists: async (attendeeId) => {
         var count = await models.user.count({ where: { attendeeId: parseInt(attendeeId) } });
@@ -52,14 +52,14 @@ module.exports.User = {
         return numDestroyed;
     },
     setFullName: async (attendeeId, fullName) => {
-        await models.user.update(
+        var numUpdated = await models.user.update(
         {
             fullName: fullName
         },
         {
             where: { attendeeId: parseInt(attendeeId) }
         });
-        return true;
+        return (numUpdated[0] > 0);
     },
     setDisplayNameFormat: async (attendeeId, displayNameFormat) => {
         if (displayNameFormat != 'Unknown' &&
@@ -69,14 +69,14 @@ module.exports.User = {
                 return false;
             }
             
-        var result = await models.user.update(
+        var numUpdated = await models.user.update(
         {
             displayNameFormat: displayNameFormat
         },
         {
             where: { attendeeId: parseInt(attendeeId) }
         });
-        return (result[0] > 0);
+        return (numUpdated[0] > 0);
     } 
 }
 

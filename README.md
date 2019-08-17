@@ -96,14 +96,10 @@ You can also see how far behind your own fork is from trunk on github's webpage 
     `<lastName>` The user's last name for the new user record.
     
 **Response**
-    A `User` record
+    `true` if a new user was created, else `false`.
 
 **Details**
     Only the attendeeId, firstName, and lastName parameters are set in the new user.  The rest of the options have default values, including the displayNameFormat parameter, until manually set.
-
----
-### Update User
-#### TBD
 
 ---
 ### Delete User

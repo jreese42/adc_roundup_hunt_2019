@@ -1,6 +1,21 @@
 $(document).ready(function() {
     console.log("Dev JS Loaded");
-
+    
+    $( "#form_findUser" ).submit(function( event ) {
+        event.preventDefault();
+        var attendeeId = $(this).find('input[name="attendeeId"]').val();
+        if(attendeeId) {
+            var uri = "/api/user/" + attendeeId;
+            console.log(uri);
+            $.ajax({
+                url: uri,
+                method: 'GET'
+            }).done(function(data) {
+               console.log(data);
+               $( "#command-output" ).text(JSON.stringify(data));
+            });
+        }
+    });
 
     $( "#form_createUser" ).submit(function( event ) {
         event.preventDefault();
@@ -14,7 +29,8 @@ $(document).ready(function() {
                 url: createUser_uri,
                 method: 'POST'
             }).done(function(data) {
-               console.log(data)
+               console.log(data);
+               $( "#command-output" ).text(JSON.stringify(data));
             });
         }
     });
@@ -28,7 +44,8 @@ $(document).ready(function() {
                 url: deleteUser_uri,
                 method: 'POST'
             }).done(function(data) {
-                console.log(data)
+                console.log(data);
+                $( "#command-output" ).text(JSON.stringify(data));
             });
         }
     });
@@ -45,7 +62,8 @@ $(document).ready(function() {
                 url: uri
             }, {'name': newName})
             .done(function(data) {
-                console.log(data)
+                console.log(data);
+                $( "#command-output" ).text(JSON.stringify(data));
             });
         }
     });
@@ -63,7 +81,8 @@ $(document).ready(function() {
                 url: uri,
             }, {'displayNameFormat': displayNameFormat})
             .done(function(data) {
-                console.log(data)
+                console.log(data);
+                $( "#command-output" ).text(JSON.stringify(data));
             });
         }
     });

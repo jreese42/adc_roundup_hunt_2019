@@ -12,6 +12,13 @@ block content
         .blog_header.align-middle
           h1 Admin Tools
   .container
+    .row.align-items-center.justify-content-center
+      .col-8
+        .card
+          p.card-title.ml-3.mt-2 Command Output
+          .card-body
+            pre
+              code#command-output
     .row
       .col
         h3 User Info
@@ -22,6 +29,16 @@ block content
           p Name: #{User.fullName} (Display Option: #{User.displayNameFormat})
         else
           p No User record found for attendeeId #{Session.attendeeId}
+    .row
+      h4 Find User
+    .row
+      .col-lg-12
+        form.form-inline#form_findUser
+          .form-group
+            label(for="findUser_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#findUser_attendeeIdField
+
+          button(type="submit").btn.btn-primary Submit
     .row
       h4 Create User
     .row
