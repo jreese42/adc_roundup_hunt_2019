@@ -25,13 +25,17 @@ sequelize.authenticate().then(() => {
 
 /* User Management */
 module.exports.User = {
-    findUserByAttendeeId: async (attendeeId, first, last) => {
+    findUser: async (attendeeId) => {
+        var user = await models.user.findByPk(parseInt(attendeeId));
+        return user;
+    },
+    createUser: async (attendeeId, first, last) => {
         var user = await models.user.findOrCreate(
             { 
                 where: { attendeeId: parseInt(attendeeId) },
                 defaults: {firstName:first, lastName: last}
             });
-        return user[0];
+        return user[1];
     },
     checkExists: async (attendeeId) => {
         var count = await models.user.count({ where: { attendeeId: parseInt(attendeeId) } });
@@ -46,6 +50,33 @@ module.exports.User = {
             where: { attendeeId: parseInt(attendeeId) }
         });
         return numDestroyed;
+    },
+    setFullName: async (attendeeId, fullName) => {
+        var numUpdated = await models.user.update(
+        {
+            fullName: fullName
+        },
+        {
+            where: { attendeeId: parseInt(attendeeId) }
+        });
+        return (numUpdated[0] > 0);
+    },
+    setDisplayNameFormat: async (attendeeId, displayNameFormat) => {
+        if (displayNameFormat != 'Unknown' &&
+            displayNameFormat != 'FirstNameLastName' &&
+            displayNameFormat != 'FirstInitialLastName' &&
+            displayNameFormat != 'Anonymous') {
+                return false;
+            }
+            
+        var numUpdated = await models.user.update(
+        {
+            displayNameFormat: displayNameFormat
+        },
+        {
+            where: { attendeeId: parseInt(attendeeId) }
+        });
+        return (numUpdated[0] > 0);
     } 
 }
 

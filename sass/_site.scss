@@ -324,3 +324,13 @@ img.navbar-logo {
     border-bottom: 3px solid transparent;
     border-top: 3px solid #79A70A;
  }
+
+ .form-inline {
+    margin: 0 -3px;
+}
+
+.form-inline .form-group label,
+.form-inline .form-group input,
+.form-inline .form-group select {
+    margin: 0 0.3rem;
+}

@@ -12,12 +12,93 @@ block content
         .blog_header.align-middle
           h1 Admin Tools
   .container
+    .row.align-items-center.justify-content-center
+      .col-8
+        .card
+          p.card-title.ml-3.mt-2 Command Output
+          .card-body
+            pre
+              code#command-output
     .row
       .col
-        h4 User Info
+        h3 User Info
     .row
       .col
-        p Attendee Id: #{user.attendeeId}
-        p Name: #{user.fullName} (Display Option: #{user.displayOption})
+        if User
+          p Attendee Id: #{User.attendeeId}
+          p Name: #{User.fullName} (Display Option: #{User.displayNameFormat})
+        else
+          p No User record found for attendeeId #{Session.attendeeId}
+    .row
+      h4 Find User
+    .row
+      .col-lg-12
+        form.form-inline#form_findUser
+          .form-group
+            label(for="findUser_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#findUser_attendeeIdField
+
+          button(type="submit").btn.btn-primary Submit
+    .row
+      h4 Create User
+    .row
+      .col-lg-12
+        form.form-inline#form_createUser
+          .form-group
+            label(for="createUser_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#createUser_attendeeIdField
+          .form-group
+            label(for="createUser_firstNameField") First Name
+            input(type="text", name="firstName", placeholder="Enter First Name").form-control#createUser_firstNameField
+          .form-group
+            label(for="createUser_lastNameField") Last Name
+            input(type="text", name="lastName", placeholder="Enter Last Name").form-control#createUser_lastNameField
+
+          button(type="submit").btn.btn-primary Submit
+
+    .row
+      h4 Delete User
+    .row
+      .col-lg-12
+        form.form-inline#form_deleteUser
+          .form-group
+            label(for="deleteUser_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#deleteUser_attendeeIdField
+
+          button(type="submit").btn.btn-primary Submit
+
+    .row
+      h4 Set Custom User Name
+    .row
+      .col-lg-12
+        form.form-inline#form_setUserName
+          .form-group
+            label(for="setUserName_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#setUserName_attendeeIdField
+          .form-group
+            input(type="text", name="customName", placeholder="Custom Name...").form-control#setUserName_propertyField
+
+          button(type="submit").btn.btn-primary Submit
+    
+    .row
+      h4 Set Display Name Format
+    .row
+      .col-lg-12
+        form.form-inline#form_setDisplayFormat
+          .form-group
+            label(for="setDisplayFormat_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#setDisplayFormat_attendeeIdField
+          .form-group
+            label(for="setDisplayFormat_propertyField") Display Format
+            select(name="displayNameFormat").form-control#setDisplayFormat_propertyField
+              option(value="FirstNameLastName") Full Name
+              option(value="FirstInitialLastName") First Initial
+              option(value="Anonymous") Anonymous
+              option(value="Unknown") Unknown (Reset User Selection)
+              option(value="Custom") Custom
+
+          button(type="submit").btn.btn-primary Submit
 
   +blog_footer
+
+  script(src='js/dev_admin.js')
