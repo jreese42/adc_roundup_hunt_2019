@@ -22,7 +22,7 @@ router.use((req, res, next) => {
 
   if (!req.session.isAdmin) {
     // Access denied...
-    res.set('WWW-Authenticate', 'Basic realm="401"');
+    res.set('WWW-Authenticate', 'Basic realm="admin-dev"');
     res.status(401).send('Authentication required.'); // custom message
   }
   else {
