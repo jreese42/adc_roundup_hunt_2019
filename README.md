@@ -62,7 +62,7 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Method** : `GET`
 
 **URL Parameters**
-    `<user>` may be either an attendee Id or "me" to select the current session user.
+    `<user>` may be either an attendee Id or `me` to select the current session user.
 
 **Details**
     This command fetches user data.  If the user does not exist, it is created using the supplied attendeeId and the first/last names from the active session.  To make a user with a sepcified name and ID, see `Create User`.
@@ -74,7 +74,7 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Method** : `GET`
 
 **URL Parameters**
-    `<user>` may be either an attendee Id or "me" to select the current session user.
+    `<user>` may be either an attendee Id or `me` to select the current session user.
     
 **Response**
     `true` or `false`
@@ -86,10 +86,12 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 ### Create User
 **URL** : `/api/user/<user>/create?firstName=<firstName>&lastName=<lastName>`
 
-**Method** : `GET` or `POST`
+**Method** : `POST`
+
+**Requires Authentication** : Yes
 
 **URL Parameters**
-    `<user>` may be either an attendee Id or "me" to select the current session user.
+    `<user>` may be either an attendee Id or `me` to select the current session user.
     `<firstName>` The user's first name for the new user record.
     `<lastName>` The user's last name for the new user record.
     
@@ -107,15 +109,72 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 ### Delete User
 **URL** : `/api/user/<user>/delete`
 
-**Method** : `GET` or `POST`
+**Method** : `POST`
+
+**Requires Authentication** : Yes
 
 **URL Parameters**
-    `<user>` may be either an attendee Id or "me" to select the current session user.
+    `<user>` may be either an attendee Id or `me` to select the current session user.
     
 **Response**
     `true` if the user existed and was deleted, else `false`.
 
 **Details**
     Delete a user record if it exists.
+
+---
+### Get Name
+**URL** : `/api/user/<user>/name`
+
+**Method** : `GET`
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or `me` to select the current session user.
+    
+**Response**
+    The user's name encoded using the user's display name format.
+
+**Details**
+    The user's name will be either their First Name/Last Name, First Initial/Last Name, "Anonymous", or a Custom option if set.
+
+---
+### Set Name
+**URL** : `/api/user/<user>/name`
+
+**Method** : `POST`
+
+**Requires Authentication** : Yes
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or `me` to select the current session user.
+
+**POST Parameters**
+    `name` The new name for the user
+    
+**Response**
+    `true` if the new name was set, else `false`
+
+**Details**
+    This sets a custom name for a user record.  Inherently, this also set the displayName option to 'Custom'.
+
+---
+### Set Display Name Format
+**URL** : `/api/user/<user>/displayNameFormat`
+
+**Method** : `POST`
+
+**Requires Authentication** : Yes
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or `me` to select the current session user.
+
+**POST Parameters**
+    `displayNameFormat` A string, one of `FirstNameLastName`, `FirstInitialLastName`, `Anonymous`, or `Unknown`
+    
+**Response**
+    `true` if the new format was set, else `false`
+
+**Details**
+    Set the display name format for a user.
 
 ---

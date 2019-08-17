@@ -16,28 +16,47 @@ router.use((req, res, next) => {
   const [login, password] = new Buffer(b64auth, 'base64').toString().split(':');
   // Verify login and password are set and correct
   if (login && password && login === auth.login && password === auth.password) {
-    // Access granted...
-    return next();
+    // Access granted. Set this info in the session.
+    req.session.isAdmin = true;
   }
 
-  // Access denied...
-  res.set('WWW-Authenticate', 'Basic realm="401"'); // change this
-  res.status(401).send('Authentication required.'); // custom message
+  if (!req.session.isAdmin) {
+    // Access denied...
+    res.set('WWW-Authenticate', 'Basic realm="401"');
+    res.status(401).send('Authentication required.'); // custom message
+  }
+  else {
+    return next();
+  }
+});
+
+/* Logout of an admin session */
+router.get('/logout', function(req, res) 
+{
+  var didLogOut = req.session.isAdmin? true:false;
+  if (req.session.isAdmin)
+    req.session.isAdmin = null;
+  res.send(didLogOut);
 });
 
 /* GET users listing. */
-router.get('/', function(req, res, next) 
+router.get('/', function(req, res) 
 {
   var db = req.app.get('db');
-  console.log("Getting user for ID " + req.session.attendeeId);
-  db.User.findUserByAttendeeId(req.session.attendeeId, req.session.firstName, req.session.lastName)
-  .then( user => {
+  var userPromise;
+  if (req.session && req.session.attendeeId)
+    userPromise = db.User.findUser(req.session.attendeeId);
+  else
+    userPromise = new Promise();
+  
+  userPromise.then( user => {
       locals = {
-        user: {
+        Session: {
           attendeeId: req.session.attendeeId,
-          fullName: user.fullName,
-          displayOption: user.displayNameFormat
-        }
+          firstName: req.session.firstName,
+          lastName: req.session.lastName,
+        },
+        User: user //Generally don't do this. Sending the full user to the client is just for debugging.
       };
       res.render('dev', locals);
   });

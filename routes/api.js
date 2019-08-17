@@ -1,8 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 /* eslint-disable no-unused-vars */
+
+router.use((req, res, next) => {
+    if ( (req.method == "POST") && !req.session.isAdmin) {
+      // Access denied...
+      res.status(401).send('Authentication required'); // custom message
+    }
+    else {
+      return next();
+    }
+});
 
 /* for_me and for_userid just specify which user is making a request, then forward to next */
 var for_me = (req, res, next) => {
@@ -11,9 +20,7 @@ var for_me = (req, res, next) => {
 }
 
 var for_userid = (req, res, next) => {
-    console.log("you route")
     req.user = {attendeeId: req.params.attendeeId};
-    console.log(req.user);
     next();
 }
 
@@ -22,7 +29,7 @@ var for_userid = (req, res, next) => {
  */
 var get_user = (req, res) => {
     var db = req.app.get('db');
-    db.User.findUserByAttendeeId(req.user.attendeeId, req.session.firstName, req.session.lastName)
+    db.User.findUser(req.user.attendeeId)
     .then( user => {
         res.send(user);
     });
@@ -50,7 +57,7 @@ var create_user = (req, res) => {
     if (!firstName || !lastName) {
         res.send({error: "Missing Arguments"});
     } else {
-        db.User.findUserByAttendeeId(req.user.attendeeId, firstName, lastName)
+        db.User.createUser(req.user.attendeeId, firstName, lastName)
         .then( user => {
             res.send(user);
         });
@@ -66,20 +73,53 @@ var delete_user = (req, res) => {
     });
 }
 
+var get_name = (req, res) => {
+    var db = req.app.get('db');
+    db.User.findUser(req.user.attendeeId)
+    .then( user => {
+        res.send(user.fullName);
+    });
+}
+
+var set_custom_name = (req, res) => {
+    var db = req.app.get('db');
+    db.User.setFullName(req.user.attendeeId, req.body.name)
+    .then( result => {
+        res.send(result);
+    });
+}
+
+var set_displaynameformat = (req, res) => {
+    var db = req.app.get('db');
+    db.User.setDisplayNameFormat(req.user.attendeeId, req.body.displayNameFormat)
+    .then( result => {
+        res.send(result);
+    });
+}
+
 router.get('/user/me/', [for_me, get_user]);
 router.get('/user/:attendeeId/', [for_userid, get_user]);
 
 router.get('/user/me/exists', [for_me, check_user_exists]);
 router.get('/user/:attendeeId/exists', [for_userid, check_user_exists]);
 
-router.all('/user/me/create', [for_me, create_user]);
-router.all('/user/:attendeeId/create', [for_userid, create_user]);
+router.post('/user/me/create', [for_me, create_user]);
+router.post('/user/:attendeeId/create', [for_userid, create_user]);
 
-// router.post('/user/me/', [for_me]);
-// router.post('/user/:attendeeId/', [for_userid]);
+router.post('/user/me/delete', [for_me, delete_user]);
+router.post('/user/:attendeeId/delete', [for_userid, delete_user]);
 
-router.all('/user/me/delete', [for_me, delete_user]);
-router.all('/user/:attendeeId/delete', [for_userid, delete_user]);
+//Full Name
+router.get('/user/me/name', [for_me, get_name]);
+router.get('/user/:attendeeId/name', [for_userid, get_name]);
+
+router.post('/user/me/name', [for_me, set_custom_name]);
+router.post('/user/:attendeeId/name', [for_userid, set_custom_name]);
+
+//Set Name Display Option
+router.post('/user/me/displayNameFormat', [for_me, set_displaynameformat]);
+router.post('/user/:attendeeId/displayNameFormat', [for_userid, set_displaynameformat]);
+
 
 
 /* eslint-enable no-unused-vars */
