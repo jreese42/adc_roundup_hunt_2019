@@ -61,12 +61,10 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Method** : `GET`
 
-**URL Parameters**
-
+**URL Parameters**  
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
-**Details**
-
+**Details**  
     This command fetches user data.  If the user does not exist, it is created using the supplied attendeeId and the first/last names from the active session.  To make a user with a sepcified name and ID, see `Create User`.
 
 ---    
@@ -76,16 +74,13 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Method** : `GET`
 
-**URL Parameters**
-
+**URL Parameters**  
     `<user>` may be either an attendee Id or `me` to select the current session user.
     
-**Response**
-
+**Response**  
     `true` or `false`
 
-**Details**
-
+**Details**  
     Fetch a boolean value indicating if a user record exists.
 
 ---
@@ -97,18 +92,15 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes
 
-**URL Parameters**
-
-    `<user>` may be either an attendee Id or `me` to select the current session user.
-    `<firstName>` The user's first name for the new user record.
-    `<lastName>` The user's last name for the new user record.
+**URL Parameters**  
+    `<user>` may be either an attendee Id or `me` to select the current session user.  
+    `<firstName>` The user's first name for the new user record.  
+    `<lastName>` The user's last name for the new user record.  
     
-**Response**
+**Response**  
+    `true` if a new user was created, else `false`.  
 
-    `true` if a new user was created, else `false`.
-
-**Details**
-
+**Details**  
     Only the attendeeId, firstName, and lastName parameters are set in the new user.  The rest of the options have default values, including the displayNameFormat parameter, until manually set.
 
 ---
@@ -120,16 +112,13 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes
 
-**URL Parameters**
-
+**URL Parameters**  
     `<user>` may be either an attendee Id or `me` to select the current session user.
     
-**Response**
-
+**Response**  
     `true` if the user existed and was deleted, else `false`.
 
-**Details**
-
+**Details**  
     Delete a user record if it exists.
 
 ---
@@ -139,16 +128,13 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Method** : `GET`
 
-**URL Parameters**
-
+**URL Parameters**  
     `<user>` may be either an attendee Id or `me` to select the current session user.
     
-**Response**
-
+**Response**  
     The user's name encoded using the user's display name format.
 
-**Details**
-
+**Details**  
     The user's name will be either their First Name/Last Name, First Initial/Last Name, "Anonymous", or a Custom option if set.
 
 ---
@@ -160,20 +146,16 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes
 
-**URL Parameters**
-
+**URL Parameters**  
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
-**POST Parameters**
-
+**POST Parameters**  
     `name` The new name for the user
     
-**Response**
-
+**Response**  
     `true` if the new name was set, else `false`
 
-**Details**
-
+**Details**  
     This sets a custom name for a user record.  Inherently, this also set the displayName option to 'Custom'.
 
 ---
@@ -185,20 +167,16 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes, except when using `me`
 
-**URL Parameters**
-
+**URL Parameters**  
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
-**POST Parameters**
-
+**POST Parameters**  
     `displayNameFormat` A string, one of `FirstNameLastName`, `FirstInitialLastName`, `Anonymous`, or `Unknown`
     
-**Response**
-
+**Response**  
     `true` if the new format was set, else `false`
 
-**Details**
-
+**Details**  
     Set the display name format for a user.
 
 ---
@@ -211,21 +189,17 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes, except when using `me`
 
-**URL Parameters**
-
+**URL Parameters**  
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
-**POST Parameters**
-
-    `solutionId` A number indicating which puzzle number to check
-    `password` A string, the password being submitted
+**POST Parameters**  
+    `solutionId` A number indicating which puzzle number to check  
+    `password` A string, the password being submitted  
     
-**Response**
-
+**Response**  
     `true` if the password was correct, else `false`
 
-**Details**
-
+**Details**  
     Check a password for a puzzle.  If the password is correct, it is also updated in the user record.
 
 ---
@@ -241,23 +215,20 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes
 
-**POST Parameters**
-
-    `title` The post title
-    `subtitle` The post subtitle
-    `author` The post's author
-    `dateStr` A string shown for the post's date, e.g. `September 27, 2019`
-    `timeStr` A string shown for the post's time, e.g. `12:00 am`
-    `imagePath` An absolute path to the header image for the post, e.g. `/img/puppy.jpg`
-    `releaseTime` A datetime string when the blog will be posted in format `yyyy-mm-ddThh:mm:ss.000Z`
-    `text` The full text of the new blog post
+**POST Parameters**  
+    `title` The post title  
+    `subtitle` The post subtitle  
+    `author` The post's author  
+    `dateStr` A string shown for the post's date, e.g. `September 27, 2019`  
+    `timeStr` A string shown for the post's time, e.g. `12:00 am`  
+    `imagePath` An absolute path to the header image for the post, e.g. `/img/puppy.jpg`  
+    `releaseTime` A datetime string when the blog will be posted in format `yyyy-mm-ddThh:mm:ss.000Z`  
+    `text` The full text of the new blog post  
     
-**Response**
-
+**Response**  
     The new blog record as JSON.
 
-**Details**
-
+**Details**  
     Create a new blog record.
 
 ---
@@ -269,16 +240,13 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes
 
-**URL Parameters**
-
+**URL Parameters**  
     `<blogId>` The ID of the blog to fetch
     
-**Response**
-
+**Response**  
     A blog record as JSON, or an empty response if not found.
 
-**Details**
-
+**Details**  
     Fetch a blog record
 
 ---
@@ -290,27 +258,23 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes
 
-**URL Parameters**
-
+**URL Parameters**  
     `<blogId>` The ID of the blog to update
 
-**POST Parameters**
-
-    `title` The post title. Optional.
-    `subtitle` The post subtitle. Optional.
-    `author` The post's author. Optional.
-    `dateStr` A string shown for the post's date, e.g. `September 27, 2019`. Optional.
-    `timeStr` A string shown for the post's time, e.g. `12:00 am`. Optional.
-    `imagePath` An absolute path to the header image for the post, e.g. `/img/puppy.jpg`. Optional.
-    `releaseTime` A datetime string when the blog will be posted in format `yyyy-mm-ddThh:mm:ss.000Z`. Optional.
-    `text` The full text of the new blog post. Optional.
+**POST Parameters**  
+    `title` The post title. Optional.  
+    `subtitle` The post subtitle. Optional.  
+    `author` The post's author. Optional.  
+    `dateStr` A string shown for the post's date, e.g. `September 27, 2019`. Optional.  
+    `timeStr` A string shown for the post's time, e.g. `12:00 am`. Optional.  
+    `imagePath` An absolute path to the header image for the post, e.g. `/img/puppy.jpg`. Optional.  
+    `releaseTime` A datetime string when the blog will be posted in format `yyyy-mm-ddThh:mm:ss.000Z`. Optional.  
+    `text` The full text of the new blog post. Optional.  
     
-**Response**
-
+**Response**  
     `true` if the blog post was updated successfully, else `false`
 
-**Details**
-
+**Details**  
     Update a blog record
 
 ---
@@ -322,16 +286,13 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Requires Authentication** : Yes
 
-**URL Parameters**
-
+**URL Parameters**  
     `<blogId>` The ID of the blog to delete
     
-**Response**
-
+**Response**  
     `true` if the post was deleted, else `false`
 
-**Details**
-
+**Details**  
     Delete a blog record
 
 ---
