@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     teaserText: DataTypes.STRING
 
   }, { sequelize, modelName: 'BlogPost' });
-  BlogPost.sync();
-//   BlogPost.sync({force: true}); //TODO: Remove this.  This wipes the blog list on each start, which is good for dev.
+  // BlogPost.sync();
+  BlogPost.sync({force: true}); //TODO: Remove this.  This wipes the blog list on each start, which is good for dev.
 
   return BlogPost;
 }
