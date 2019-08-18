@@ -15,6 +15,7 @@ const sequelize = new Sequelize({
 
 var models = {};
 models.user = sequelize.import('User', require(__dirname + '/user'));
+models.blogpost = sequelize.import('BlogPost', require(__dirname + '/blogpost'));
 
 //validating communcation to the database 
 sequelize.authenticate().then(() => {
@@ -49,7 +50,7 @@ module.exports.User = {
         {
             where: { attendeeId: parseInt(attendeeId) }
         });
-        return numDestroyed;
+        return (numDestroyed > 0);
     },
     setFullName: async (attendeeId, fullName) => {
         var numUpdated = await models.user.update(
@@ -118,6 +119,66 @@ module.exports.User = {
             return false;
         }
     }
+}
+
+module.exports.BlogPost = {
+    //Blog list
+    getList: async () => {
+        var blogList = await models.blogpost.findAll({
+            attributes: ['blogId', 'title', 'releaseTime'],
+            order: [
+                ['releaseTime', 'DESC']
+            ]
+        });
+        return blogList;
+    },
+    createPost: async (title, subtitle, author, dateStr, timeStr, imgPath, releaseTime, text) => {
+        var result = await models.blogpost.create(
+                { "title": title, "subtitle": subtitle, "author": author, "imagePath": imgPath,
+                    "date": dateStr, "time": timeStr, "releaseTime": releaseTime, "text": text }
+            );
+        return result;
+    },
+    getPost: async (blogId) => {
+        if (parseInt(blogId)) {
+            var blogPost = await models.blogpost.findByPk(parseInt(blogId));
+            return blogPost;
+        }
+        return "";
+    },
+    deletePost: async (blogId) => {
+        if (parseInt(blogId)) {
+            var numDestroyed = await models.blogpost.destroy(
+                {
+                    where: { blogId: parseInt(blogId) }
+                });
+            return (numDestroyed > 0);
+        }
+        return false;
+    },
+    updatePost: async (blogId, title, subtitle, author, dateStr, timeStr, imgPath, releaseTime, text) => {
+        console.log("Udpate blogpost request for id " + blogId)
+        if (parseInt(blogId)) {
+            var updateStruct = {};
+            if (title) updateStruct["title"] = title;
+            if (subtitle) updateStruct["subtitle"] = subtitle;
+            if (author) updateStruct["author"] = author;
+            if (imgPath) updateStruct["imagePath"] = imgPath;
+            if (dateStr) updateStruct["date"] = dateStr;
+            if (timeStr) updateStruct["time"] = timeStr;
+            if (releaseTime) updateStruct["releaseTime"] = releaseTime;
+            if (text) updateStruct["text"] = text;
+            console.log(updateStruct);
+            var numUpdated = await models.blogpost.update(
+                updateStruct,
+                {
+                    where: { blogId: parseInt(blogId) }
+                });
+            return (numUpdated[0] > 0);
+        } else {
+            return false;
+        }
+    },
 }
 
 module.exports.sequelize = sequelize;

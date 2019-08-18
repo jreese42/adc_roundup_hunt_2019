@@ -62,28 +62,35 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Method** : `GET`
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
 **Details**
+
     This command fetches user data.  If the user does not exist, it is created using the supplied attendeeId and the first/last names from the active session.  To make a user with a sepcified name and ID, see `Create User`.
 
 ---    
 ### Check User Exists
+
 **URL** : `/api/user/<user>/exists`
 
 **Method** : `GET`
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
     
 **Response**
+
     `true` or `false`
 
 **Details**
+
     Fetch a boolean value indicating if a user record exists.
 
 ---
 ### Create User
+
 **URL** : `/api/user/<user>/create?firstName=<firstName>&lastName=<lastName>`
 
 **Method** : `POST`
@@ -91,18 +98,22 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Requires Authentication** : Yes
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
     `<firstName>` The user's first name for the new user record.
     `<lastName>` The user's last name for the new user record.
     
 **Response**
+
     `true` if a new user was created, else `false`.
 
 **Details**
+
     Only the attendeeId, firstName, and lastName parameters are set in the new user.  The rest of the options have default values, including the displayNameFormat parameter, until manually set.
 
 ---
 ### Delete User
+
 **URL** : `/api/user/<user>/delete`
 
 **Method** : `POST`
@@ -110,31 +121,39 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Requires Authentication** : Yes
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
     
 **Response**
+
     `true` if the user existed and was deleted, else `false`.
 
 **Details**
+
     Delete a user record if it exists.
 
 ---
 ### Get Name
+
 **URL** : `/api/user/<user>/name`
 
 **Method** : `GET`
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
     
 **Response**
+
     The user's name encoded using the user's display name format.
 
 **Details**
+
     The user's name will be either their First Name/Last Name, First Initial/Last Name, "Anonymous", or a Custom option if set.
 
 ---
 ### Set Name
+
 **URL** : `/api/user/<user>/name`
 
 **Method** : `POST`
@@ -142,19 +161,24 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Requires Authentication** : Yes
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
 **POST Parameters**
+
     `name` The new name for the user
     
 **Response**
+
     `true` if the new name was set, else `false`
 
 **Details**
+
     This sets a custom name for a user record.  Inherently, this also set the displayName option to 'Custom'.
 
 ---
 ### Set Display Name Format
+
 **URL** : `/api/user/<user>/displayNameFormat`
 
 **Method** : `POST`
@@ -162,19 +186,25 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Requires Authentication** : Yes, except when using `me`
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
 **POST Parameters**
+
     `displayNameFormat` A string, one of `FirstNameLastName`, `FirstInitialLastName`, `Anonymous`, or `Unknown`
     
 **Response**
+
     `true` if the new format was set, else `false`
 
 **Details**
+
     Set the display name format for a user.
 
 ---
+
 ### Submit Password
+
 **URL** : `/api/user/<user>/submitPassword`
 
 **Method** : `POST`
@@ -182,16 +212,126 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 **Requires Authentication** : Yes, except when using `me`
 
 **URL Parameters**
+
     `<user>` may be either an attendee Id or `me` to select the current session user.
 
 **POST Parameters**
+
     `solutionId` A number indicating which puzzle number to check
     `password` A string, the password being submitted
     
 **Response**
+
     `true` if the password was correct, else `false`
 
 **Details**
+
     Check a password for a puzzle.  If the password is correct, it is also updated in the user record.
+
+---
+
+## Blog Post Management
+
+---
+### Create New Blog Post
+
+**URL** : `/api/blog/createNew`
+
+**Method** : `POST`
+
+**Requires Authentication** : Yes
+
+**POST Parameters**
+
+    `title` The post title
+    `subtitle` The post subtitle
+    `author` The post's author
+    `dateStr` A string shown for the post's date, e.g. `September 27, 2019`
+    `timeStr` A string shown for the post's time, e.g. `12:00 am`
+    `imagePath` An absolute path to the header image for the post, e.g. `/img/puppy.jpg`
+    `releaseTime` A datetime string when the blog will be posted in format `yyyy-mm-ddThh:mm:ss.000Z`
+    `text` The full text of the new blog post
+    
+**Response**
+
+    The new blog record as JSON.
+
+**Details**
+
+    Create a new blog record.
+
+---
+### Fetch Blog Post
+
+**URL** : `/api/blog/<blogId>`
+
+**Method** : `GET`
+
+**Requires Authentication** : Yes
+
+**URL Parameters**
+
+    `<blogId>` The ID of the blog to fetch
+    
+**Response**
+
+    A blog record as JSON, or an empty response if not found.
+
+**Details**
+
+    Fetch a blog record
+
+---
+### Update Blog Post
+
+**URL** : `/api/blog/<blogId>`
+
+**Method** : `POST`
+
+**Requires Authentication** : Yes
+
+**URL Parameters**
+
+    `<blogId>` The ID of the blog to update
+
+**POST Parameters**
+
+    `title` The post title. Optional.
+    `subtitle` The post subtitle. Optional.
+    `author` The post's author. Optional.
+    `dateStr` A string shown for the post's date, e.g. `September 27, 2019`. Optional.
+    `timeStr` A string shown for the post's time, e.g. `12:00 am`. Optional.
+    `imagePath` An absolute path to the header image for the post, e.g. `/img/puppy.jpg`. Optional.
+    `releaseTime` A datetime string when the blog will be posted in format `yyyy-mm-ddThh:mm:ss.000Z`. Optional.
+    `text` The full text of the new blog post. Optional.
+    
+**Response**
+
+    `true` if the blog post was updated successfully, else `false`
+
+**Details**
+
+    Update a blog record
+
+---
+### Delete Blog Post
+
+**URL** : `/api/blog/<blogId>/delete`
+
+**Method** : `POST`
+
+**Requires Authentication** : Yes
+
+**URL Parameters**
+
+    `<blogId>` The ID of the blog to delete
+    
+**Response**
+
+    `true` if the post was deleted, else `false`
+
+**Details**
+
+    Delete a blog record
 
 ---
