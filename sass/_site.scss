@@ -334,3 +334,16 @@ img.navbar-logo {
 .form-inline .form-group select {
     margin: 0 0.3rem;
 }
+
+i.checkmark-glyph {
+    // background: $color-darkgray;
+    &.success {
+        color: #79A70A;
+    }
+    &.error {
+        color: $color-brightred;
+    }
+    &.neutral {
+        color: $color-gray-80;
+    }
+}

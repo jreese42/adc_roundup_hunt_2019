@@ -3,15 +3,15 @@ var router = express.Router();
 
 /* eslint-disable no-unused-vars */
 
-router.use((req, res, next) => {
-    if ( (req.method == "POST") && !req.session.isAdmin) {
+var authenticator = (req, res, next) => {
+    if (!req.session.isAdmin) {
       // Access denied...
       res.status(401).send('Authentication required'); // custom message
     }
     else {
       return next();
     }
-});
+}
 
 /* for_me and for_userid just specify which user is making a request, then forward to next */
 var for_me = (req, res, next) => {
@@ -53,7 +53,6 @@ var create_user = (req, res) => {
 
     var firstName = req.query.firstName;
     var lastName = req.query.lastName;
-    console.log(firstName + " " + lastName);
     if (!firstName || !lastName) {
         res.send({error: "Missing Arguments"});
     } else {
@@ -97,30 +96,40 @@ var set_displaynameformat = (req, res) => {
     });
 }
 
+var submit_password = (req, res) => {
+    var db = req.app.get('db');
+    db.User.submitPassword(req.user.attendeeId, req.body.solutionId, req.body.password)
+    .then( result => {
+        res.send(result);
+    });
+}
+
 router.get('/user/me/', [for_me, get_user]);
 router.get('/user/:attendeeId/', [for_userid, get_user]);
 
 router.get('/user/me/exists', [for_me, check_user_exists]);
 router.get('/user/:attendeeId/exists', [for_userid, check_user_exists]);
 
-router.post('/user/me/create', [for_me, create_user]);
-router.post('/user/:attendeeId/create', [for_userid, create_user]);
+router.post('/user/me/create', [authenticator, for_me, create_user]);
+router.post('/user/:attendeeId/create', [authenticator, for_userid, create_user]);
 
-router.post('/user/me/delete', [for_me, delete_user]);
-router.post('/user/:attendeeId/delete', [for_userid, delete_user]);
+router.post('/user/me/delete', [authenticator, for_me, delete_user]);
+router.post('/user/:attendeeId/delete', [authenticator, for_userid, delete_user]);
 
 //Full Name
 router.get('/user/me/name', [for_me, get_name]);
 router.get('/user/:attendeeId/name', [for_userid, get_name]);
 
-router.post('/user/me/name', [for_me, set_custom_name]);
-router.post('/user/:attendeeId/name', [for_userid, set_custom_name]);
+router.post('/user/me/name', [authenticator, for_me, set_custom_name]);
+router.post('/user/:attendeeId/name', [authenticator, for_userid, set_custom_name]);
 
 //Set Name Display Option
 router.post('/user/me/displayNameFormat', [for_me, set_displaynameformat]);
-router.post('/user/:attendeeId/displayNameFormat', [for_userid, set_displaynameformat]);
+router.post('/user/:attendeeId/displayNameFormat', [authenticator, for_userid, set_displaynameformat]);
 
-
+//Submit password
+router.post('/user/me/submitPassword', [for_me, submit_password]);
+router.post('/user/:attendeeId/submitPassword', [authenticator, for_userid, submit_password]);
 
 /* eslint-enable no-unused-vars */
 
