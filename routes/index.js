@@ -52,18 +52,6 @@ router.get('/', function(req, res, next) {
         blog_posts: []
     };
 
-    // for (blog_post in blog_posts) {
-    //     locals.blog_posts.push({
-    //         title: blog_post.title,
-    //         subtitle: blog_post.subtitle,
-    //         imagePath: blog_post.imagePath, 
-    //         dateString: blog_post.dateString, 
-    //         timeString: blog_post.timeString, 
-    //         author: blog_post.author, 
-    //         teaserText: blog_post.text.substring(0, 200) + " ...",
-    //         isNew: blog_post.isNew
-    //     });
-    // }
     for (var i=0; i<blog_posts.length; i++){
         var blog_post = {
             entryUrl: "/blog/entry/" + i,

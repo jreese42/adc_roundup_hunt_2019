@@ -39,7 +39,6 @@ router.get('/logout', function(req, res)
   res.send(didLogOut);
 });
 
-/* GET users listing. */
 router.get('/', function(req, res) 
 {
   var db = req.app.get('db');
@@ -59,6 +58,20 @@ router.get('/', function(req, res)
         User: user //Generally don't do this. Sending the full user to the client is just for debugging.
       };
       res.render('dev', locals);
+  });
+});
+
+router.get('/editor', function(req, res) 
+{
+  var db = req.app.get('db');
+  
+  db.BlogPost.getList().then( blogList => {
+      locals = {
+        blogList: blogList
+      };
+      console.log("Blog List");
+      console.log(blogList);
+      res.render('blog_editor', locals);
   });
 });
 

@@ -15,6 +15,7 @@ const sequelize = new Sequelize({
 
 var models = {};
 models.user = sequelize.import('User', require(__dirname + '/user'));
+models.blogpost = sequelize.import('BlogPost', require(__dirname + '/blogpost'));
 
 //validating communcation to the database 
 sequelize.authenticate().then(() => {
@@ -49,7 +50,7 @@ module.exports.User = {
         {
             where: { attendeeId: parseInt(attendeeId) }
         });
-        return numDestroyed;
+        return (numDestroyed > 0);
     },
     setFullName: async (attendeeId, fullName) => {
         var numUpdated = await models.user.update(
@@ -118,6 +119,41 @@ module.exports.User = {
             return false;
         }
     }
+}
+
+module.exports.BlogPost = {
+    //Blog list
+    getList: async () => {
+        var blogList = await models.blogpost.findAll({
+            attributes: ['blogId', 'title', 'releaseTime'],
+            order: [
+                ['releaseTime', 'DESC']
+            ]
+        });
+        return blogList;
+    },
+    //createPost
+    createPost: async (title, subtitle, author, dateStr, timeStr, imgPath, releaseTime, text) => {
+        var result = await models.blogpost.create(
+                { "title": title, "subtitle": subtitle, "author": author, "imagePath": imgPath,
+                    "date": dateStr, "time": timeStr, "releaseTime": releaseTime, "text": text }
+            );
+        return result;
+    },
+    //getPost
+    getPost: async (blogId) => {
+        var blogPost = await models.user.findByPk(parseInt(blogId));
+        return blogPost;
+    },
+    //deletePost
+    deletePost: async (blogId) => {
+        var numDestroyed = await models.blogpost.destroy(
+            {
+                where: { blogId: parseInt(blogId) }
+            });
+            return (numDestroyed > 0);
+    },
+    //updatePost
 }
 
 module.exports.sequelize = sequelize;

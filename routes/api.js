@@ -104,6 +104,38 @@ var submit_password = (req, res) => {
     });
 }
 
+var create_post = (req, res) => {
+    var db = req.app.get('db');
+    db.BlogPost.createPost(
+        req.body.title,
+        req.body.subtitle,
+        req.body.author,
+        req.body.dateStr,
+        req.body.timeStr,
+        req.body.imagePath,
+        req.body.releaseTime,
+        req.body.text)
+    .then( result => {
+        res.send(result);
+    });
+}
+
+var get_blogData = (req, res) => {
+    var db = req.app.get('db');
+    db.BlogPost.getPost(req.params.blogId)
+    .then( result => {
+        res.send(result);
+    });
+}
+
+var delete_blogPost = (req, res) => {
+    var db = req.app.get('db');
+    db.BlogPost.deletePost(req.params.blogId)
+    .then( result => {
+        res.send(result);
+    });
+}
+
 router.get('/user/me/', [for_me, get_user]);
 router.get('/user/:attendeeId/', [for_userid, get_user]);
 
@@ -130,6 +162,13 @@ router.post('/user/:attendeeId/displayNameFormat', [authenticator, for_userid, s
 //Submit password
 router.post('/user/me/submitPassword', [for_me, submit_password]);
 router.post('/user/:attendeeId/submitPassword', [authenticator, for_userid, submit_password]);
+
+//Create new blog
+router.post('/blog/createNew', [authenticator, create_post]);
+//Get Blog Data
+router.get('/blog/:blogId', [authenticator, get_blogData]);
+//Delete post
+router.post('/blog/:blogId/delete', [authenticator, delete_blogPost]);
 
 /* eslint-enable no-unused-vars */
 
