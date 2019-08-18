@@ -5,6 +5,7 @@
  */
 
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -145,6 +146,21 @@ module.exports.BlogPost = {
             return blogPost;
         }
         return "";
+    },
+    getActivePosts: async (dateUntil) => {
+        var blogList = await models.blogpost.findAll({
+            attributes: ['blogId', 'releaseTime', 'title', 'subtitle', 'imagePath', 'date', 'time', 'author', 'teaserText'],
+            order: [
+                ['releaseTime', 'DESC']
+            ],
+            where: {      
+                releaseTime: { 
+                    [Op.lte]: dateUntil.toISOString()
+              }
+
+            }
+        });
+        return blogList;
     },
     deletePost: async (blogId) => {
         if (parseInt(blogId)) {

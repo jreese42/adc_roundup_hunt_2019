@@ -7,8 +7,8 @@ router.use((req, res, next) => {
   // authentication middleware
   
   // Use a default user/pass if unset, otherwise use the user/pass set in the environment
-  let auth = {login: "admin", password: "admin"};
-  if ((process.env.DEV_USER && process.env.DEV_PASS) && (process.env.DEV_USER == "" || process.env.DEV_PASS == ""))
+  var auth = {login: "admin", password: "admin"};
+  if ((process.env.DEV_USER && process.env.DEV_PASS) && (process.env.DEV_USER != "" || process.env.DEV_PASS != ""))
     auth = {login: process.env.DEV_USER, password: process.env.DEV_PASS};
 
   // parse login and password from headers
@@ -23,7 +23,7 @@ router.use((req, res, next) => {
   if (!req.session.isAdmin) {
     // Access denied...
     res.set('WWW-Authenticate', 'Basic realm="admin-dev"');
-    res.status(401).send('Authentication required.'); // custom message
+    res.status(401).send('Authentication required.');
   }
   else {
     return next();
@@ -36,7 +36,12 @@ router.get('/logout', function(req, res)
   var didLogOut = req.session.isAdmin? true:false;
   if (req.session.isAdmin)
     req.session.isAdmin = null;
-  res.send(didLogOut);
+    if (didLogOut) {
+      res.set('WWW-Authenticate', 'Basic realm="admin-dev"');
+      res.status(401).send('Authentication required.'); // custom message
+    } else {
+      res.send(false);
+    }
 });
 
 router.get('/', function(req, res) 
@@ -51,9 +56,9 @@ router.get('/', function(req, res)
   userPromise.then( user => {
       locals = {
         Session: {
-          attendeeId: req.session.attendeeId,
-          firstName: req.session.firstName,
-          lastName: req.session.lastName,
+          attendeeId: req.session.attendeeId || 0,
+          firstName: req.session.firstName || "",
+          lastName: req.session.lastName || "",
         },
         User: user //Generally don't do this. Sending the full user to the client is just for debugging.
       };
