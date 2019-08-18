@@ -6,7 +6,7 @@ include mixins/laser/laser_footer.pug
 
 block content
   +laser_header
-  +navbar_sticky
+  +navbar_sticky("laser")
   .container
     each solution_correct, index in correct_solutions
       .row.align-items-center.my-1.align-center
