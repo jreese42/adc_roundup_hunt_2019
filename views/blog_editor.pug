@@ -18,7 +18,7 @@ block content
           .form-group
             label(for="blogEditor_selectBlog") Select Post
             select(name="blogSelector").form-control#blogEditor_selectBlog
-              option(value="" disabled selected) Select Blog Post...
+              option(value="") Select Blog Post...
               for blogPost in blogList
                 option(value= blogPost.blogId) #{blogPost.title}
               option(value="new") Create New Post

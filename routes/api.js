@@ -128,6 +128,24 @@ var get_blogData = (req, res) => {
     });
 }
 
+var update_blogPost = (req, res) => {
+    console.log("Update blogpost")
+    var db = req.app.get('db');
+    db.BlogPost.updatePost(
+        req.params.blogId,
+        req.body.title,
+        req.body.subtitle,
+        req.body.author,
+        req.body.dateStr,
+        req.body.timeStr,
+        req.body.imagePath,
+        req.body.releaseTime,
+        req.body.text)
+    .then( result => {
+        res.send(result);
+    });
+}
+
 var delete_blogPost = (req, res) => {
     var db = req.app.get('db');
     db.BlogPost.deletePost(req.params.blogId)
@@ -167,6 +185,8 @@ router.post('/user/:attendeeId/submitPassword', [authenticator, for_userid, subm
 router.post('/blog/createNew', [authenticator, create_post]);
 //Get Blog Data
 router.get('/blog/:blogId', [authenticator, get_blogData]);
+//Update post
+router.post('/blog/:blogId', [authenticator, update_blogPost]);
 //Delete post
 router.post('/blog/:blogId/delete', [authenticator, delete_blogPost]);
 
