@@ -12,7 +12,7 @@ var blog_posts = [
         dateString: "September 27, 2019", 
         timeString: "10:56 am", 
         author: "bbg", 
-        text: "I’ve never been to Florida, but it looks like a prime piece of real estate for an evil villain like me to take over. In fact, it might be the perfect state to test my newest laser cutting technology on… I could cut off the peninsula and have my very own private island to develop my evil plans without being interrupted by pesky neighbors. Of course this would be a tremendous undertaking, so I have to put a lot of plans into place to make this happen….  I also need to lock down access to the Death Laser control page, don't want just anyone hacking in and stopping my plan from being set into motion!",
+        text: "I’ve never been to Florida, but it looks like a prime piece of real estate for an evil villain like me to take over. In fact, it might be the perfect state to test my newest laser cutting technology on… I could cut off the peninsula and have my very own private island to develop my evil plans without being interrupted by pesky neighbors. Of course this would be a tremendous undertaking, so I have to put a lot of plans into place to make this happen….  I also need to lock down access to the Space Laser control page, don't want just anyone hacking in and stopping my plan from being set into motion!",
         isNew: false
     },
     {
@@ -84,6 +84,19 @@ router.get('/', function(req, res, next) {
 
 router.get('/about', function(req, res, next) {
     res.render('game_info_page');
+});
+
+router.get('/laser', function(req, res) {
+
+    var db = req.app.get('db');
+
+    db.User.findUser(req.session.attendeeId).then( user => {
+        locals = {
+            correct_solutions: [user.solution1, user.solution2, user.solution3,
+                                user.solution4, user.solution5, user.solution6]
+        }
+        res.render('laser_mgmt_page', locals);
+    });
 });
 
 router.get('/blog/entry/:entryId', function(req, res, next) {

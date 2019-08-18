@@ -159,7 +159,7 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Method** : `POST`
 
-**Requires Authentication** : Yes
+**Requires Authentication** : Yes, except when using `me`
 
 **URL Parameters**
     `<user>` may be either an attendee Id or `me` to select the current session user.
@@ -172,5 +172,26 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 **Details**
     Set the display name format for a user.
+
+---
+### Submit Password
+**URL** : `/api/user/<user>/submitPassword`
+
+**Method** : `POST`
+
+**Requires Authentication** : Yes, except when using `me`
+
+**URL Parameters**
+    `<user>` may be either an attendee Id or `me` to select the current session user.
+
+**POST Parameters**
+    `solutionId` A number indicating which puzzle number to check
+    `password` A string, the password being submitted
+    
+**Response**
+    `true` if the password was correct, else `false`
+
+**Details**
+    Check a password for a puzzle.  If the password is correct, it is also updated in the user record.
 
 ---
