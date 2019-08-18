@@ -12,16 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     time: DataTypes.STRING,
     author: DataTypes.STRING,
     text: DataTypes.STRING,
-    teaserText: {
-        type: DataTypes.VIRTUAL,
-        get() {
-            var text = this.getDataValue('text');
-            if (text) {
-                return text.split(" ").slice(0,35).join(" ") + " ..."
-            }
-            return "";
+    text: {
+        type: DataTypes.STRING,
+        set(text) {
+            this.setDataValue('text', text);
+            this.setDataValue('teaserText', text.split(" ").slice(0,35).join(" ") + " ...");
         }
-    }
+    },
+    teaserText: DataTypes.STRING
 
   }, { sequelize, modelName: 'BlogPost' });
   BlogPost.sync();

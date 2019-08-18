@@ -17,6 +17,27 @@ $(document).ready(function() {
         $('#blogEditor_selectBlog').find('option[value=""]').attr('selected', 'selected');
         clearEditor();
     }
+
+    var formatLocalDate = function(date) {
+        var month = '' + (date.getMonth() + 1);
+        var day = '' + date.getDate();
+        var year = date.getFullYear();
+    
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
+
+    var formatLocalTime = function(date) {
+        var hours = '' + date.getHours();
+        var minutes = '' + date.getMinutes();
+    
+        if (hours.length < 2) hours = '0' + hours;
+        if (minutes.length < 2) minutes = '0' + minutes;
+    
+        return [hours, minutes].join(':');
+    }
     
     $( "#form_findUser" ).submit(function( event ) {
         event.preventDefault();
@@ -142,8 +163,9 @@ $(document).ready(function() {
                     if(blogData.time) $("#blogTime").val(blogData.time);
                     if(blogData.imagePath) $("#blogImagePath").val(blogData.imagePath);
                     if(blogData.releaseTime) {
-                        $("#blogReleaseDate").val(blogData.releaseTime.split("T")[0]);
-                        $("#blogReleaseTime").val(blogData.releaseTime.split("T")[1].split('.')[0].substring(0,5));
+                        var releaseDate = new Date(blogData.releaseTime);
+                        $("#blogReleaseDate").val(formatLocalDate(releaseDate));
+                        $("#blogReleaseTime").val(formatLocalTime(releaseDate));
                     }
                     if(blogData.text) $("#blogText").val(blogData.text);
                 }
@@ -170,6 +192,7 @@ $(document).ready(function() {
     $( "#editor_btnSave" ).click(function(event) {
         event.preventDefault();   
 
+        var releaseDate = new Date($("#blogReleaseDate").val() + "T" + $("#blogReleaseTime").val());
         var post_params = {
             title: $("#blogTitle").val(),
             subtitle: $("#blogSubtitle").val(),
@@ -177,7 +200,7 @@ $(document).ready(function() {
             dateStr: $("#blogDate").val(),
             timeStr: $("#blogTime").val(),
             imagePath: $("#blogImagePath").val(),
-            releaseTime: $("#blogReleaseDate").val() + "T" + $("#blogReleaseTime").val() + ":00.000Z",
+            releaseTime: releaseDate.toISOString(),
             text: $("#blogText").val()
         }
 
