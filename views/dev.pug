@@ -19,47 +19,56 @@ block content
           .card-body
             pre
               code#command-output
-    .row
-      .col
+    .row.mt-3
+      .col.offset-md-1
         h3 User Info
     .row
-      .col
+      .col.offset-md-1
         if User
           p Attendee Id: #{User.attendeeId}
           p Name: #{User.fullName} (Display Option: #{User.displayNameFormat})
         else
           p No User record found for attendeeId #{Session.attendeeId}
+    .row.mt-3
+      .col.offset-md-1
+        h4 Find User
     .row
-      h4 Find User
-    .row
-      .col-lg-12
+      .col.offset-md-1
         form.form-inline#form_findUser
           .form-group
             label(for="findUser_attendeeIdField") Attendee ID
             input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#findUser_attendeeIdField
 
           button(type="submit").btn.btn-primary Submit
-    .row
-      h4 Create User
-    .row
-      .col-lg-12
-        form.form-inline#form_createUser
+    .row.mt-3
+      .col.offset-md-1
+        h4 Create User
+    
+    form.form-inline#form_createUser
+      .form-row.align-items-center
+        .col-md-3.offset-md-1
           .form-group
             label(for="createUser_attendeeIdField") Attendee ID
             input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#createUser_attendeeIdField
+        
+        .col-md-3
           .form-group
             label(for="createUser_firstNameField") First Name
             input(type="text", name="firstName", placeholder="Enter First Name").form-control#createUser_firstNameField
+        
+        .col-md-3
           .form-group
             label(for="createUser_lastNameField") Last Name
             input(type="text", name="lastName", placeholder="Enter Last Name").form-control#createUser_lastNameField
 
+        .col
           button(type="submit").btn.btn-primary Submit
 
+    .row.mt-3
+      .col.offset-md-1
+        h4 Delete User
     .row
-      h4 Delete User
-    .row
-      .col-lg-12
+      .col.offset-md-1
         form.form-inline#form_deleteUser
           .form-group
             label(for="deleteUser_attendeeIdField") Attendee ID
@@ -67,10 +76,11 @@ block content
 
           button(type="submit").btn.btn-primary Submit
 
+    .row.mt-3
+      .col.offset-md-1
+        h4 Set Custom User Name
     .row
-      h4 Set Custom User Name
-    .row
-      .col-lg-12
+      .col.offset-md-1
         form.form-inline#form_setUserName
           .form-group
             label(for="setUserName_attendeeIdField") Attendee ID
@@ -80,10 +90,11 @@ block content
 
           button(type="submit").btn.btn-primary Submit
     
+    .row.mt-3
+      .col.offset-md-1
+        h4 Set Display Name Format
     .row
-      h4 Set Display Name Format
-    .row
-      .col-lg-12
+      .col.offset-md-1
         form.form-inline#form_setDisplayFormat
           .form-group
             label(for="setDisplayFormat_attendeeIdField") Attendee ID
@@ -98,6 +109,13 @@ block content
               option(value="Custom") Custom
 
           button(type="submit").btn.btn-primary Submit
+          
+    .row.mt-5
+      .col.offset-md-1
+        h3 Blog Editor
+    .row
+      .col.offset-md-1
+        a(href="/admin/editor") Blog Editor
 
   +blog_footer
 
