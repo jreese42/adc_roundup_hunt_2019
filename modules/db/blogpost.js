@@ -25,5 +25,6 @@ module.exports = (sequelize, DataTypes) => {
   // BlogPost.sync();
   BlogPost.sync({force: true}); //TODO: Remove this.  This wipes the blog list on each start, which is good for dev.
 
+
   return BlogPost;
 }
