@@ -51,9 +51,9 @@ router.get('/', function(req, res)
   userPromise.then( user => {
       locals = {
         Session: {
-          attendeeId: req.session.attendeeId,
-          firstName: req.session.firstName,
-          lastName: req.session.lastName,
+          attendeeId: req.session.attendeeId || 0,
+          firstName: req.session.firstName || "",
+          lastName: req.session.lastName || "",
         },
         User: user //Generally don't do this. Sending the full user to the client is just for debugging.
       };
