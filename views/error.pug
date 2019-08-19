@@ -14,8 +14,8 @@ block content
       .col-md-1
         i.fas.fa-exclamation-triangle.fa-4x.mt-2
       .col-md-11
-        h2 Sorry, I couldn't find what you were looking for.
-        p The page you tried to reach does not exist.  Please go back and try again.
+        h2 #{errorText}
+        p #{errorSubtext}
     .row
 
   +blog_footer
