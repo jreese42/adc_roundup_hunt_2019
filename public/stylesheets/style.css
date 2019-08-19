@@ -4701,6 +4701,10 @@ img.inline-logo {
   .blog_card .card-text {
     font: 15px "Tajawal", sans-serif;
     color: #323840; }
+  .blog_card .card-body img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
 
 img.navbar-logo {
   width: 60px; }

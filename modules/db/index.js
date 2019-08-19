@@ -278,6 +278,20 @@ var BlogPost = {
         }
         return "";
     },
+    getPostIfActive: async (blogId, date) => {
+        if (parseInt(blogId)) {
+            var blogPost = await models.blogpost.findOne({
+                where: {  
+                    blogId: parseInt(blogId),   
+                    releaseTime: { 
+                        [Op.lte]: date.toISOString()
+                    }
+                }
+            });
+            return blogPost;
+        }
+        return "";
+    },
     getActivePosts: async (dateUntil) => {
         var blogList = await models.blogpost.findAll({
             attributes: ['blogId', 'releaseTime', 'title', 'subtitle', 'imagePath', 'date', 'time', 'author', 'teaserText'],
@@ -287,8 +301,7 @@ var BlogPost = {
             where: {      
                 releaseTime: { 
                     [Op.lte]: dateUntil.toISOString()
-              }
-
+                }
             }
         });
         return blogList;

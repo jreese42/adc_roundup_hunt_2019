@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    $(".card-body img").addClass("rounded mx-auto img-fluid");
+
     $( ".form_submitPassword" ).submit(function( event ) {
         event.stopPropagation();
         event.stopImmediatePropagation();

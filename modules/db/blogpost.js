@@ -16,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         set(text) {
             this.setDataValue('text', text);
-            this.setDataValue('teaserText', text.split(" ").slice(0,35).join(" ") + " ...");
+            var shortText = text.split(" ").slice(0,35).join(" ");
+            var strippedShortText = shortText.replace(/(<([^>]+)>)/ig,"");
+            this.setDataValue('teaserText', strippedShortText + " ...");
         }
     },
     teaserText: DataTypes.STRING
