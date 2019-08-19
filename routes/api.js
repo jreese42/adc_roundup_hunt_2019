@@ -129,7 +129,6 @@ var get_blogData = (req, res) => {
 }
 
 var update_blogPost = (req, res) => {
-    console.log("Update blogpost")
     var db = req.app.get('db');
     db.BlogPost.updatePost(
         req.params.blogId,
@@ -149,6 +148,42 @@ var update_blogPost = (req, res) => {
 var delete_blogPost = (req, res) => {
     var db = req.app.get('db');
     db.BlogPost.deletePost(req.params.blogId)
+    .then( result => {
+        res.send(result);
+    });
+}
+
+var create_string = (req, res) => {
+    var db = req.app.get('db');
+    db.Strings.create(
+        req.body.referenceName,
+        req.body.value)
+    .then( result => {
+        res.send(result);
+    });
+}
+
+var get_string = (req, res) => {
+    var db = req.app.get('db');
+    db.Strings.get(req.params.referenceName)
+    .then( result => {
+        res.send(result);
+    });
+}
+
+var set_string = (req, res) => {
+    var db = req.app.get('db');
+    db.Strings.set(
+        req.params.referenceName,
+        req.body.value)
+    .then( result => {
+        res.send(result);
+    });
+}
+
+var delete_string = (req, res) => {
+    var db = req.app.get('db');
+    db.Strings.delete(req.params.referenceName)
     .then( result => {
         res.send(result);
     });
@@ -189,6 +224,12 @@ router.get('/blog/:blogId', [authenticator, get_blogData]);
 router.post('/blog/:blogId', [authenticator, update_blogPost]);
 //Delete post
 router.post('/blog/:blogId/delete', [authenticator, delete_blogPost]);
+
+//string
+router.post('/string/create', [authenticator, create_string]);
+router.get('/string/:referenceName', [authenticator, get_string]);
+router.post('/string/:referenceName', [authenticator, set_string]);
+router.post('/string/:referenceName/delete', [authenticator, delete_string]);
 
 /* eslint-enable no-unused-vars */
 

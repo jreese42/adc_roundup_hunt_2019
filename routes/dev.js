@@ -80,4 +80,16 @@ router.get('/editor', function(req, res)
   });
 });
 
+router.get('/strings', function(req, res) 
+{
+  var db = req.app.get('db');
+  
+  db.Strings.getList().then( stringList => {
+      locals = {
+        stringList: stringList
+      };
+      res.render('string_editor', locals);
+  });
+});
+
 module.exports = router;
