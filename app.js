@@ -89,7 +89,17 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    if (err.status == 404) {
+        res.render('error', { 
+            errorText: "Sorry, I couldn't find what you were looking for.", 
+            errorSubtext: "The page you tried to reach does not exist.  Please go back and try again."
+        });
+    } else {
+        res.render('error', { 
+            errorText: "Sorry, something went wrong.", 
+            errorSubtext: "A server error ocurred.  It's probably your fault. Please go back and try again, then contact the Gamemasters."
+        });
+    }
 });
 /* eslint-enable no-unused-vars */
 /* eslint-enable no-undef */

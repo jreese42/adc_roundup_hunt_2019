@@ -347,3 +347,11 @@ i.checkmark-glyph {
         color: $color-gray-80;
     }
 }
+
+a.backButton {
+    font-size: 18px;
+    & i {
+        vertical-align: middle;
+    }
+
+}

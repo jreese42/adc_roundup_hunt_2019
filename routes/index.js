@@ -45,11 +45,19 @@ router.get('/laser', function(req, res) {
     var db = req.app.get('db');
 
     db.User.findUser(req.session.attendeeId).then( user => {
-        locals = {
-            correct_solutions: [user.solution1, user.solution2, user.solution3,
-                                user.solution4, user.solution5, user.solution6]
+        if (!user) {
+            res.status(401).render('error', { 
+                errorText: "No User Record Found", 
+                errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
+            });
         }
-        res.render('laser_mgmt_page', locals);
+        else {
+            locals = {
+                correct_solutions: [user.solution1, user.solution2, user.solution3,
+                                    user.solution4, user.solution5, user.solution6]
+            }
+            res.render('laser_mgmt_page', locals);
+        }
     });
 });
 
@@ -60,7 +68,10 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
         res.render('blog_entry', locals);
     }
     else {
-        res.render('error');
+        res.status(404).render('error', { 
+            errorText: "Sorry, I couldn't find what you were looking for.", 
+            errorSubtext: "The page you tried to reach does not exist.  Please go back and try again."
+        });
     }
 });
 

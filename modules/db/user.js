@@ -48,8 +48,6 @@ module.exports = (sequelize, DataTypes) => {
     score: DataTypes.INTEGER,
     hasClaimedSticker: DataTypes.BOOLEAN,
   }, { sequelize, modelName: 'User' });
-  User.sync();
-  // User.sync({force: true}); //TODO: Remove this.  This wipes the user list on each start, which is good for dev.
 
   return User;
 }
