@@ -100,7 +100,7 @@ models.user.sync({force: resetUsers});
 models.blogpost.sync({force: resetBlogPosts});
 
 models.puzzle.sync({force: resetPuzzles}).then( () => {
-    models.puzzle.create(defaultPuzzles);
+    models.puzzle.bulkCreate(defaultPuzzles);
 }).then( () => {
 
     models.puzzle.findAll({
@@ -120,7 +120,7 @@ sequelize.authenticate().then(() => {
 });
 
 /* String Management */
-module.exports.Strings = {
+var Strings = {
     getList: async () => {
         var stringList = await models.string.findAll({
             attributes: ['referenceName'],
@@ -140,7 +140,9 @@ module.exports.Strings = {
         var string = await models.string.findOne({
             where: {referenceName: referenceName}
         });
-        return string || "";
+        if (string)
+            return string.value || "";
+        else return "";
     },
     set: async (referenceName, value) => {
         console.log("Updating string: " + referenceName + " to " + value)
@@ -163,7 +165,7 @@ module.exports.Strings = {
 }
 
 /* User Management */
-module.exports.User = {
+var User = {
     findUser: async (attendeeId) => {
         var user = await models.user.findByPk(parseInt(attendeeId));
         return user;
@@ -217,49 +219,56 @@ module.exports.User = {
         });
         return (numUpdated[0] > 0);
     },
-    submitPassword: async (attendeeId, solutionId, password) => {
-        var passwords = ["password1","password2","password3","password4","password5","password6"];
-        if (solutionId > 0 && 
-            solutionId <= passwords.length && 
-            password.toLowerCase() == passwords[solutionId-1]) {
+    submitPassword: async (attendeeId, puzzleId, submittedPass) => {
+
+        var puzzle = await Puzzle.get(puzzleId);
+        if (!puzzle)
+            return false;
+
+        var correctPass = await Strings.get(puzzle.solutionReference);
+        if (!correctPass)
+            return false;
+
+        if (submittedPass.toLowerCase() == correctPass) {
             //Correct password - update in table
             var updateStruct;
-            if (solutionId == 1)
+            if (puzzleId == 1)
                 updateStruct = {solution1: true};
-            else if (solutionId == 2)
+            else if (puzzleId == 2)
                 updateStruct = {solution2: true};
-            else if (solutionId == 3)
+            else if (puzzleId == 3)
                 updateStruct = {solution3: true};
-            else if (solutionId == 4)
+            else if (puzzleId == 4)
                 updateStruct = {solution4: true};
-            else if (solutionId == 5)
+            else if (puzzleId == 5)
                 updateStruct = {solution5: true};
-            else if (solutionId == 6)
+            else if (puzzleId == 6)
                 updateStruct = {solution6: true};
-            else if (solutionId == 7)
+            else if (puzzleId == 7)
                 updateStruct = {solution7: true};
-            else if (solutionId == 8)
+            else if (puzzleId == 8)
                 updateStruct = {solution8: true};
-            else if (solutionId == 9)
+            else if (puzzleId == 9)
                 updateStruct = {solution9: true};
+
             if (updateStruct) {
                 var numUpdated = await models.user.update(
                     updateStruct,
                     {
                         where: { attendeeId: parseInt(attendeeId) }
                     });
+
                 return (numUpdated[0] > 0);
             } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
 }
 
-module.exports.BlogPost = {
+var BlogPost = {
     //Blog list
     getList: async () => {
         var blogList = await models.blogpost.findAll({
@@ -333,8 +342,9 @@ module.exports.BlogPost = {
 }
 
 /* Puzzle Management */
-module.exports.Puzzle = {
+var Puzzle = {
     get: async (puzzleId) => {
+        console.log("find puzzle with id " + puzzleId);
         var puzzle = await models.puzzle.findOne({
             where: {puzzleId: puzzleId}
         });
@@ -342,4 +352,8 @@ module.exports.Puzzle = {
     }
 }
 
+module.exports.Strings = Strings;
+module.exports.User = User;
+module.exports.BlogPost = BlogPost;
+module.exports.Puzzle = Puzzle;
 module.exports.sequelize = sequelize;

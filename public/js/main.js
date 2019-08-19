@@ -4,14 +4,14 @@ $(document).ready(function() {
         event.stopImmediatePropagation();
         event.preventDefault();
         var thisForm = $(this);
-        var solutionId = $(this).find('input[name="password"]').attr("data-solution-id");
+        var solutionId = parseInt($(this).find('input[name="password"]').attr("data-solution-id"));
         var password = $(this).find('input[name="password"]').val();
 
         var uri = "/api/user/me/submitPassword";
         console.log(uri);
         $.post({
             url: uri,
-        }, {'solutionId': solutionId, 'password': password})
+        }, {'solutionId': solutionId+1, 'password': password})
         .done(function(data) {
             console.log(data)
             if (data == true) {

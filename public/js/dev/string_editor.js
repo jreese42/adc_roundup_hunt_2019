@@ -13,19 +13,19 @@ $(document).ready(function() {
         //clear out the editor
         if ($("#stringEditor_selectString").val() == "new") {
             clearEditor();
-        } else {
-            
-            var referenceName = $("#stringEditor_selectString").val();  
+        } else {            
+            var referenceName = $("#stringEditor_selectString").val();
+            if(referenceName) $("#stringReferenceName").val(referenceName);
+            else $("#stringReferenceName").val("");
+
             $.get({
                 url: "/api/string/" + referenceName,
             })
             .done(function(stringData) {
                 if (stringData) {
-                    if(stringData.referenceName) $("#stringReferenceName").val(stringData.referenceName);
-                    else $("#stringReferenceName").val("");
-                    if(stringData.value) $("#stringValue").val(stringData.value); 
-                    else $("#stringValue").val("");
+                    $("#stringValue").val(stringData);
                 }
+                else $("#stringValue").val("");
             });
         }
     });
