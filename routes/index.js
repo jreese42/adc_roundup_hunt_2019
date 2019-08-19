@@ -17,9 +17,6 @@ router.get('/', function(req, res, next) {
         if (!isNaN(forDate))
             date = forDate;
     }
-    console.log("Date in request")
-    console.log(date)
-    console.log(date.toISOString())
     db.BlogPost.getActivePosts(date).then( blogList => {
         var locals = {
             blog_posts: []
@@ -62,17 +59,29 @@ router.get('/laser', function(req, res) {
 });
 
 router.get('/blog/entry/:entryId', function(req, res, next) {
-    if (req.params.entryId < blog_posts.length) {
-        var locals = {blog: {}};
-        locals.blog = blog_posts[req.params.entryId];
-        res.render('blog_entry', locals);
+    var db = req.app.get('db');
+
+    var date = new Date(Date.now());
+    //Admin option allows querying for a datetime that isn't now
+    if (req.query.d && req.session.isAdmin) {
+        var forDate = new Date(req.query.d);
+        if (!isNaN(forDate))
+            date = forDate;
     }
-    else {
-        res.status(404).render('error', { 
-            errorText: "Sorry, I couldn't find what you were looking for.", 
-            errorSubtext: "The page you tried to reach does not exist.  Please go back and try again."
-        });
-    }
+    
+    db.BlogPost.getPostIfActive(req.params.entryId, date).then( blogPost => {
+        if (blogPost) {
+            blogPost.isNew = false;
+            var locals = {blog: {}};
+            locals.blog = blogPost;
+            res.render('blog_entry', locals);
+        } else {
+            res.status(404).render('error', { 
+                errorText: "Sorry, I couldn't find what you were looking for.", 
+                errorSubtext: "The page you tried to reach does not exist.  Please go back and try again."
+            });
+        }
+    });
 });
 
 router.get('/user/login', function(req, res) {
