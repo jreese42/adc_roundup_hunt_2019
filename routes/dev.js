@@ -74,8 +74,6 @@ router.get('/editor', function(req, res)
       locals = {
         blogList: blogList
       };
-      console.log("Blog List");
-      console.log(blogList);
       res.render('blog_editor', locals);
   });
 });

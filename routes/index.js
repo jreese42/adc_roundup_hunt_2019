@@ -17,9 +17,6 @@ router.get('/', function(req, res, next) {
         if (!isNaN(forDate))
             date = forDate;
     }
-    console.log("Date in request")
-    console.log(date)
-    console.log(date.toISOString())
     db.BlogPost.getActivePosts(date).then( blogList => {
         var locals = {
             blog_posts: []

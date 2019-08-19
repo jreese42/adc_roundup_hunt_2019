@@ -20,7 +20,7 @@ models.blogpost = sequelize.import('BlogPost', require(__dirname + '/blogpost'))
 models.puzzle = sequelize.import('Puzzle', require(__dirname + '/puzzle'));
 
 // defaults
-var resetStrings = true;
+var resetStrings = false;
 var resetUsers = false;
 var resetBlogPosts = false;
 var resetPuzzles = true;
@@ -88,12 +88,6 @@ var defaultPuzzles = [
 
 models.string.sync({force: resetStrings}).then( () => {
     models.string.bulkCreate(defaultStrings);
-}).then( () => {
-
-    models.string.findAll().then( strings => {
-        console.log("Searching for strings")
-        console.log(strings);
-    });
 });
 
 models.user.sync({force: resetUsers});
@@ -101,14 +95,6 @@ models.blogpost.sync({force: resetBlogPosts});
 
 models.puzzle.sync({force: resetPuzzles}).then( () => {
     models.puzzle.bulkCreate(defaultPuzzles);
-}).then( () => {
-
-    models.puzzle.findAll({
-        where: {puzzleId: 1}
-    }).then( puzzle => {
-        console.log("Searching for puzzle")
-        console.log(puzzle);
-    });
 });
 
 
@@ -145,7 +131,6 @@ var Strings = {
         else return "";
     },
     set: async (referenceName, value) => {
-        console.log("Updating string: " + referenceName + " to " + value)
         var numUpdated = await models.string.update(
             {
                 value: value 
@@ -344,7 +329,6 @@ var BlogPost = {
 /* Puzzle Management */
 var Puzzle = {
     get: async (puzzleId) => {
-        console.log("find puzzle with id " + puzzleId);
         var puzzle = await models.puzzle.findOne({
             where: {puzzleId: puzzleId}
         });
