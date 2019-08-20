@@ -20,10 +20,10 @@ models.blogpost = sequelize.import('BlogPost', require(__dirname + '/blogpost'))
 models.puzzle = sequelize.import('Puzzle', require(__dirname + '/puzzle'));
 
 // defaults
-var resetStrings = false;
+var resetStrings = false;  //Be very careful with these.  Set to true to wipe the table and reinitialize.
 var resetUsers = false;
 var resetBlogPosts = false;
-var resetPuzzles = true;
+var resetPuzzles = false;
 
 var defaultStrings = [
     {
@@ -52,11 +52,11 @@ var defaultStrings = [
     },
     {
         referenceName: "TWILIO_TWIML_VOICE_RESPONSE",
-        value: `Thanks so much for finding my dog Edison, I owe you one!  I knew that Brian's loyal readers would be able to find him.  
-        I don't know what I would do without him if I had lost him!  Gosh, now that I think about it,
-        Brian was the person who suggested I name my dog Edison in the first place.  Edison always was Brian's
-        favorite scientist.  I think he even uses Edison for some of his computer 
-        passwords.  Anyway, I'll come pick Edison up now, you can leave him there.  Goodbye!`
+        value: "Thanks so much for finding my dog Edison, I owe you one!  I knew that Brian's loyal readers would be able to find him.\
+        I don't know what I would do without him if I had lost him!  Gosh, now that I think about it,\
+        Brian was the person who suggested I name my dog Edison in the first place.  Edison always was Brian's\
+        favorite scientist.  I think he even uses Edison for some of his computer\
+        passwords.  Anyway, I'll come pick Edison up now, you can leave him there.  Goodbye!"
     },
     {
         referenceName: "TWILIO_TWIML_SMS_RESPONSE",
@@ -152,7 +152,7 @@ var Strings = {
 /* User Management */
 var User = {
     findUser: async (attendeeId) => {
-        var user = await models.user.findByPk(parseInt(attendeeId));
+        var user = await models.user.findByPk(parseInt(attendeeId)).catch(() => {return null;});
         return user;
     },
     createUser: async (attendeeId, first, last) => {
