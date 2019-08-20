@@ -16,6 +16,8 @@
     "express-session": "^1.16.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
     "pug": "^2.0.4",
     "sequelize": "^5.10.1",
     "sequelizer": "^1.1.3",
