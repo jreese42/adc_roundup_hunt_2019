@@ -40,10 +40,18 @@ var models = {
 };
 
 // defaults
-var resetStrings = true;
-var resetUsers = true;
-var resetBlogPosts = true;
-var resetPuzzles = true;
+var resetStrings = false;  //Be very careful with these. Set to true to wipe and reinitalize each table.
+var resetUsers = false;
+var resetBlogPosts = false;
+var resetPuzzles = false;
+
+if (process.env.NODE_ENV === 'production') {
+    //Never allow resyncing this way in production.
+    resetStrings = false;
+    resetUsers = false;
+    resetBlogPosts = false;
+    resetPuzzles = false;
+}
 
 var defaultStrings = [
     {
