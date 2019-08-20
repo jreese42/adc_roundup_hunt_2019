@@ -7,22 +7,42 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: 'adcHuntDb.sqlite'
-});
+//If production and DATABASE_URL is set, use postgres without logging
+//If not production and DATABASE_URL is set, use postgres with logging
+//If not production and no DATABASE_URL, fall back to sqlite3
+const sequelize = (process.env.DATABASE_URL && process.env.NODE_ENV === 'production') ? 
+    new Sequelize( // DATABASE_URL is set
+        process.env.DATABASE_URL, 
+        { 
+            dialect: 'postgres'
+        }
+    ) :
+    (process.env.DATABASE_URL) ?
+    new Sequelize( // DATABASE_URL is unset, so use a local instance
+        process.env.DATABASE_URL, //On a local machine, this is something like 'postgres://postgres:postgres@127.0.0.1:5432/adcRoundupHunt'
+        {
+            dialect: 'postgres',
+            logging:  console.log
+        }
+    ) :
+    new Sequelize({
+        dialect: 'sqlite',
+        storage: 'adcHuntDb.sqlite'
+    });
+
 
 // load models
-var models = {};
-models.string = sequelize.import('String', require(__dirname + '/string'));
-models.user = sequelize.import('User', require(__dirname + '/user'));
-models.blogpost = sequelize.import('BlogPost', require(__dirname + '/blogpost'));
-models.puzzle = sequelize.import('Puzzle', require(__dirname + '/puzzle'));
+var models = {
+    string: sequelize.import('String', require(__dirname + '/string')),
+    user: sequelize.import('User', require(__dirname + '/user')),
+    blogpost: sequelize.import('BlogPost', require(__dirname + '/blogpost')),
+    puzzle: sequelize.import('Puzzle', require(__dirname + '/puzzle')),
+};
 
 // defaults
-var resetStrings = false;
-var resetUsers = false;
-var resetBlogPosts = false;
+var resetStrings = true;
+var resetUsers = true;
+var resetBlogPosts = true;
 var resetPuzzles = true;
 
 var defaultStrings = [

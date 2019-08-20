@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Sequelize.Model {};
   User.init({
     attendeeId: {type: DataTypes.INTEGER, primaryKey: true},
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    firstName: DataTypes.STRING(255),
+    lastName: DataTypes.STRING(255),
     displayNameFormat: {
       type: DataTypes.ENUM('Unknown', 'FirstNameLastName', 'FirstInitialLastName', 'Anonymous', 'Custom'),
       defaultValue: 'Unknown'

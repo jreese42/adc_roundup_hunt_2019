@@ -5,15 +5,14 @@ module.exports = (sequelize, DataTypes) => {
   BlogPost.init({
     blogId: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
     releaseTime: DataTypes.DATE,
-    title: DataTypes.STRING,
-    subtitle: DataTypes.STRING,
-    imagePath: DataTypes.STRING,
-    date: DataTypes.STRING,
-    time: DataTypes.STRING,
-    author: DataTypes.STRING,
-    text: DataTypes.STRING,
+    title: DataTypes.STRING(1024),
+    subtitle: DataTypes.STRING(1024),
+    imagePath: DataTypes.STRING(512),
+    date: DataTypes.STRING(255),
+    time: DataTypes.STRING(255),
+    author: DataTypes.STRING(255),
     text: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(10000),
         set(text) {
             this.setDataValue('text', text);
             var shortText = text.split(" ").slice(0,35).join(" ");
@@ -21,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
             this.setDataValue('teaserText', strippedShortText + " ...");
         }
     },
-    teaserText: DataTypes.STRING
+    teaserText: DataTypes.STRING(2048)
 
   }, { sequelize, modelName: 'BlogPost' });
 
