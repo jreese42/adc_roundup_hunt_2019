@@ -255,6 +255,14 @@ img.inline-logo {
         font: 15px $font-paragraph-main;
         color: $color-gray-80;
     }
+
+    .card-body {          
+        img {       
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    }
 }
 
 img.navbar-logo {
@@ -324,3 +332,34 @@ img.navbar-logo {
     border-bottom: 3px solid transparent;
     border-top: 3px solid #79A70A;
  }
+
+ .form-inline {
+    margin: 0 -3px;
+}
+
+.form-inline .form-group label,
+.form-inline .form-group input,
+.form-inline .form-group select {
+    margin: 0 0.3rem;
+}
+
+i.checkmark-glyph {
+    // background: $color-darkgray;
+    &.success {
+        color: #79A70A;
+    }
+    &.error {
+        color: $color-brightred;
+    }
+    &.neutral {
+        color: $color-gray-80;
+    }
+}
+
+a.backButton {
+    font-size: 18px;
+    & i {
+        vertical-align: middle;
+    }
+
+}

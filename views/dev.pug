@@ -1,0 +1,124 @@
+extends layout
+
+include mixins/blog/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog/blog_card.pug
+include mixins/blog/blog_footer.pug
+
+block content
+  .container
+    .row.align-items-center
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 Admin Tools
+  .container
+    .row.align-items-center.justify-content-center
+      .col-8
+        .card
+          p.card-title.ml-3.mt-2 Command Output
+          .card-body
+            pre
+              code#command-output
+    .row.mt-3
+      .col.offset-md-1
+        h3 User Info
+    .row
+      .col.offset-md-1
+        if User
+          p Attendee Id: #{User.attendeeId}
+          p Name: #{User.fullName} (Display Option: #{User.displayNameFormat})
+        else
+          p No User record found for attendeeId #{Session.attendeeId}
+    .row.mt-3
+      .col.offset-md-1
+        h4 Find User
+    .row
+      .col.offset-md-1
+        form.form-inline#form_findUser
+          .form-group
+            label(for="findUser_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#findUser_attendeeIdField
+
+          button(type="submit").btn.btn-primary Submit
+    .row.mt-3
+      .col.offset-md-1
+        h4 Create User
+    
+    form.form-inline#form_createUser
+      .form-row.align-items-center
+        .col-md-3.offset-md-1
+          .form-group
+            label(for="createUser_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#createUser_attendeeIdField
+        
+        .col-md-3
+          .form-group
+            label(for="createUser_firstNameField") First Name
+            input(type="text", name="firstName", placeholder="Enter First Name").form-control#createUser_firstNameField
+        
+        .col-md-3
+          .form-group
+            label(for="createUser_lastNameField") Last Name
+            input(type="text", name="lastName", placeholder="Enter Last Name").form-control#createUser_lastNameField
+
+        .col
+          button(type="submit").btn.btn-primary Submit
+
+    .row.mt-3
+      .col.offset-md-1
+        h4 Delete User
+    .row
+      .col.offset-md-1
+        form.form-inline#form_deleteUser
+          .form-group
+            label(for="deleteUser_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#deleteUser_attendeeIdField
+
+          button(type="submit").btn.btn-primary Submit
+
+    .row.mt-3
+      .col.offset-md-1
+        h4 Set Custom User Name
+    .row
+      .col.offset-md-1
+        form.form-inline#form_setUserName
+          .form-group
+            label(for="setUserName_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#setUserName_attendeeIdField
+          .form-group
+            input(type="text", name="customName", placeholder="Custom Name...").form-control#setUserName_propertyField
+
+          button(type="submit").btn.btn-primary Submit
+    
+    .row.mt-3
+      .col.offset-md-1
+        h4 Set Display Name Format
+    .row
+      .col.offset-md-1
+        form.form-inline#form_setDisplayFormat
+          .form-group
+            label(for="setDisplayFormat_attendeeIdField") Attendee ID
+            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#setDisplayFormat_attendeeIdField
+          .form-group
+            label(for="setDisplayFormat_propertyField") Display Format
+            select(name="displayNameFormat").form-control#setDisplayFormat_propertyField
+              option(value="FirstNameLastName") Full Name
+              option(value="FirstInitialLastName") First Initial
+              option(value="Anonymous") Anonymous
+              option(value="Unknown") Unknown (Reset User Selection)
+              option(value="Custom") Custom
+
+          button(type="submit").btn.btn-primary Submit
+          
+    .row.mt-5
+      .col.offset-md-1
+        h3 Data Editors
+    .row
+      .col-md-2.offset-md-1
+        a(href="/admin/editor").btn.btn-lg.btn-dark Blog Editor
+      .col-md-3
+        a(href="/admin/strings").btn.btn-lg.btn-dark String Editor
+
+  +blog_footer
+
+  script(src='js/dev_admin.js')

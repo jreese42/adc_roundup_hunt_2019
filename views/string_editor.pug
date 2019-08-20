@@ -1,0 +1,49 @@
+extends layout
+
+include mixins/blog/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog/blog_card.pug
+include mixins/blog/blog_footer.pug
+
+block content
+  .container
+    .row.align-items-center
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 String Editor
+    
+    form#form_stringEditor
+      .row.align-items-center
+        .col-md-2.offset-md-2
+          a(href="/admin").backButton
+            i.fas.fa-chevron-left.fa-2x
+            |  Back
+      .row
+        .col-md-3.offset-md-7
+          .form-group
+            label(for="stringEditor_selectString") Select String
+            select(name="stringSelector").form-control#stringEditor_selectString
+              option(value="") Select String...
+              for string in stringList
+                option(value= string.referenceName) #{string.referenceName}
+              option(value="new") Create New String
+              
+      .row
+        .col-md-8.offset-md-2
+          .form-group
+            label(for="#stringReferenceName") String Reference Name
+            input(type=text).form-control#stringReferenceName
+      .row
+        .col-md-8.offset-md-2
+          .form-group
+            label(for="#stringValue") String Value
+            textarea(rows=3).form-control#stringValue
+      .row.mt-2
+        .col-md-1.offset-md-2
+          button(type="submit")#stringEditor_btnDelete.btn.btn-danger.mx-2 Delete
+        .col-md-1.offset-md-6
+          button(type="submit")#stringEditor_btnSave.btn.btn-primary.mx-2 Save
+                
+  +blog_footer
+
+  script(src='/js/dev/string_editor.js')

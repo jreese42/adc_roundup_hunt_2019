@@ -1,4 +1,4 @@
-mixin navbar_sticky()
+mixin navbar_sticky(active_page)
   nav.navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.pl-12
     .navbar-brand
       img.navbar-logo(src="/img/gun_logo.png")
@@ -8,8 +8,17 @@ mixin navbar_sticky()
     .collapse.navbar-collapse#navbar-content
       ul.navbar-nav.mr-auto
         li.nav-item
-          a#nav-link-home.nav-link.active(href="/") Home
+          if active_page == "home"
+            a#nav-link-home.nav-link.active(href="/") Home
+          else
+            a#nav-link-home.nav-link(href="/") Home
         li.nav-item
-          a#nav-link-about.nav-link(href="/about") About
+          if active_page == "about"
+            a#nav-link-about.nav-link(href="/about").active About
+          else
+            a#nav-link-about.nav-link(href="/about") About
         li.nav-item
-          a#nav-link-laser.nav-link(href="#") Death Laser Management
+          if active_page == "laser"
+            a#nav-link-laser.nav-link(href="/laser").active Space Laser Management
+          else
+            a#nav-link-laser.nav-link(href="/laser") Space Laser Management

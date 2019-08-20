@@ -5,3 +5,6 @@ package_lock.json
 
 #vscode
 launch.json
+
+#database
+adcHuntDb.sqlite

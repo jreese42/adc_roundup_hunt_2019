@@ -1,13 +1,13 @@
 extends layout
 
-include mixins/blog_header.pug
+include mixins/blog/blog_header.pug
 include mixins/navbar_sticky.pug
-include mixins/blog_card.pug
-include mixins/blog_footer.pug
+include mixins/blog/blog_card.pug
+include mixins/blog/blog_footer.pug
 
 block content
   +blog_header
-  +navbar_sticky
+  +navbar_sticky("home")
   .container
     each blog in blog_posts
       .row.align-items-center 
@@ -17,8 +17,8 @@ block content
             blog.title,
             blog.subtitle,
             blog.imagePath, 
-            blog.dateString, 
-            blog.timeString, 
+            blog.date, 
+            blog.time, 
             blog.author, 
             blog.teaserText,
             blog.isNew
