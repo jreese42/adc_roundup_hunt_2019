@@ -55,31 +55,31 @@ if (process.env.NODE_ENV === 'production') {
 
 var defaultStrings = [
     {
-        referenceName: "SOLUTION_1",
-        value: ""
+        referenceName: 'SOLUTION_REGEX_1',
+        value: ''
     },
     {
-        referenceName: "SOLUTION_2",
-        value: ""
+        referenceName: 'SOLUTION_REGEX_2',
+        value: ''
     },
     {
-        referenceName: "SOLUTION_3",
-        value: ""
+        referenceName: 'SOLUTION_REGEX_3',
+        value: ''
     },
     {
-        referenceName: "SOLUTION_4",
-        value: ""
+        referenceName: 'SOLUTION_REGEX_4',
+        value: ''
     },
     {
-        referenceName: "SOLUTION_5",
-        value: ""
+        referenceName: 'SOLUTION_REGEX_5',
+        value: ''
     },
     {
-        referenceName: "SOLUTION_6",
-        value: ""
+        referenceName: 'SOLUTION_REGEX_6',
+        value: ''
     },
     {
-        referenceName: "TWILIO_TWIML_VOICE_RESPONSE",
+        referenceName: 'TWILIO_TWIML_VOICE_RESPONSE',
         value: `Thanks so much for finding my dog Edison, I owe you one!  I knew that Brian's loyal readers would be able to find him.  
         I don't know what I would do without him if I had lost him!  Gosh, now that I think about it,
         Brian was the person who suggested I name my dog Edison in the first place.  Edison always was Brian's
@@ -87,30 +87,30 @@ var defaultStrings = [
         passwords.  Anyway, I'll come pick Edison up now, you can leave him there.  Goodbye!`
     },
     {
-        referenceName: "TWILIO_TWIML_SMS_RESPONSE",
-        value: "The number you are trying to reach does not support text messaging.  Please call this number instead."
+        referenceName: 'TWILIO_TWIML_SMS_RESPONSE',
+        value: 'The number you are trying to reach does not support text messaging.  Please call this number instead.'
     },
 
 ];
 
 var defaultPuzzles = [
     {
-        solutionReference: "SOLUTION_1"
+        solutionRegexReference: 'SOLUTION_REGEX_1'
     },
     {
-        solutionReference: "SOLUTION_2"
+        solutionRegexReference: 'SOLUTION_REGEX_2'
     },
     {
-        solutionReference: "SOLUTION_3"
+        solutionRegexReference: 'SOLUTION_REGEX_3'
     },
     {
-        solutionReference: "SOLUTION_4"
+        solutionRegexReference: 'SOLUTION_REGEX_4'
     },
     {
-        solutionReference: "SOLUTION_5"
+        solutionRegexReference: 'SOLUTION_REGEX_5'
     },
     {
-        solutionReference: "SOLUTION_6"
+        solutionRegexReference: 'SOLUTION_REGEX_6'
     },
 ];
 
@@ -146,7 +146,7 @@ var Strings = {
     },
     create: async (referenceName, value) => {
         var result = await models.string.create(
-                { "referenceName": referenceName, "value": value }
+                { 'referenceName': referenceName, 'value': value }
             );
         return result;
     },
@@ -155,8 +155,8 @@ var Strings = {
             where: {referenceName: referenceName}
         });
         if (string)
-            return string.value || "";
-        else return "";
+            return string.value || '';
+        else return '';
     },
     set: async (referenceName, value) => {
         var numUpdated = await models.string.update(
@@ -235,34 +235,46 @@ var User = {
     submitPassword: async (attendeeId, puzzleId, submittedPass) => {
 
         var puzzle = await Puzzle.get(puzzleId);
-        if (!puzzle)
+        if (!puzzle) {
             return false;
+        }
 
-        var correctPass = await Strings.get(puzzle.solutionReference);
-        if (!correctPass)
+        var correctPass = await Strings.get(puzzle.solutionRegexReference);
+        if (!correctPass) {
             return false;
+        }
 
-        if (submittedPass.toLowerCase() == correctPass) {
+        var correctRe;
+        try {
+            correctRe = new RegExp(correctPass, 'i');
+        } catch (ex) {
+            // Password regex was invalid, puzzlemaster needs to fix that
+            console.log('Invalid password regex for puzzleId=' + puzzleId + ', string=' + correctPass);
+            return false;
+        }
+
+        if (correctRe.test(submittedPass)) {
             //Correct password - update in table
             var updateStruct;
-            if (puzzleId == 1)
+            if (puzzleId === 1) {
                 updateStruct = {solution1: true};
-            else if (puzzleId == 2)
+            } else if (puzzleId === 2) {
                 updateStruct = {solution2: true};
-            else if (puzzleId == 3)
+            } else if (puzzleId === 3) {
                 updateStruct = {solution3: true};
-            else if (puzzleId == 4)
+            } else if (puzzleId === 4) {
                 updateStruct = {solution4: true};
-            else if (puzzleId == 5)
+            } else if (puzzleId === 5) {
                 updateStruct = {solution5: true};
-            else if (puzzleId == 6)
+            } else if (puzzleId === 6) {
                 updateStruct = {solution6: true};
-            else if (puzzleId == 7)
+            } else if (puzzleId === 7) {
                 updateStruct = {solution7: true};
-            else if (puzzleId == 8)
+            } else if (puzzleId === 8) {
                 updateStruct = {solution8: true};
-            else if (puzzleId == 9)
+            } else if (puzzleId === 9) {
                 updateStruct = {solution9: true};
+            }
 
             if (updateStruct) {
                 var numUpdated = await models.user.update(
@@ -294,8 +306,8 @@ var BlogPost = {
     },
     createPost: async (title, subtitle, author, dateStr, timeStr, imgPath, releaseTime, text) => {
         var result = await models.blogpost.create(
-                { "title": title, "subtitle": subtitle, "author": author, "imagePath": imgPath,
-                    "date": dateStr, "time": timeStr, "releaseTime": releaseTime, "text": text }
+                { 'title': title, 'subtitle': subtitle, 'author': author, 'imagePath': imgPath,
+                    'date': dateStr, 'time': timeStr, 'releaseTime': releaseTime, 'text': text }
             );
         return result;
     },
@@ -304,7 +316,7 @@ var BlogPost = {
             var blogPost = await models.blogpost.findByPk(parseInt(blogId));
             return blogPost;
         }
-        return "";
+        return '';
     },
     getPostIfActive: async (blogId, date) => {
         if (parseInt(blogId)) {
@@ -318,7 +330,7 @@ var BlogPost = {
             });
             return blogPost;
         }
-        return "";
+        return '';
     },
     getActivePosts: async (dateUntil) => {
         var blogList = await models.blogpost.findAll({
@@ -347,14 +359,14 @@ var BlogPost = {
     updatePost: async (blogId, title, subtitle, author, dateStr, timeStr, imgPath, releaseTime, text) => {
         if (parseInt(blogId)) {
             var updateStruct = {};
-            if (title) updateStruct["title"] = title;
-            if (subtitle) updateStruct["subtitle"] = subtitle;
-            if (author) updateStruct["author"] = author;
-            if (imgPath) updateStruct["imagePath"] = imgPath;
-            if (dateStr) updateStruct["date"] = dateStr;
-            if (timeStr) updateStruct["time"] = timeStr;
-            if (releaseTime) updateStruct["releaseTime"] = releaseTime;
-            if (text) updateStruct["text"] = text;
+            if (title) updateStruct['title'] = title;
+            if (subtitle) updateStruct['subtitle'] = subtitle;
+            if (author) updateStruct['author'] = author;
+            if (imgPath) updateStruct['imagePath'] = imgPath;
+            if (dateStr) updateStruct['date'] = dateStr;
+            if (timeStr) updateStruct['time'] = timeStr;
+            if (releaseTime) updateStruct['releaseTime'] = releaseTime;
+            if (text) updateStruct['text'] = text;
             var numUpdated = await models.blogpost.update(
                 updateStruct,
                 {
