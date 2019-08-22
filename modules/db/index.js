@@ -41,6 +41,10 @@ var models = {
 
 var defaultStrings = [
     {
+        referenceName: "DATETIME_START_UTC",
+        value: ""
+    },
+    {
         referenceName: "SOLUTION_REGEX_1",
         value: ""
     },
@@ -63,6 +67,26 @@ var defaultStrings = [
     {
         referenceName: "SOLUTION_REGEX_6",
         value: ""
+    },   
+    {
+        referenceName: "SECURITY_QUESTION_1",
+        value: "Security Question 1"
+    },
+    {
+        referenceName: "SECURITY_QUESTION_2",
+        value: "Security Question 2"
+    },
+    {
+        referenceName: "SECURITY_QUESTION_3",
+        value: "Security Question 3"
+    },
+    {
+        referenceName: "SECURITY_QUESTION_4",
+        value: "Security Question 4"
+    },
+    {
+        referenceName: "SECURITY_QUESTION_5",
+        value: "Security Question 5"
     },
     {
         referenceName: "TWILIO_TWIML_VOICE_RESPONSE",
