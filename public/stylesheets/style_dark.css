@@ -4389,6 +4389,7 @@ readers do not read off random characters that represent icons */
 
 body {
   background-color: #1E252D;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMElEQVQImWMwsnD4L6eqixUzyKnq/selgAHGwKaAAZmDroABXTWyAgxJZAVYJWEKADzXR9bNE83HAAAAAElFTkSuQmCC) repeat;
   font: 14px "Tajawal", sans-serif; }
 
 a {
@@ -4467,13 +4468,14 @@ img.navbar-logo {
 
 .page-footer {
   font: 12px "Tajawal", sans-serif;
-  color: #323840;
   background-color: #FFF;
   margin-top: 1.5rem; }
   .page-footer h3 {
-    font: 16px "Rubik", sans-serif; }
+    font: 16px "Rubik", sans-serif;
+    color: #323840; }
   .page-footer p {
-    font: 12px "Tajawal", sans-serif; }
+    font: 12px "Tajawal", sans-serif;
+    color: #323840; }
   .page-footer .footer-copyright {
     background-color: #eaebeb; }
 
@@ -4538,14 +4540,15 @@ img.navbar-logo {
 .form-inline .form-group select {
   margin: 0 0.3rem; }
 
-i.checkmark-glyph.success {
-  color: #79A70A; }
-
-i.checkmark-glyph.error {
-  color: #F20986; }
-
-i.checkmark-glyph.neutral {
-  color: #323840; }
+i.checkmark-glyph {
+  font-size: 18px;
+  vertical-align: middle; }
+  i.checkmark-glyph.success {
+    color: #79A70A; }
+  i.checkmark-glyph.error {
+    color: #F20986; }
+  i.checkmark-glyph.neutral {
+    color: #eaebeb; }
 
 a.backButton {
   font-size: 18px; }

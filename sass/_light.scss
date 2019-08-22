@@ -9,15 +9,15 @@ a {
 }
 
 h1 {
-    font: 24px $font-title-main;
+    font: 32px $font-title-main;
 }
 
 h2 {
-    font: 16px $font-title-main;
+    font: 26px $font-title-main;
 }
 
 h3 {
-    font: 14px $font-title-main;
+    font: 18px $font-title-main;
 }
 
 p {
@@ -214,7 +214,7 @@ img.inline-logo {
     }
 
     .card-text {
-        font: 15px $font-paragraph-main;
+        font: 16px $font-paragraph-main;
         color: $color-gray-80;
     }
 
@@ -232,12 +232,12 @@ img.navbar-logo {
 }
 
 .page-footer {
-    font: 12px $font-paragraph-main;
+    font: 14px $font-paragraph-main;
     h3 {
         font: 16px $font-title-main;
     }
     p {
-        font: 12px $font-paragraph-main;
+        font: 14px $font-paragraph-main;
     }
     color: $color-offwhite;
     background-color: $color-gray-80;

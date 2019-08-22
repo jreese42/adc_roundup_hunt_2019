@@ -60,37 +60,41 @@ router.get('/laser', function(req, res) {
             });
         }
         else {
-            locals = {
-                securityQuestions: [
-                    {
-                        questionText: "question1",
-                        alreadySolved: user.solution1
-                    },
-                    {
-                        questionText: "question2",
-                        alreadySolved: user.solution2
-                    },
-                    {
-                        questionText: "question3",
-                        alreadySolved: user.solution3
-                    },
-                    {
-                        questionText: "question3",
-                        alreadySolved: user.solution4
-                    },
-                    {
-                        questionText: "question5",
-                        alreadySolved: user.solution5
-                    },
-                    {
-                        questionText: "question6",
-                        alreadySolved: user.solution6
-                    },
-                ],
-                title: "Laser Management Console"
-            };
-
-            res.render('laser_mgmt_page', locals);
+            var secQuestion1 = db.Strings.get("SECURITY_QUESTION_1");
+            var secQuestion2 = db.Strings.get("SECURITY_QUESTION_2");
+            var secQuestion3 = db.Strings.get("SECURITY_QUESTION_3");
+            var secQuestion4 = db.Strings.get("SECURITY_QUESTION_4");
+            var secQuestion5 = db.Strings.get("SECURITY_QUESTION_5");
+            Promise.all([secQuestion1,secQuestion2,secQuestion3,secQuestion4,secQuestion5])
+            .then( securityQuestions => {
+                locals = {
+                    securityQuestions: [
+                        {
+                            questionText: securityQuestions[0],
+                            alreadySolved: user.solution1
+                        },
+                        {
+                            questionText: securityQuestions[1],
+                            alreadySolved: user.solution2
+                        },
+                        {
+                            questionText: securityQuestions[2],
+                            alreadySolved: user.solution3
+                        },
+                        {
+                            questionText: securityQuestions[3],
+                            alreadySolved: user.solution4
+                        },
+                        {
+                            questionText: securityQuestions[4],
+                            alreadySolved: user.solution5
+                        }
+                    ],
+                    title: "Laser Management Console"
+                };
+    
+                res.render('laser_mgmt_page', locals);
+            })
         }
     });
 });

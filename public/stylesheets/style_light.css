@@ -4395,13 +4395,13 @@ a {
   color: #00B7FF; }
 
 h1 {
-  font: 24px "Rubik", sans-serif; }
+  font: 32px "Rubik", sans-serif; }
 
 h2 {
-  font: 16px "Rubik", sans-serif; }
+  font: 26px "Rubik", sans-serif; }
 
 h3 {
-  font: 14px "Rubik", sans-serif; }
+  font: 18px "Rubik", sans-serif; }
 
 p {
   font: 14px "Tajawal", sans-serif; }
@@ -4662,7 +4662,7 @@ img.inline-logo {
     .blog_card .card-metadata a {
       font: 15px "Tajawal", sans-serif; }
   .blog_card .card-text {
-    font: 15px "Tajawal", sans-serif;
+    font: 16px "Tajawal", sans-serif;
     color: #323840; }
   .blog_card .card-body img {
     display: block;
@@ -4673,14 +4673,14 @@ img.navbar-logo {
   width: 60px; }
 
 .page-footer {
-  font: 12px "Tajawal", sans-serif;
+  font: 14px "Tajawal", sans-serif;
   color: #eaebeb;
   background-color: #323840;
   margin-top: 1.5rem; }
   .page-footer h3 {
     font: 16px "Rubik", sans-serif; }
   .page-footer p {
-    font: 12px "Tajawal", sans-serif; }
+    font: 14px "Tajawal", sans-serif; }
   .page-footer .footer-copyright {
     background-color: #1E252D; }
 

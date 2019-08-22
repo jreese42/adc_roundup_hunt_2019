@@ -4657,40 +4657,6 @@ img.inline-logo {
 .parallax-container {
   height: 10rem; }
 
-.blog_header {
-  margin-top: 3rem;
-  margin-bottom: 3rem; }
-  .blog_header h1 {
-    font: 32px "Rubik", sans-serif;
-    color: #1E252D; }
-  .blog_header h2 {
-    font: 18px "Tajawal", sans-serif;
-    color: #6f7479; }
-
-.blog_card {
-  margin-top: 2rem; }
-  .blog_card .card-img-top {
-    width: 100%;
-    height: 7rem;
-    object-fit: cover; }
-  .blog_card .card-title {
-    font: 22px "Rubik", sans-serif; }
-  .blog_card .card-subtitle {
-    font: 16px "Tajawal", sans-serif;
-    color: #6f7479; }
-  .blog_card .card-metadata {
-    font: 13px "Tajawal", sans-serif;
-    color: #989b9f; }
-    .blog_card .card-metadata a {
-      font: 15px "Tajawal", sans-serif; }
-  .blog_card .card-text {
-    font: 15px "Tajawal", sans-serif;
-    color: #323840; }
-  .blog_card .card-body img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto; }
-
 img.navbar-logo {
   width: 60px; }
 
@@ -4710,55 +4676,6 @@ img.navbar-logo {
   float: none;
   margin: 0 auto; }
 
-.ribbon {
-  position: absolute;
-  right: -5px;
-  top: -5px;
-  z-index: 1;
-  overflow: hidden;
-  width: 75px;
-  height: 75px;
-  text-align: right; }
-
-.ribbon span {
-  font-size: 10px;
-  color: #fff;
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: bold;
-  line-height: 20px;
-  transform: rotate(45deg);
-  width: 100px;
-  display: block;
-  background: #79A70A;
-  background: linear-gradient(#9BC90D 0%, #79A70A 100%);
-  box-shadow: 0 3px 10px -5px black;
-  position: absolute;
-  top: 20px;
-  right: -20px; }
-
-.ribbon span::before {
-  content: '';
-  position: absolute;
-  left: 0px;
-  top: 100%;
-  z-index: -1;
-  border-left: 3px solid #79A70A;
-  border-right: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #79A70A; }
-
-.ribbon span::after {
-  content: '';
-  position: absolute;
-  right: 0%;
-  top: 100%;
-  z-index: -1;
-  border-right: 3px solid #79A70A;
-  border-left: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #79A70A; }
-
 .form-inline {
   margin: 0 -3px; }
 
@@ -4775,8 +4692,3 @@ i.checkmark-glyph.error {
 
 i.checkmark-glyph.neutral {
   color: #323840; }
-
-a.backButton {
-  font-size: 18px; }
-  a.backButton i {
-    vertical-align: middle; }
