@@ -1,23 +1,24 @@
-extends layout
+extends layout_dark
 
 include mixins/laser/laser_header.pug
 include mixins/navbar_sticky.pug
 include mixins/laser/laser_footer.pug
 
-block content
-  +laser_header
-  +navbar_sticky("laser")
-  .container
-    each solution_correct, index in correct_solutions
+mixin questionCardSuccess(question, index)
+  .card.bg-dark.border-success
+    .card-body
+      p.text-muted Security Question #{index+1}
+      h3 #{question.questionText}
+
       .row.align-items-center.my-1.align-center
         .col-md-1
-          if solution_correct
+          if question.alreadySolved
             i.far.fa-check-circle.checkmark-glyph.success
           else
             i.far.fa-circle.checkmark-glyph.neutral
         .col-md-9
           form.form-inline.form_submitPassword
-            if solution_correct
+            if question.alreadySolved
               .form-group
                 input(type="text", name="password", data-solution-id= index, disabled=true, placeholder="Unlocked!" readonly).form-control
 
@@ -27,4 +28,45 @@ block content
                 input(type="text", name="password", data-solution-id= index, placeholder="Enter Password...").form-control
 
                 button(type="submit").btn.btn-primary Submit
+
+mixin questionCardNormal(question, index)
+  .card.bg-dark.border-light
+    .card-body
+      p.text-muted Security Question #{index+1}
+      h3 #{question.questionText}
+
+      .row.align-items-center.my-1.align-center
+        .col-md-1
+          if question.alreadySolved
+            i.far.fa-check-circle.checkmark-glyph.success
+          else
+            i.far.fa-circle.checkmark-glyph.neutral
+        .col-md-9
+          form.form-inline.form_submitPassword
+            if question.alreadySolved
+              .form-group
+                input(type="text", name="password", data-solution-id= index, disabled=true, placeholder="Unlocked!" readonly).form-control
+
+                button(type="submit", readonly, disabled=true).btn.btn-primary Submit
+            else
+              .form-group
+                input(type="text", name="password", data-solution-id= index, placeholder="Enter Password...").form-control
+
+                button(type="submit").btn.btn-primary Submit
+
+block content
+  +laser_header
+  +navbar_sticky_dark("laser")
+  .container.style-laser-mgmt-page
+    each question, index in securityQuestions
+      if question.alreadySolved
+        +questionCardSuccess(question, index)
+      else
+        +questionCardNormal(question, index)
+
+      
+    h3
+     | Powered by LaserTech Space Laser Technology 
+     i.far.fa-registered
+
   +laser_footer

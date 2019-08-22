@@ -4402,26 +4402,11 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Brands'; }
 
 body {
+  background-color: #eaebeb;
   font: 14px "Tajawal", sans-serif; }
-  body .light {
-    background-color: #eaebeb; }
-  body > .style-laser-mgmt-page {
-    background-color: #1E252D; }
 
 a {
   color: #00B7FF; }
-
-.blog_style h1 {
-  font: 24px "Rubik", sans-serif; }
-
-.blog_style h2 {
-  font: 16px "Rubik", sans-serif; }
-
-.blog_style h3 {
-  font: 12px "Rubik", sans-serif; }
-
-.blog_style p {
-  font: 12px "Tajawal", sans-serif; }
 
 .game-info-container h1 {
   font: 48px "Rubik", sans-serif; }

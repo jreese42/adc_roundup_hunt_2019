@@ -1,35 +1,11 @@
 body {
-    // padding: 50px;
-    .light {
-        background-color: $color-offwhite;
-    }
-    .dark {
-        background-color: $color-darkgray;
-    }
+    background-color: $color-offwhite;
     font: 14px $font-stack;
 }
 
 
 a {
     color: #00B7FF;
-}
-
-.blog_style {
-    h1 {
-        font: 24px $font-title-main;
-    }
-    
-    h2 {
-        font: 16px $font-title-main;
-    }
-    
-    h3 {
-        font: 12px $font-title-main;
-    }
-    
-    p {
-        font: 12px $font-paragraph-main;
-    }
 }
 
 .game-info-container {
@@ -215,56 +191,6 @@ img.inline-logo {
     height: 10rem;
 }
 
-.blog_header {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-    h1 {
-        font: 32px $font-title-main;
-        color: $color-darkgray;
-    }
-    h2 {
-        font: 18px $font-paragraph-main;
-        color: $color-gray-60;
-    }
-}
-
-.blog_card {
-    margin-top: 2rem;
-    .card-img-top {
-        width: 100%;
-        height: 7rem;
-        object-fit: cover;
-    }
-
-    .card-title {
-        font: 22px $font-title-main;
-    }  
-    .card-subtitle {
-        font: 16px $font-paragraph-main;
-        color: $color-gray-60;
-    }
-    .card-metadata {
-        font: 13px $font-paragraph-main;
-        color: $color-gray-40;
-        a {
-            font: 15px $font-paragraph-main;
-        }
-    }
-
-    .card-text {
-        font: 15px $font-paragraph-main;
-        color: $color-gray-80;
-    }
-
-    .card-body {          
-        img {       
-            display:block;
-            margin-left:auto;
-            margin-right:auto;
-        }
-    }
-}
-
 img.navbar-logo {
     width: 60px;
 }
@@ -290,49 +216,6 @@ img.navbar-logo {
     margin: 0 auto;
 }
 
-.ribbon {
-    position: absolute;
-    right: -5px; top: -5px;
-    z-index: 1;
-    overflow: hidden;
-    width: 75px; height: 75px; 
-    text-align: right;
- }
- .ribbon span {
-    font-size: 10px;
-    color: #fff; 
-    text-transform: uppercase; 
-    text-align: center;
-    font-weight: bold; line-height: 20px;
-    transform: rotate(45deg);
-    width: 100px; display: block;
-    background: #79A70A;
-    background: linear-gradient(#9BC90D 0%, #79A70A 100%);
-    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-    position: absolute;
-    top: 20px; right: -20px;
- }
- .ribbon span::before {
-    content: '';
-    position: absolute; 
-    left: 0px; top: 100%;
-    z-index: -1;
-    border-left: 3px solid #79A70A;
-    border-right: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #79A70A;
- }
- .ribbon span::after {
-    content: '';
-    position: absolute; 
-    right: 0%; top: 100%;
-    z-index: -1;
-    border-right: 3px solid #79A70A;
-    border-left: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #79A70A;
- }
-
  .form-inline {
     margin: 0 -3px;
 }
@@ -354,12 +237,4 @@ i.checkmark-glyph {
     &.neutral {
         color: $color-gray-80;
     }
-}
-
-a.backButton {
-    font-size: 18px;
-    & i {
-        vertical-align: middle;
-    }
-
 }

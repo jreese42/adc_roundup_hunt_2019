@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
+    //Bootstrap-ize some elements in the blog posts
     $(".card-body img").addClass("rounded mx-auto img-fluid");
+    $(".card-body iframe").addClass("embed-responsive-item").wrap("<div class=\"embed-responsive embed-responsive-16by9\"></div>");
 
     $( ".form_submitPassword" ).submit(function( event ) {
         event.stopPropagation();
