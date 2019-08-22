@@ -1,11 +1,5 @@
 body {
-    // padding: 50px;
-    .light {
-        background-color: $color-offwhite;
-    }
-    .dark {
-        background-color: $color-darkgray;
-    }
+    background-color: $color-white;
     font: 14px $font-stack;
 }
 
@@ -14,22 +8,20 @@ a {
     color: #00B7FF;
 }
 
-.blog_style {
-    h1 {
-        font: 24px $font-title-main;
-    }
-    
-    h2 {
-        font: 16px $font-title-main;
-    }
-    
-    h3 {
-        font: 12px $font-title-main;
-    }
-    
-    p {
-        font: 12px $font-paragraph-main;
-    }
+h1 {
+    font: 32px $font-title-main;
+}
+
+h2 {
+    font: 26px $font-title-main;
+}
+
+h3 {
+    font: 18px $font-title-main;
+}
+
+p {
+    font: 14px $font-paragraph-main;
 }
 
 .game-info-container {
@@ -49,6 +41,10 @@ a {
         font: 18px $font-paragraph-main;
     }
 }
+
+// .style-laser-mgmt-page {
+//     background-color: $color-darkgray;
+// }
 
 .help-text-dark {
     font: 20px $font-paragraph-main;
@@ -181,40 +177,6 @@ img.inline-logo {
     padding: 0 0 5% 0;
 }
 
-.game_info_container {
-    color: #fff;
-    background-color: $color-offwhite;
-    text-align: center;
-    // padding: 10% 0;
-
-    // .slide_section:nth-child(1) {
-    //     @include parallax(0);
-    //     z-index: 100;
-    // }
-    .slide_section:nth-child(2) {
-        @include parallax(.2);
-        // padding: 300px;
-        position: relative;
-        top: -100px;
-    }
-    .slide_section:nth-child(3) {
-        @include parallax(.3);
-        // padding-top: 300px;
-        position: relative;
-        top: -20rem;
-        // z-index: 50;
-    }
-    .slide_section:nth-child(4) {
-        @include parallax(.3);
-        top: -500px;
-        z-index: -1;
-    }
-}
-
-.parallax-container {
-    height: 10rem;
-}
-
 .blog_header {
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -252,7 +214,7 @@ img.inline-logo {
     }
 
     .card-text {
-        font: 15px $font-paragraph-main;
+        font: 16px $font-paragraph-main;
         color: $color-gray-80;
     }
 
@@ -270,12 +232,12 @@ img.navbar-logo {
 }
 
 .page-footer {
-    font: 12px $font-paragraph-main;
+    font: 14px $font-paragraph-main;
     h3 {
         font: 16px $font-title-main;
     }
     p {
-        font: 12px $font-paragraph-main;
+        font: 14px $font-paragraph-main;
     }
     color: $color-offwhite;
     background-color: $color-gray-80;

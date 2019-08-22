@@ -1,4 +1,4 @@
-extends layout
+extends layout_light
 
 include mixins/blog/blog_header.pug
 include mixins/navbar_sticky.pug
@@ -7,7 +7,7 @@ include mixins/blog/blog_footer.pug
 
 block content
   +blog_header
-  +navbar_sticky("home")
+  +navbar_sticky_light("home")
   .container
     each blog in blog_posts
       .row.align-items-center 

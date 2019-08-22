@@ -60,11 +60,41 @@ router.get('/laser', function(req, res) {
             });
         }
         else {
-            locals = {
-                correct_solutions: [user.solution1, user.solution2, user.solution3,
-                                    user.solution4, user.solution5, user.solution6]
-            }
-            res.render('laser_mgmt_page', locals);
+            var secQuestion1 = db.Strings.get("SECURITY_QUESTION_1");
+            var secQuestion2 = db.Strings.get("SECURITY_QUESTION_2");
+            var secQuestion3 = db.Strings.get("SECURITY_QUESTION_3");
+            var secQuestion4 = db.Strings.get("SECURITY_QUESTION_4");
+            var secQuestion5 = db.Strings.get("SECURITY_QUESTION_5");
+            Promise.all([secQuestion1,secQuestion2,secQuestion3,secQuestion4,secQuestion5])
+            .then( securityQuestions => {
+                locals = {
+                    securityQuestions: [
+                        {
+                            questionText: securityQuestions[0],
+                            alreadySolved: user.solution1
+                        },
+                        {
+                            questionText: securityQuestions[1],
+                            alreadySolved: user.solution2
+                        },
+                        {
+                            questionText: securityQuestions[2],
+                            alreadySolved: user.solution3
+                        },
+                        {
+                            questionText: securityQuestions[3],
+                            alreadySolved: user.solution4
+                        },
+                        {
+                            questionText: securityQuestions[4],
+                            alreadySolved: user.solution5
+                        }
+                    ],
+                    title: "Laser Management Console"
+                };
+    
+                res.render('laser_mgmt_page', locals);
+            })
         }
     });
 });

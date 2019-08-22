@@ -1,7 +1,6 @@
-extends layout
+extends layout_light
 
 include mixins/navbar_sticky.pug
-include mixins/blog/blog_card.pug
 include mixins/blog/blog_footer.pug
 
 block content
@@ -11,7 +10,6 @@ block content
         .blog_header.align-middle
           h1 Database Management
 
-    
     .row.align-items-center
       .col-md-2.offset-md-1
         a(href="/admin").backButton

@@ -1,0 +1,206 @@
+body {
+    background-color: $color-darkgray;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMElEQVQImWMwsnD4L6eqixUzyKnq/selgAHGwKaAAZmDroABXTWyAgxJZAVYJWEKADzXR9bNE83HAAAAAElFTkSuQmCC) repeat;
+    font: 14px $font-stack;
+}
+
+
+a {
+    color: #00B7FF;
+}
+
+h1 {
+    color: $color-offwhite;
+    font: 36px $font-title-main;
+}
+
+h2 {
+    color: $color-offwhite;
+    font: 28px $font-title-main;
+}
+
+h3 {
+    color: $color-offwhite;
+    font: 16px $font-title-main;
+}
+
+h4 {
+    color: $color-offwhite;
+    font: 14px $font-title-main;
+}
+
+p {
+    color: $color-offwhite;
+    font: 14px $font-paragraph-main;
+}
+
+.help-text-dark {
+    font: 20px $font-paragraph-main;
+    color: $color-black;
+    vertical-align: middle;
+    line-height: inherit !important;
+    margin-bottom: 2rem;
+}
+
+.help-text-light {
+    font: 20px $font-paragraph-main;
+    color: $color-offwhite;
+    vertical-align: middle;
+    line-height: inherit !important;
+    margin-bottom: 2rem;
+}
+
+.blog_header {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    h1 {
+        font: 32px $font-title-main;
+        color: $color-offwhite;
+    }
+    h2 {
+        font: 18px $font-paragraph-main;
+        color: $color-gray-40;
+    }
+}
+
+.blog_card {
+    margin-top: 2rem;
+    .card-img-top {
+        width: 100%;
+        height: 7rem;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font: 22px $font-title-main;
+    }  
+    .card-subtitle {
+        font: 16px $font-paragraph-main;
+        color: $color-gray-60;
+    }
+    .card-metadata {
+        font: 13px $font-paragraph-main;
+        color: $color-gray-40;
+        a {
+            font: 15px $font-paragraph-main;
+        }
+    }
+
+    .card-text {
+        font: 15px $font-paragraph-main;
+        color: $color-gray-80;
+    }
+
+    .card-body {          
+        img {       
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    }
+}
+
+img.navbar-logo {
+    width: 60px;
+}
+
+.page-footer {
+    font: 12px $font-paragraph-main;
+    h3 {
+        font: 16px $font-title-main;
+        color: $color-gray-80;
+    }
+    p {
+        font: 12px $font-paragraph-main;
+        color: $color-gray-80;
+    }
+    background-color: $color-white;
+    .footer-copyright {
+        background-color: $color-offwhite;
+    }
+    margin-top: 1.5rem;
+}
+
+.col-center {
+    float: none;
+    margin: 0 auto;
+}
+
+.ribbon {
+    position: absolute;
+    right: -5px; top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px; height: 75px; 
+    text-align: right;
+ }
+ .ribbon span {
+    font-size: 10px;
+    color: #fff; 
+    text-transform: uppercase; 
+    text-align: center;
+    font-weight: bold; line-height: 20px;
+    transform: rotate(45deg);
+    width: 100px; display: block;
+    background: #79A70A;
+    background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 20px; right: -20px;
+ }
+ .ribbon span::before {
+    content: '';
+    position: absolute; 
+    left: 0px; top: 100%;
+    z-index: -1;
+    border-left: 3px solid #79A70A;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #79A70A;
+ }
+ .ribbon span::after {
+    content: '';
+    position: absolute; 
+    right: 0%; top: 100%;
+    z-index: -1;
+    border-right: 3px solid #79A70A;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #79A70A;
+ }
+
+ .form-inline {
+    margin: 0 -3px;
+}
+
+.form-inline .form-group label,
+.form-inline .form-group input,
+.form-inline .form-group select {
+    margin: 0 0.3rem;
+}
+
+i.checkmark-glyph {
+    font-size: 18px;
+    vertical-align: middle;
+    &.success {
+        color: #79A70A;
+    }
+    &.error {
+        color: $color-brightred;
+    }
+    &.neutral {
+        color: $color-offwhite;
+    }
+}
+
+a.backButton {
+    font-size: 18px;
+    & i {
+        vertical-align: middle;
+    }
+
+}
+
+img.invert {
+    filter: invert(100%);
+}

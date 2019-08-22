@@ -1,30 +1,65 @@
-extends layout
+extends layout_dark
 
 include mixins/laser/laser_header.pug
 include mixins/navbar_sticky.pug
 include mixins/laser/laser_footer.pug
 
+mixin questionCardSuccess(question, index)
+  .card.bg-dark.border-success.my-3
+    .card-body
+      p.text-muted
+        i.far.fa-check-circle.checkmark-glyph.success.mr-2
+        | Security Question #{index+1}
+
+      .row.align-items-center.my-1.align-center
+        .col-sm-6.offset-sm-3
+          form.form_submitPassword
+            .form-group
+              label(for="securityQuestion" + index).text-light #{question.questionText}
+              input(type="text", name="securityQuestion" + index, data-solution-id= index, disabled=true, placeholder="Unlocked!" readonly).form-control
+
+              button(type="submit", readonly, disabled).btn.btn-secondary.btn-block.mt-2 Submit
+
+mixin questionCardNormal(question, index)
+  .card.bg-dark.border-light.my-3
+    .card-body
+      p.text-muted 
+        i.far.fa-circle.checkmark-glyph.neutral.mr-2
+        | Security Question #{index+1}
+      
+      .row.align-items-center.my-1
+        .col-sm-6.offset-sm-3
+          form.form_submitPassword
+            .form-group
+              label(for="securityQuestion" + index).text-light #{question.questionText}
+              input(type="text", name="securityQuestion" + index, data-solution-id= index, placeholder="Enter Password...").form-control
+
+              button(type="submit").btn.btn-primary.btn-block.mt-2 Submit
+
 block content
   +laser_header
-  +navbar_sticky("laser")
-  .container
-    each solution_correct, index in correct_solutions
-      .row.align-items-center.my-1.align-center
-        .col-md-1
-          if solution_correct
-            i.far.fa-check-circle.checkmark-glyph.success
+  +navbar_sticky_dark("laser")
+  .container.style-laser-mgmt-page
+    .row
+      .col-sm-8.offset-sm-2
+        .card.bg-dark.mt-3.mb-1
+          .card-body
+            p.text-muted
+              i Welcome Back Raymond!
+            h3.text-warning Authentication Required
+            p To access laser controls and self-destruct, please answer the five personal security questions below.
+    each question, index in securityQuestions
+      .row
+        .col-sm-8.offset-sm-2
+          if question.alreadySolved
+            +questionCardSuccess(question, index)
           else
-            i.far.fa-circle.checkmark-glyph.neutral
-        .col-md-9
-          form.form-inline.form_submitPassword
-            if solution_correct
-              .form-group
-                input(type="text", name="password", data-solution-id= index, disabled=true, placeholder="Unlocked!" readonly).form-control
+            +questionCardNormal(question, index)
 
-                button(type="submit", readonly, disabled=true).btn.btn-primary Submit
-            else
-              .form-group
-                input(type="text", name="password", data-solution-id= index, placeholder="Enter Password...").form-control
+  .row
+    .col-sm-8.offset-sm-2.text-center
+      h3.text-muted
+        | Powered by LaserTech Space Laser Technology 
+        i.far.fa-registered
 
-                button(type="submit").btn.btn-primary Submit
   +laser_footer

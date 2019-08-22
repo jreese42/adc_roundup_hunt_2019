@@ -1,17 +1,3 @@
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; }
-
-body {
-  overflow: auto;
-  perspective: 1px;
-  transform-style: preserve-3d; }
-  body, body * {
-    transform-style: preserve-3d; }
-
 /*!
  * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -4402,26 +4388,23 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Brands'; }
 
 body {
+  background-color: #FFF;
   font: 14px "Tajawal", sans-serif; }
-  body .light {
-    background-color: #eaebeb; }
-  body > .style-laser-mgmt-page {
-    background-color: #1E252D; }
 
 a {
   color: #00B7FF; }
 
-.blog_style h1 {
-  font: 24px "Rubik", sans-serif; }
+h1 {
+  font: 32px "Rubik", sans-serif; }
 
-.blog_style h2 {
-  font: 16px "Rubik", sans-serif; }
+h2 {
+  font: 26px "Rubik", sans-serif; }
 
-.blog_style h3 {
-  font: 12px "Rubik", sans-serif; }
+h3 {
+  font: 18px "Rubik", sans-serif; }
 
-.blog_style p {
-  font: 12px "Tajawal", sans-serif; }
+p {
+  font: 14px "Tajawal", sans-serif; }
 
 .game-info-container h1 {
   font: 48px "Rubik", sans-serif; }
@@ -4652,26 +4635,6 @@ img.inline-logo {
       border-width: 0 100vw 5vw 0;
       border-color: transparent transparent #fff transparent; } }
 
-.game_info_container {
-  color: #fff;
-  background-color: #eaebeb;
-  text-align: center; }
-  .game_info_container .slide_section:nth-child(2) {
-    transform: translateZ(0.2px) scale(0.8);
-    position: relative;
-    top: -100px; }
-  .game_info_container .slide_section:nth-child(3) {
-    transform: translateZ(0.3px) scale(0.7);
-    position: relative;
-    top: -20rem; }
-  .game_info_container .slide_section:nth-child(4) {
-    transform: translateZ(0.3px) scale(0.7);
-    top: -500px;
-    z-index: -1; }
-
-.parallax-container {
-  height: 10rem; }
-
 .blog_header {
   margin-top: 3rem;
   margin-bottom: 3rem; }
@@ -4699,7 +4662,7 @@ img.inline-logo {
     .blog_card .card-metadata a {
       font: 15px "Tajawal", sans-serif; }
   .blog_card .card-text {
-    font: 15px "Tajawal", sans-serif;
+    font: 16px "Tajawal", sans-serif;
     color: #323840; }
   .blog_card .card-body img {
     display: block;
@@ -4710,14 +4673,14 @@ img.navbar-logo {
   width: 60px; }
 
 .page-footer {
-  font: 12px "Tajawal", sans-serif;
+  font: 14px "Tajawal", sans-serif;
   color: #eaebeb;
   background-color: #323840;
   margin-top: 1.5rem; }
   .page-footer h3 {
     font: 16px "Rubik", sans-serif; }
   .page-footer p {
-    font: 12px "Tajawal", sans-serif; }
+    font: 14px "Tajawal", sans-serif; }
   .page-footer .footer-copyright {
     background-color: #1E252D; }
 
