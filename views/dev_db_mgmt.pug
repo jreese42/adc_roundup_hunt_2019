@@ -1,0 +1,42 @@
+extends layout
+
+include mixins/navbar_sticky.pug
+include mixins/blog/blog_card.pug
+include mixins/blog/blog_footer.pug
+
+block content
+  .container
+    .row.align-items-center
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 Database Management
+
+    
+    .row.align-items-center
+      .col-md-2.offset-md-1
+        a(href="/admin").backButton
+          i.fas.fa-chevron-left.fa-2x
+          |  Back
+    .row.mt-5
+      .col.offset-md-1
+        h3 Database Resync
+    .row#resyncWarning
+      .col.offset-md-1
+        h6.text-danger 
+         | Resyncing the database 
+         b completely wipes all data
+         |  in the selected table! Only click the button below if you know why you are doing it.
+        button.btn.btn-danger Show
+    .row#resyncButtons.mt-3.invisible
+      .col-md-2.offset-md-1
+        .btn.btn-sm.btn-danger#btnResyncStrings Resync Strings
+      .col-md-2
+        .btn.btn-sm.btn-danger#btnResyncUsers Resync Users
+      .col-md-2
+        .btn.btn-sm.btn-danger#btnResyncBlogPosts Resync Blog Posts
+      .col-md-2
+        .btn.btn-sm.btn-danger#btnResyncPuzzles Resync Puzzles
+               
+  +blog_footer
+
+  script(src='/js/dev/db_mgmt.js')

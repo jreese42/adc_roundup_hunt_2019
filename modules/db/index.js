@@ -7,47 +7,61 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: 'adcHuntDb.sqlite'
-});
+//If production and DATABASE_URL is set, use postgres without logging
+//If not production and DATABASE_URL is set, use postgres with logging
+//If not production and no DATABASE_URL, fall back to sqlite3
+const sequelize = (process.env.DATABASE_URL && process.env.NODE_ENV === 'production') ? 
+    new Sequelize( // DATABASE_URL is set
+        process.env.DATABASE_URL, 
+        { 
+            dialect: 'postgres'
+        }
+    ) :
+    (process.env.DATABASE_URL) ?
+    new Sequelize( // DATABASE_URL is unset, so use a local instance
+        process.env.DATABASE_URL, //On a local machine, this is something like 'postgres://postgres:postgres@127.0.0.1:5432/adcRoundupHunt'
+        {
+            dialect: 'postgres',
+            logging:  console.log
+        }
+    ) :
+    new Sequelize({
+        dialect: 'sqlite',
+        storage: 'adcHuntDb.sqlite'
+    });
+
 
 // load models
-var models = {};
-models.string = sequelize.import('String', require(__dirname + '/string'));
-models.user = sequelize.import('User', require(__dirname + '/user'));
-models.blogpost = sequelize.import('BlogPost', require(__dirname + '/blogpost'));
-models.puzzle = sequelize.import('Puzzle', require(__dirname + '/puzzle'));
-
-// defaults
-var resetStrings = false;  //Be very careful with these.  Set to true to wipe the table and reinitialize.
-var resetUsers = false;
-var resetBlogPosts = false;
-var resetPuzzles = false;
+var models = {
+    string: sequelize.import('String', require(__dirname + '/string')),
+    user: sequelize.import('User', require(__dirname + '/user')),
+    blogpost: sequelize.import('BlogPost', require(__dirname + '/blogpost')),
+    puzzle: sequelize.import('Puzzle', require(__dirname + '/puzzle')),
+};
 
 var defaultStrings = [
     {
-        referenceName: "SOLUTION_1",
+        referenceName: "SOLUTION_REGEX_1",
         value: ""
     },
     {
-        referenceName: "SOLUTION_2",
+        referenceName: "SOLUTION_REGEX_2",
         value: ""
     },
     {
-        referenceName: "SOLUTION_3",
+        referenceName: "SOLUTION_REGEX_3",
         value: ""
     },
     {
-        referenceName: "SOLUTION_4",
+        referenceName: "SOLUTION_REGEX_4",
         value: ""
     },
     {
-        referenceName: "SOLUTION_5",
+        referenceName: "SOLUTION_REGEX_5",
         value: ""
     },
     {
-        referenceName: "SOLUTION_6",
+        referenceName: "SOLUTION_REGEX_6",
         value: ""
     },
     {
@@ -67,35 +81,43 @@ var defaultStrings = [
 
 var defaultPuzzles = [
     {
-        solutionReference: "SOLUTION_1"
+        solutionReference: "SOLUTION_REGEX_1"
     },
     {
-        solutionReference: "SOLUTION_2"
+        solutionReference: "SOLUTION_REGEX_2"
     },
     {
-        solutionReference: "SOLUTION_3"
+        solutionReference: "SOLUTION_REGEX_3"
     },
     {
-        solutionReference: "SOLUTION_4"
+        solutionReference: "SOLUTION_REGEX_4"
     },
     {
-        solutionReference: "SOLUTION_5"
+        solutionReference: "SOLUTION_REGEX_5"
     },
     {
-        solutionReference: "SOLUTION_6"
+        solutionReference: "SOLUTION_REGEX_6"
     },
 ];
 
-models.string.sync({force: resetStrings}).then( () => {
-    models.string.bulkCreate(defaultStrings);
-});
-
-models.user.sync({force: resetUsers});
-models.blogpost.sync({force: resetBlogPosts});
-
-models.puzzle.sync({force: resetPuzzles}).then( () => {
-    models.puzzle.bulkCreate(defaultPuzzles);
-});
+var Defaults = {
+    resyncStrings: async () => {
+        models.string.sync({force: true}).then( () => {
+            models.string.bulkCreate(defaultStrings);
+        });
+    },
+    resyncUsers: async () => {
+        models.user.sync({force: true});
+    },
+    resyncBlogPosts: async () => {
+        models.blogpost.sync({force: true});
+    },
+    resyncPuzzles: async () => {
+        models.puzzle.sync({force: true}).then( () => {
+            models.puzzle.bulkCreate(defaultPuzzles);
+        });
+    }
+}
 
 
 //validating communcation to the database 
@@ -106,6 +128,7 @@ sequelize.authenticate().then(() => {
 });
 
 /* String Management */
+var StringsCache = {};
 var Strings = {
     getList: async () => {
         var stringList = await models.string.findAll({
@@ -120,15 +143,26 @@ var Strings = {
         var result = await models.string.create(
                 { "referenceName": referenceName, "value": value }
             );
+        if (result.referenceName)
+            StringsCache[result.referenceName] = result.value;
         return result;
     },
     get: async (referenceName) => {
-        var string = await models.string.findOne({
-            where: {referenceName: referenceName}
-        });
-        if (string)
-            return string.value || "";
-        else return "";
+        if (StringsCache[referenceName]){
+            // Cache hit
+            return StringsCache[referenceName];
+        }
+        else {
+            // Cache miss
+            var string = await models.string.findOne({
+                where: {referenceName: referenceName}
+            });
+            if (string){
+                if (string.value) StringsCache[referenceName] = string.value;
+                return string.value || "";
+            }
+            else return "";
+        }
     },
     set: async (referenceName, value) => {
         var numUpdated = await models.string.update(
@@ -139,12 +173,20 @@ var Strings = {
                 where: {referenceName: referenceName}
             }
         );
+
+        if (numUpdated > 0) 
+            StringsCache[referenceName] = value;
+
         return (numUpdated > 0);
     },
     delete: async (referenceName) => {
         var numDestroyed = await models.string.destroy({
             where: {referenceName: referenceName}
         });
+
+        if (numDestroyed > 0) 
+            delete StringsCache[referenceName];
+
         return (numDestroyed > 0);
     },
 }
@@ -349,6 +391,7 @@ var Puzzle = {
     }
 }
 
+module.exports.Defaults = Defaults;
 module.exports.Strings = Strings;
 module.exports.User = User;
 module.exports.BlogPost = BlogPost;

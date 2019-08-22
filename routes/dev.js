@@ -47,11 +47,9 @@ router.get('/logout', function(req, res)
 router.get('/', function(req, res) 
 {
   var db = req.app.get('db');
-  var userPromise;
-  if (req.session && req.session.attendeeId)
-    userPromise = db.User.findUser(req.session.attendeeId);
-  else
-    userPromise = new Promise();
+  var userPromise = (req.session && req.session.attendeeId) ?
+      db.User.findUser(req.session.attendeeId) :
+      new Promise();
   
   userPromise.then( user => {
       locals = {
@@ -59,9 +57,11 @@ router.get('/', function(req, res)
           attendeeId: req.session.attendeeId || 0,
           firstName: req.session.firstName || "",
           lastName: req.session.lastName || "",
-        },
-        User: user //Generally don't do this. Sending the full user to the client is just for debugging.
+        }
       };
+
+      if (user) locals.User = user; //Generally don't do this. Sending the full user to the client is just for debugging.
+
       res.render('dev', locals);
   });
 });
@@ -74,7 +74,7 @@ router.get('/editor', function(req, res)
       locals = {
         blogList: blogList
       };
-      res.render('blog_editor', locals);
+      res.render('dev_blog_editor', locals);
   });
 });
 
@@ -86,8 +86,13 @@ router.get('/strings', function(req, res)
       locals = {
         stringList: stringList
       };
-      res.render('string_editor', locals);
+      res.render('dev_string_editor', locals);
   });
+});
+
+router.get('/database', function(req, res) 
+{
+  res.render('dev_db_mgmt');
 });
 
 module.exports = router;
