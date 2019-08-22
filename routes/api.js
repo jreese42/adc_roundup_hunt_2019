@@ -189,6 +189,38 @@ var delete_string = (req, res) => {
     });
 }
 
+var db_resync_strings = (req, res) => {
+    var db = req.app.get('db');
+    db.Defaults.resyncStrings()
+    .then( result => {
+        res.send(true);
+    });
+}
+
+var db_resync_users = (req, res) => {
+    var db = req.app.get('db');
+    db.Defaults.resyncUsers()
+    .then( result => {
+        res.send(true);
+    });
+}
+
+var db_resync_blogposts = (req, res) => {
+    var db = req.app.get('db');
+    db.Defaults.resyncBlogPosts()
+    .then( result => {
+        res.send(true);
+    });
+}
+
+var db_resync_puzzles = (req, res) => {
+    var db = req.app.get('db');
+    db.Defaults.resyncPuzzles()
+    .then( result => {
+        res.send(true);
+    });
+}
+
 router.get('/user/me/', [for_me, get_user]);
 router.get('/user/:attendeeId/', [for_userid, get_user]);
 
@@ -230,6 +262,12 @@ router.post('/string/create', [authenticator, create_string]);
 router.get('/string/:referenceName', [authenticator, get_string]);
 router.post('/string/:referenceName', [authenticator, set_string]);
 router.post('/string/:referenceName/delete', [authenticator, delete_string]);
+
+//string
+router.delete('/db/syncStrings', [authenticator, db_resync_strings]);
+router.delete('/db/syncUsers', [authenticator, db_resync_users]);
+router.delete('/db/syncBlogPosts', [authenticator, db_resync_blogposts]);
+router.delete('/db/syncPuzzles', [authenticator, db_resync_puzzles]);
 
 /* eslint-enable no-unused-vars */
 
