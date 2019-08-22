@@ -39,43 +39,29 @@ var models = {
     puzzle: sequelize.import('Puzzle', require(__dirname + '/puzzle')),
 };
 
-// defaults
-var resetStrings = false;  //Be very careful with these. Set to true to wipe and reinitalize each table.
-var resetUsers = false;
-var resetBlogPosts = false;
-var resetPuzzles = false;
-
-if (process.env.NODE_ENV === 'production') {
-    //Never allow resyncing this way in production.
-    resetStrings = false;
-    resetUsers = false;
-    resetBlogPosts = false;
-    resetPuzzles = false;
-}
-
 var defaultStrings = [
     {
-        referenceName: "SOLUTION_1",
+        referenceName: "SOLUTION_REGEX_1",
         value: ""
     },
     {
-        referenceName: "SOLUTION_2",
+        referenceName: "SOLUTION_REGEX_2",
         value: ""
     },
     {
-        referenceName: "SOLUTION_3",
+        referenceName: "SOLUTION_REGEX_3",
         value: ""
     },
     {
-        referenceName: "SOLUTION_4",
+        referenceName: "SOLUTION_REGEX_4",
         value: ""
     },
     {
-        referenceName: "SOLUTION_5",
+        referenceName: "SOLUTION_REGEX_5",
         value: ""
     },
     {
-        referenceName: "SOLUTION_6",
+        referenceName: "SOLUTION_REGEX_6",
         value: ""
     },
     {
@@ -95,35 +81,43 @@ var defaultStrings = [
 
 var defaultPuzzles = [
     {
-        solutionReference: "SOLUTION_1"
+        solutionReference: "SOLUTION_REGEX_1"
     },
     {
-        solutionReference: "SOLUTION_2"
+        solutionReference: "SOLUTION_REGEX_2"
     },
     {
-        solutionReference: "SOLUTION_3"
+        solutionReference: "SOLUTION_REGEX_3"
     },
     {
-        solutionReference: "SOLUTION_4"
+        solutionReference: "SOLUTION_REGEX_4"
     },
     {
-        solutionReference: "SOLUTION_5"
+        solutionReference: "SOLUTION_REGEX_5"
     },
     {
-        solutionReference: "SOLUTION_6"
+        solutionReference: "SOLUTION_REGEX_6"
     },
 ];
 
-models.string.sync({force: resetStrings}).then( () => {
-    models.string.bulkCreate(defaultStrings);
-});
-
-models.user.sync({force: resetUsers});
-models.blogpost.sync({force: resetBlogPosts});
-
-models.puzzle.sync({force: resetPuzzles}).then( () => {
-    models.puzzle.bulkCreate(defaultPuzzles);
-});
+var Defaults = {
+    resyncStrings: async () => {
+        models.string.sync({force: true}).then( () => {
+            models.string.bulkCreate(defaultStrings);
+        });
+    },
+    resyncUsers: async () => {
+        models.user.sync({force: true});
+    },
+    resyncBlogPosts: async () => {
+        models.blogpost.sync({force: true});
+    },
+    resyncPuzzles: async () => {
+        models.puzzle.sync({force: true}).then( () => {
+            models.puzzle.bulkCreate(defaultPuzzles);
+        });
+    }
+}
 
 
 //validating communcation to the database 
@@ -397,6 +391,7 @@ var Puzzle = {
     }
 }
 
+module.exports.Defaults = Defaults;
 module.exports.Strings = Strings;
 module.exports.User = User;
 module.exports.BlogPost = BlogPost;

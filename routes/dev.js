@@ -74,7 +74,7 @@ router.get('/editor', function(req, res)
       locals = {
         blogList: blogList
       };
-      res.render('blog_editor', locals);
+      res.render('dev_blog_editor', locals);
   });
 });
 
@@ -86,8 +86,13 @@ router.get('/strings', function(req, res)
       locals = {
         stringList: stringList
       };
-      res.render('string_editor', locals);
+      res.render('dev_string_editor', locals);
   });
+});
+
+router.get('/database', function(req, res) 
+{
+  res.render('dev_db_mgmt');
 });
 
 module.exports = router;
