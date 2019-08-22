@@ -41,7 +41,7 @@ var models = {
 
 var defaultStrings = [
     {
-        referenceName: "DATETIME_START",
+        referenceName: "DATETIME_START_UTC",
         value: ""
     },
     {
