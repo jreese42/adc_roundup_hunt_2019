@@ -134,6 +134,7 @@ sequelize.authenticate().then(() => {
 });
 
 /* String Management */
+var StringsCache = {};
 var Strings = {
     getList: async () => {
         var stringList = await models.string.findAll({
@@ -148,15 +149,26 @@ var Strings = {
         var result = await models.string.create(
                 { "referenceName": referenceName, "value": value }
             );
+        if (result.referenceName)
+            StringsCache[result.referenceName] = result.value;
         return result;
     },
     get: async (referenceName) => {
-        var string = await models.string.findOne({
-            where: {referenceName: referenceName}
-        });
-        if (string)
-            return string.value || "";
-        else return "";
+        if (StringsCache[referenceName]){
+            // Cache hit
+            return StringsCache[referenceName];
+        }
+        else {
+            // Cache miss
+            var string = await models.string.findOne({
+                where: {referenceName: referenceName}
+            });
+            if (string){
+                if (string.value) StringsCache[referenceName] = string.value;
+                return string.value || "";
+            }
+            else return "";
+        }
     },
     set: async (referenceName, value) => {
         var numUpdated = await models.string.update(
@@ -167,12 +179,20 @@ var Strings = {
                 where: {referenceName: referenceName}
             }
         );
+
+        if (numUpdated > 0) 
+            StringsCache[referenceName] = value;
+
         return (numUpdated > 0);
     },
     delete: async (referenceName) => {
         var numDestroyed = await models.string.destroy({
             where: {referenceName: referenceName}
         });
+
+        if (numDestroyed > 0) 
+            delete StringsCache[referenceName];
+
         return (numDestroyed > 0);
     },
 }
