@@ -8,28 +8,39 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 
     var db = req.app.get('db');
-    //TODO: Cache this list?
 
-    var date = new Date(Date.now());
-    //Admin option allows querying for a datetime that isn't now
-    if (req.query.d && req.session.isAdmin) {
-        var forDate = new Date(req.query.d);
-        if (!isNaN(forDate))
-            date = forDate;
-    }
-    db.BlogPost.getActivePosts(date).then( blogList => {
-        var locals = {
-            blog_posts: []
-        };
-    
-        for (var i=0; i<blogList.length; i++){
-            blogList[i].entryUrl = "/blog/entry/" + blogList[i].blogId;
-            blogList[i].isNew = false;
-            locals.blog_posts[i] = blogList[i];
+    db.Strings.get("DATETIME_START").then( dateStartStr => {
+        var date = new Date(Date.now());
+        //Admin option allows querying for a datetime that isn't now
+        if (req.query.d && req.session.isAdmin) {
+            var forDate = new Date(req.query.d);
+            if (!isNaN(forDate))
+                date = forDate;
         }
-    
-        res.render('blog_index', locals);
+        console.log(dateStartStr)
+        var dateStart = new Date(dateStartStr);
+        if (isNaN(dateStart) || date >= dateStart) {
+            //Game is on! Send the blog page.
+            db.BlogPost.getActivePosts(date).then( blogList => {
+                var locals = {
+                    blog_posts: []
+                };
+            
+                for (var i=0; i<blogList.length; i++){
+                    blogList[i].entryUrl = "/blog/entry/" + blogList[i].blogId;
+                    blogList[i].isNew = false;
+                    locals.blog_posts[i] = blogList[i];
+                }
+            
+                res.render('blog_index', locals);
+            });
+        } else {
+            //Game has not started yet, redirect to landing page
+            res.render('game_info_page');
+        }
     });
+
+    
 
 });
 
