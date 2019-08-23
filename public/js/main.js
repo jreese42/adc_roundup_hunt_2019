@@ -13,19 +13,17 @@ $(document).ready(function() {
         var password = $(this).find('input[name*="securityQuestion"]').val();
 
         var uri = "/api/user/me/submitPassword";
-        console.log(uri);
         $.post({
             url: uri,
         }, {'solutionId': solutionId+1, 'password': password})
         .done(function(data) {
-            console.log(data)
             if (data == true) {
                 //Update Glyph
                 thisForm.parents(".row").find('.checkmark-glyph')
                 .removeClass("fa-times-circle").removeClass("error")
                 .removeClass("fa-circle").removeClass("neutral")
                 .addClass("fa-check-circle").addClass("success");
-                thisForm.parents(".card").removeClass("border-light").addClass("border-success");
+                thisForm.parents(".card").removeClass("border-light").removeClass("border-danger").addClass("border-success");
                 thisForm.parents(".card").find('.btn-primary')
                 .removeClass("btn-primary").addClass("btn-secondary");
         
@@ -33,6 +31,11 @@ $(document).ready(function() {
                 thisForm.find('button[type="submit"]').prop('disabled', "true");
                 thisForm.find('input[name*="securityQuestion"]').prop('disabled', "true")
                     .val("").prop('placeholder', "Unlocked!");
+
+                //Check Winner
+                if ($('input:disabled[name*="securityQuestion"]').length >= 5) {
+                    location.reload();
+                }
             } else {
                 //Update Glyph)
                 thisForm.parents(".row").find('.checkmark-glyph')
@@ -41,7 +44,6 @@ $(document).ready(function() {
                 .addClass("fa-times-circle").addClass("error");
                 thisForm.parents(".card").removeClass("border-light").addClass("border-danger");
             }
-            // $( "#command-output" ).text(JSON.stringify(data));
         });
         
     });

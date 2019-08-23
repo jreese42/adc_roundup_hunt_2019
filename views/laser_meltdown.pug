@@ -1,0 +1,42 @@
+extends layout_dark
+
+include mixins/laser/laser_header.pug
+include mixins/navbar_sticky.pug
+include mixins/laser/laser_footer.pug
+
+block content
+  +laser_header
+  +navbar_sticky_dark("laser")
+  .container.style-laser-mgmt-page
+    .row
+      .col-sm-10.offset-sm-1
+        .card.bg-dark.mt-3.mb-1
+          .card-body
+            h2#shutdownText.text-warning Shutting Down Laser
+            p#shutdownSubtext Please wait...
+            .progress
+              #shutdownProgress.progress-bar(role="progressbar", style="width: 100%", aria-valuenow="100", aria-valuemin="0", aria-valuemax="100") 100%
+            .collapse#destroyedCollapse
+              .container
+                .row.align-items-center.mt-4.text-center
+                  h2.text-danger Laser Destroyed!
+            .collapse#overridePasswordCollapse 
+              .container
+                .row.align-items-center.mt-4.align-center
+                  .col-sm-6.offset-sm-3
+                    form.form_finalPassword
+                      .form-group
+                        label(for="overridePassword").text-light#overridePasswordHelpText Input override password to halt charging and initiate self-destruct
+                        input(type="text", name="overridePassword", placeholder="Enter Password...", data-solution-id="5").form-control
+
+                        button(type="submit").btn.btn-danger.btn-block.mt-2 Destroy Space Laser
+
+  .row
+    .col-sm-8.offset-sm-2.text-center
+      h3.text-muted
+        | Powered by LaserTech Space Laser Technology 
+        i.far.fa-registered
+
+  +laser_footer
+
+  script(src='/js/endgame.js')
