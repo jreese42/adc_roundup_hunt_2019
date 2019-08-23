@@ -4557,3 +4557,7 @@ a.backButton {
 
 img.invert {
   filter: invert(100%); }
+
+.progress {
+  height: 28px;
+  font: 16px "Tajawal", sans-serif; }
