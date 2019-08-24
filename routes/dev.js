@@ -46,24 +46,7 @@ router.get('/logout', function(req, res)
 
 router.get('/', function(req, res) 
 {
-  var db = req.app.get('db');
-  var userPromise = (req.session && req.session.attendeeId) ?
-      db.User.findUser(req.session.attendeeId) :
-      new Promise();
-  
-  userPromise.then( user => {
-      locals = {
-        Session: {
-          attendeeId: req.session.attendeeId || 0,
-          firstName: req.session.firstName || "",
-          lastName: req.session.lastName || "",
-        }
-      };
-
-      if (user) locals.User = user; //Generally don't do this. Sending the full user to the client is just for debugging.
-
-      res.render('dev', locals);
-  });
+    res.render('dev', locals);
 });
 
 router.get('/editor', function(req, res) 

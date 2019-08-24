@@ -271,7 +271,7 @@ var User = {
         return (numUpdated[0] > 0);
     },
     submitPassword: async (attendeeId, puzzleId, submittedPass) => {
-
+        var trimmedPass = submittedPass.string.substring(0, 70).toLowerCase();
         var puzzle = await Puzzle.get(puzzleId);
         if (!puzzle)
             return false;
@@ -280,7 +280,7 @@ var User = {
         if (!correctPass)
             return false;
 
-        if (submittedPass.toLowerCase() == correctPass) {
+        if (trimmedPass == correctPass) {
             //Correct password - update in table
             var updateStruct;
             if (puzzleId == 1)
