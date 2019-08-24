@@ -4758,3 +4758,7 @@ a.backButton {
   font-size: 18px; }
   a.backButton i {
     vertical-align: middle; }
+
+a.disabled {
+  color: #6f7479;
+  pointer-events: none; }

@@ -38,7 +38,7 @@ router.get('/logout', function(req, res)
     req.session.isAdmin = null;
     if (didLogOut) {
       res.set('WWW-Authenticate', 'Basic realm="admin-dev"');
-      res.status(401).send('Authentication required.'); // custom message
+      res.status(401).send('Logged out.'); // custom message
     } else {
       res.send(false);
     }
@@ -46,7 +46,7 @@ router.get('/logout', function(req, res)
 
 router.get('/', function(req, res) 
 {
-    res.render('dev', locals);
+    res.render('dev');
 });
 
 router.get('/editor', function(req, res) 

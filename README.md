@@ -204,6 +204,25 @@ You can also see how far behind your own fork is from trunk on github's webpage 
 
 ---
 
+### Fetch Leaderboard
+
+**URL** : `/api/leaderboard?page=<page>`
+
+**Method** : `POST`
+
+**URL Parameters**  
+    `<user>` may be either an attendee Id or `me` to select the current session user.
+    `<page>` the page being requested.  Pages are 25 entries each.
+    
+**Response**  
+    JSON Object containing:
+    `leaderboardData` an array containing 25 entries of the leaderboard. And entry has an `index`, `name`, `score`, and `isCurrentUser`.
+
+**Details**  
+    Fetch leaderboard data.  The client is responsible for handling the paging/max pages (this is NOT RESTful because it does not respond with the pageCount!)
+
+---
+
 ## Blog Post Management
 
 ---

@@ -13,7 +13,7 @@ block content
           h1 Leaderboard
   +navbar_sticky_light("")
   .container
-    .row.offset-md-2.text-center
+    .row.offset-md-2.text-center.mt-4
       h3 Please select how you want your name to appear in the leaderboard.
     .row.text-center
       .col-md-3.offset-md-2
@@ -22,7 +22,7 @@ block content
         .btn.btn-secondary.nameOptionSelector(data-name-option="FirstInitialLastName") #{nameOpt2}
       .col-md-3
         .btn.btn-secondary.nameOptionSelector(data-name-option="Anonymous") #{nameOpt3}
-    .row
+    .row.mt-3
       .col-md-10.offset-md-1.col-center.mt-3
         h3 Current Standings 
     .row.align-items-center 
@@ -33,36 +33,20 @@ block content
               th(scope="col") #
               th(scope="col") Name
               th(scope="col") Score
-          tbody
-            for leaderboard_entry in leaderboard_entries
-              if leaderboard_entry.isCurrentUser
-                tr.table-info
-                  td #{leaderboard_entry.index}
-                  td #{leaderboard_entry.name}
-                  if leaderboard_entry.score
-                    td #{leaderboard_entry.score}
-                  else
-                    td 0
-              else
-                tr
-                  td #{leaderboard_entry.index}
-                  td #{leaderboard_entry.name}
-                  if leaderboard_entry.score
-                    td #{leaderboard_entry.score}
-                  else
-                    td 0
-        //get list of all users, paginated
-        //jump to page containing current user, render that page
-        //table with users, table head, striped
-        //page selector at bottom
-        //highlight current user row
+          tbody#leaderboardBody
+    .d-flex.justify-content-center#loadingSpinner
+      .spinner-border(role="status").m-3.mb-5
     .row
       .col-md-2.offset-md-1
-        if prevPage
-          a(href= prevPage) Previous Page
-      .col-md-2.offset-md-6.text-right
-        if nextPage
-          a(href= nextPage) Next Page
+        a.mr-3(href="#")#link_firstPage << First
+        a.mx-3(href="#")#link_prevPage < Prev
+      .col-md-4.offset-md-1.text-center
+          #currentPageNum.d-none(data-page-num= currentPage)
+          #pageCount.d-none(data-page-count= pageCount)
+          p.text-muted#pageIndicator #{currentPage} / #{pageCount}
+      .col-md-2.offset-md-1.text-right
+        a.mx-3(href="#")#link_nextPage Next >
+        a.ml-3(href="#")#link_lastPage Last >>
 
 
   +blog_footer

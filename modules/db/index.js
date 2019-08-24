@@ -293,42 +293,78 @@ var User = {
             if (!user) 
                 return false;
 
-            var updateStruct;
-            if (puzzleId == 1)
+            var userPoints = 0;
+            switch (puzzle.solvedCount) {
+                case 0:
+                case 1:
+                case 2:
+                    userPoints = 400;
+                    break;
+                case 3:
+                case 4:
+                    userPoints = 300;
+                    break;
+                case 5:
+                    userPoints = 200;
+                    break;
+                case 6: 
+                default:
+                    userPoints = 100;
+                    break;
+            }
+            
+            if (puzzleId == 1) {
+                if (!user.solution1) user.score += userPoints;
                 user.solution1 = true;
-            else if (puzzleId == 2)
+            }
+            else if (puzzleId == 2) {
+                if (!user.solution2) user.score += userPoints;
                 user.solution2 = true;
-            else if (puzzleId == 3)
+            }
+            else if (puzzleId == 3) {
+                if (!user.solution3) user.score += userPoints;
                 user.solution3 = true;
-            else if (puzzleId == 4)
+            }
+            else if (puzzleId == 4) {
+                if (!user.solution4) user.score += userPoints;
                 user.solution4 = true;
-            else if (puzzleId == 5)
+            }
+            else if (puzzleId == 5) {
+                if (!user.solution5) user.score += userPoints;
                 user.solution5 = true;
-            else if (puzzleId == 6)
+            }
+            else if (puzzleId == 6) {
+                if (!user.solution6) user.score += userPoints;
                 user.solution6 = true;
-            else if (puzzleId == 7)
+            }
+            else if (puzzleId == 7) {
+                if (!user.solution7) user.score += userPoints;
                 user.solution7 = true;
-            else if (puzzleId == 8)
+            }
+            else if (puzzleId == 8) {
+                if (!user.solution8) user.score += userPoints;
                 user.solution8 = true;
-            else if (puzzleId == 9)
+            }
+            else if (puzzleId == 9) {
+                if (!user.solution9) user.score += userPoints;
                 user.solution9 = true;
-
-            //Update solved count and available pts on puzzle
-            //score for this puzzle = [5,4,3,2,1,1,1...]
-            const userPoints = (puzzle.solvedCount >= 4) ? 1 : 5 - puzzle.solvedCount;
+            }
+            user.save();
             puzzle.solvedCount += 1;
             puzzle.save();
-            user.score += userPoints;
-            user.save();
             return true;
         } else {
             return false;
         }
     },
     getLeaderboardPage: async (page) => {
-        const offset = page * 25;
+        console.log("get loeaderboard page " + page);
+        page = parseInt(page, 10);
+        if (page < 1)
+            page = 1;
+        const offset = (page-1) * 25;
         const limit = 25;
-        var list = models.user.findAll({
+        var list = await models.user.findAll({
             offset: offset,
             limit: limit,
             attributes: ['attendeeId', 'displayNameFormat', 'fullName', 'firstName', 'lastName', 'score'],
@@ -336,11 +372,25 @@ var User = {
                 ['score', 'DESC']
             ]
         });
+        for (var i = 0; i < list.length; i++) {
+            list[i].leaderboardIndex = offset + i + 1;
+        }
         return list;
+    },
+    getLeaderboardPageNumForUser: async (attendeeId) => {
+        if (!attendeeId) return 0;
+
+        var list = await models.user.findAll({
+            attributes: ['attendeeId', 'score'],
+            order: [
+                ['score', 'DESC']
+            ]
+        });
+        var index = list.findIndex(user => user.attendeeId == attendeeId);
+        return Math.ceil(index / 25);
     },
     countLeaderboardPages: async () => {
         var count = await models.user.count();
-        console.log("Count is " + count + ". Pages: " + Math.ceil(count / 25));
         return Math.ceil(count / 25);
     }
 }

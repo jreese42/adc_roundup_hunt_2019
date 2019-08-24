@@ -104,6 +104,25 @@ var submit_password = (req, res) => {
     });
 }
 
+var get_leaderboard_page = (req, res) => {
+    var db = req.app.get('db');
+    var page = req.query.page || 1;
+    db.User.getLeaderboardPage(page)
+    .then( leaderboardPage => {
+        var response = {};
+        response["leaderboardData"] = [];
+        for (var i=0; i<leaderboardPage.length; i++) {
+            response["leaderboardData"][i] = {
+                "index": leaderboardPage[i].leaderboardIndex,
+                "name": leaderboardPage[i].fullName,
+                "score": leaderboardPage[i].score,
+                "isCurrentUser": (leaderboardPage[i].attendeeId == parseInt(req.session.attendeeId))
+            };
+        }
+        res.send(response);
+    });
+}
+
 var create_post = (req, res) => {
     var db = req.app.get('db');
     db.BlogPost.createPost(
@@ -247,6 +266,9 @@ router.post('/user/:attendeeId/displayNameFormat', [authenticator, for_userid, s
 //Submit password
 router.post('/user/me/submitPassword', [for_me, submit_password]);
 router.post('/user/:attendeeId/submitPassword', [authenticator, for_userid, submit_password]);
+
+//Leaderboard
+router.get('/leaderboard', [get_leaderboard_page]);
 
 //Create new blog
 router.post('/blog/createNew', [authenticator, create_post]);

@@ -42,10 +42,6 @@ p {
     }
 }
 
-// .style-laser-mgmt-page {
-//     background-color: $color-darkgray;
-// }
-
 .help-text-dark {
     font: 20px $font-paragraph-main;
     color: $color-black;
@@ -325,3 +321,8 @@ a.backButton {
     }
 
 }
+
+a.disabled {
+    color: $color-gray-60;
+    pointer-events: none;
+  }

@@ -6,7 +6,6 @@ var router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-
     var db = req.app.get('db');
 
     db.Strings.get("DATETIME_START").then( dateStartStr => {
@@ -103,10 +102,6 @@ router.get('/laser', function(req, res) {
     });
 });
 
-router.get('/laserOverride', function(req, res) {
-    res.render('laser_meltdown');
-});
-
 router.get('/blog/entry/:entryId', function(req, res, next) {
     var db = req.app.get('db');
 
@@ -134,37 +129,22 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
 });
 
 router.get('/leaderboard', function(req, res) {
-    //get current user page in leaderboard
-    //return page of users
-        //index, name, points, isCurrentUser
-    //currentPage, pageCount
     var db = req.app.get('db');
-    var page = req.query.page || 0;
-    var pagePromise = db.User.getLeaderboardPage(page);
     var pageCountPromise = db.User.countLeaderboardPages();
+    var startPagePromise = db.User.getLeaderboardPageNumForUser(req.session.attendeeId);
     
-    
-    Promise.all([pagePromise, pageCountPromise]).then( values => {
-        var leaderboardPage = values[0];
-        var pageCount = values[1];
+    Promise.all([pageCountPromise, startPagePromise]).then( values => {
+        var pageCount = values[0];
+        var startPage = values[1];
         var locals = {};
-        locals.leaderboard_entries = [];
-        for (var i=0; i<leaderboardPage.length; i++) {
-            locals.leaderboard_entries[i] = {
-                "index": (page*25) + i + 1,
-                "name": leaderboardPage[i].fullName,
-                "score": leaderboardPage[i].score,
-                "isCurrentUser": (leaderboardPage[i].attendeeId == parseInt(req.session.attendeeId))
-            };
-        }
-        locals.nameOpt1 = req.session.firstName + " " + req.session.lastName;
-        locals.nameOpt2 = req.session.firstName.charAt(0) + ". " + req.session.lastName;
+        var firstName = (req.session.firstName) ? req.session.firstName : "";
+        var lastName = (req.session.lastName) ? req.session.lastName : "";
+
+        locals.nameOpt1 = firstName + " " + lastName;
+        locals.nameOpt2 = firstName.charAt(0) + ". " + lastName;
         locals.nameOpt3 = "Anonymous";
-        if (page > 0)
-            locals.prevPage = "/leaderboard?page=" + (parseInt(page)-1);
-        console.log("Page Count: " + pageCount + ". CurrPage: " + page);
-        if (pageCount >= page)
-            locals.nextPage = "/leaderboard?page=" + (parseInt(page)+1);
+        locals.currentPage = startPage || "0";
+        locals.pageCount = pageCount;
         res.render('leaderboard', locals);
     });
 });
