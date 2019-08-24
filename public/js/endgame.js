@@ -37,7 +37,7 @@ $(document).ready(function() {
                 counter = 0;
                 animState = "recharge"
                 textHeader.text("Error! Hacking Attempt Detected!").removeClass("text-warning").addClass("text-danger");
-                textSm.text("Recharging!")
+                textSm.text("Failsafe engaged! Recharging!")
                 $("#overridePasswordCollapse").collapse('show');
             } else {
                 counter += interval;

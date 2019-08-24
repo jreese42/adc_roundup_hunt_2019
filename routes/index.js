@@ -6,7 +6,6 @@ var router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-
     var db = req.app.get('db');
 
     db.Strings.get("DATETIME_START").then( dateStartStr => {
@@ -103,10 +102,6 @@ router.get('/laser', function(req, res) {
     });
 });
 
-router.get('/laserOverride', function(req, res) {
-    res.render('laser_meltdown');
-});
-
 router.get('/blog/entry/:entryId', function(req, res, next) {
     var db = req.app.get('db');
 
@@ -130,6 +125,27 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
                 errorSubtext: "The page you tried to reach does not exist.  Please go back and try again."
             });
         }
+    });
+});
+
+router.get('/leaderboard', function(req, res) {
+    var db = req.app.get('db');
+    var pageCountPromise = db.User.countLeaderboardPages();
+    var startPagePromise = db.User.getLeaderboardPageNumForUser(req.session.attendeeId);
+    
+    Promise.all([pageCountPromise, startPagePromise]).then( values => {
+        var pageCount = values[0];
+        var startPage = values[1];
+        var locals = {};
+        var firstName = (req.session.firstName) ? req.session.firstName : "";
+        var lastName = (req.session.lastName) ? req.session.lastName : "";
+
+        locals.nameOpt1 = firstName + " " + lastName;
+        locals.nameOpt2 = firstName.charAt(0) + ". " + lastName;
+        locals.nameOpt3 = "Anonymous";
+        locals.currentPage = startPage || "0";
+        locals.pageCount = pageCount;
+        res.render('leaderboard', locals);
     });
 });
 

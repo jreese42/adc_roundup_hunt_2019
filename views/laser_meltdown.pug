@@ -26,15 +26,15 @@ block content
                   .col-sm-6.offset-sm-3
                     form.form_finalPassword
                       .form-group
-                        label(for="overridePassword").text-light#overridePasswordHelpText Input override password to halt charging and initiate self-destruct
-                        input(type="text", name="overridePassword", placeholder="Enter Password...", data-solution-id="5").form-control
+                        label(for="overridePassword").text-light#overridePasswordHelpText Input override password to override failsafe and initiate self-destruct
+                        input(type="text", name="overridePassword", maxlength="70", placeholder="Enter Password...", data-solution-id="5").form-control
 
                         button(type="submit").btn.btn-danger.btn-block.mt-2 Destroy Space Laser
 
   .row
     .col-sm-8.offset-sm-2.text-center
       h3.text-muted
-        | Powered by LaserTech Space Laser Technology 
+        | Powered by E-Z Laser Space Laser Technology 
         i.far.fa-registered
 
   +laser_footer

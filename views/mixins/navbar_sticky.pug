@@ -16,11 +16,16 @@ mixin navbar_sticky_light(active_page)
             a#nav-link-about.nav-link(href="/about").active About
           else
             a#nav-link-about.nav-link(href="/about") About
-        li.nav-item
+        li.nav-item.mr-3
           if active_page == "laser"
             a#nav-link-laser.nav-link(href="/laser").active Space Laser Management
           else
             a#nav-link-laser.nav-link(href="/laser") Space Laser Management
+        li.nav-item.nav
+          if active_page == "leaderboard"
+            a#nav-link-leaderboard.nav-link(href="/leaderboard").active Leaderboard
+          else
+            a#nav-link-leaderboard.nav-link(href="/leaderboard") Leaderboard
 
 mixin navbar_sticky_dark(active_page)
   nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark.pl-12
@@ -40,8 +45,10 @@ mixin navbar_sticky_dark(active_page)
             a#nav-link-about.nav-link(href="/about").active About
           else
             a#nav-link-about.nav-link(href="/about") About
-        li.nav-item
+        li.nav-item.mr-3
           if active_page == "laser"
             a#nav-link-laser.nav-link(href="/laser").active Space Laser Management
           else
             a#nav-link-laser.nav-link(href="/laser") Space Laser Management
+        li.nav-item.nav
+          a#nav-link-leaderboard.nav-link(href="/leaderboard") Leaderboard

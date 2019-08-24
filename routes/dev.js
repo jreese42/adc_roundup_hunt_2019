@@ -38,7 +38,7 @@ router.get('/logout', function(req, res)
     req.session.isAdmin = null;
     if (didLogOut) {
       res.set('WWW-Authenticate', 'Basic realm="admin-dev"');
-      res.status(401).send('Authentication required.'); // custom message
+      res.status(401).send('Logged out.'); // custom message
     } else {
       res.send(false);
     }
@@ -46,24 +46,7 @@ router.get('/logout', function(req, res)
 
 router.get('/', function(req, res) 
 {
-  var db = req.app.get('db');
-  var userPromise = (req.session && req.session.attendeeId) ?
-      db.User.findUser(req.session.attendeeId) :
-      new Promise();
-  
-  userPromise.then( user => {
-      locals = {
-        Session: {
-          attendeeId: req.session.attendeeId || 0,
-          firstName: req.session.firstName || "",
-          lastName: req.session.lastName || "",
-        }
-      };
-
-      if (user) locals.User = user; //Generally don't do this. Sending the full user to the client is just for debugging.
-
-      res.render('dev', locals);
-  });
+    res.render('dev');
 });
 
 router.get('/editor', function(req, res) 

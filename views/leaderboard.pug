@@ -1,0 +1,54 @@
+extends layout_light
+
+include mixins/blog/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog/blog_card.pug
+include mixins/blog/blog_footer.pug
+
+block content
+  .container
+    .row.align-items-center
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 Leaderboard
+  +navbar_sticky_light("leaderboard")
+  .container
+    .row.offset-md-2.text-center.mt-4
+      h3 Please select how you want your name to appear in the leaderboard.
+    .row.text-center
+      .col-md-3.offset-md-2
+        .btn.btn-secondary.nameOptionSelector(data-name-option="FirstNameLastName") #{nameOpt1}
+      .col-md-2
+        .btn.btn-secondary.nameOptionSelector(data-name-option="FirstInitialLastName") #{nameOpt2}
+      .col-md-3
+        .btn.btn-secondary.nameOptionSelector(data-name-option="Anonymous") #{nameOpt3}
+    .row.mt-3
+      .col-md-10.offset-md-1.col-center.mt-3
+        h3 Current Standings 
+    .row.align-items-center 
+      .col-md-10.offset-md-1.col-center.mt-3
+        table.table.table-striped
+          thead
+            tr
+              th(scope="col") #
+              th(scope="col") Name
+              th(scope="col") Score
+          tbody#leaderboardBody
+    .d-flex.justify-content-center#loadingSpinner
+      .spinner-border(role="status").m-3.mb-5
+    .row
+      .col-md-2.offset-md-1
+        a.mr-3(href="#")#link_firstPage << First
+        a.mx-3(href="#")#link_prevPage < Prev
+      .col-md-4.offset-md-1.text-center
+          #currentPageNum.d-none(data-page-num= currentPage)
+          #pageCount.d-none(data-page-count= pageCount)
+          p.text-muted#pageIndicator #{currentPage} / #{pageCount}
+      .col-md-2.offset-md-1.text-right
+        a.mx-3(href="#")#link_nextPage Next >
+        a.ml-3(href="#")#link_lastPage Last >>
+
+
+  +blog_footer
+  
+  script(src='/js/leaderboard.js')

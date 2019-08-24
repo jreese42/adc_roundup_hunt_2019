@@ -271,7 +271,9 @@ var User = {
         return (numUpdated[0] > 0);
     },
     submitPassword: async (attendeeId, puzzleId, submittedPass) => {
-
+        if (!submittedPass || !puzzleId || !attendeeId)
+            return false;
+        var trimmedPass = submittedPass.substring(0, 70).toLowerCase();
         var puzzle = await Puzzle.get(puzzleId);
         if (!puzzle)
             return false;
@@ -280,42 +282,116 @@ var User = {
         if (!correctPass)
             return false;
 
-        if (submittedPass.toLowerCase() == correctPass) {
+        if (trimmedPass == correctPass) {
             //Correct password - update in table
-            var updateStruct;
-            if (puzzleId == 1)
-                updateStruct = {solution1: true};
-            else if (puzzleId == 2)
-                updateStruct = {solution2: true};
-            else if (puzzleId == 3)
-                updateStruct = {solution3: true};
-            else if (puzzleId == 4)
-                updateStruct = {solution4: true};
-            else if (puzzleId == 5)
-                updateStruct = {solution5: true};
-            else if (puzzleId == 6)
-                updateStruct = {solution6: true};
-            else if (puzzleId == 7)
-                updateStruct = {solution7: true};
-            else if (puzzleId == 8)
-                updateStruct = {solution8: true};
-            else if (puzzleId == 9)
-                updateStruct = {solution9: true};
+            var user = await models.user.findOne(
+                {
+                    where: { attendeeId: parseInt(attendeeId) }
+                }
+            );
 
-            if (updateStruct) {
-                var numUpdated = await models.user.update(
-                    updateStruct,
-                    {
-                        where: { attendeeId: parseInt(attendeeId) }
-                    });
-
-                return (numUpdated[0] > 0);
-            } else {
+            if (!user) 
                 return false;
+
+            var userPoints = 0;
+            switch (puzzle.solvedCount) {
+                case 0:
+                case 1:
+                case 2:
+                    userPoints = 400;
+                    break;
+                case 3:
+                case 4:
+                    userPoints = 300;
+                    break;
+                case 5:
+                    userPoints = 200;
+                    break;
+                case 6: 
+                default:
+                    userPoints = 100;
+                    break;
             }
+            
+            if (puzzleId == 1) {
+                if (!user.solution1) user.score += userPoints;
+                user.solution1 = true;
+            }
+            else if (puzzleId == 2) {
+                if (!user.solution2) user.score += userPoints;
+                user.solution2 = true;
+            }
+            else if (puzzleId == 3) {
+                if (!user.solution3) user.score += userPoints;
+                user.solution3 = true;
+            }
+            else if (puzzleId == 4) {
+                if (!user.solution4) user.score += userPoints;
+                user.solution4 = true;
+            }
+            else if (puzzleId == 5) {
+                if (!user.solution5) user.score += userPoints;
+                user.solution5 = true;
+            }
+            else if (puzzleId == 6) {
+                if (!user.solution6) user.score += userPoints;
+                user.solution6 = true;
+            }
+            else if (puzzleId == 7) {
+                if (!user.solution7) user.score += userPoints;
+                user.solution7 = true;
+            }
+            else if (puzzleId == 8) {
+                if (!user.solution8) user.score += userPoints;
+                user.solution8 = true;
+            }
+            else if (puzzleId == 9) {
+                if (!user.solution9) user.score += userPoints;
+                user.solution9 = true;
+            }
+            user.save();
+            puzzle.solvedCount += 1;
+            puzzle.save();
+            return true;
         } else {
             return false;
         }
+    },
+    getLeaderboardPage: async (page) => {
+        console.log("get loeaderboard page " + page);
+        page = parseInt(page, 10);
+        if (page < 1)
+            page = 1;
+        const offset = (page-1) * 25;
+        const limit = 25;
+        var list = await models.user.findAll({
+            offset: offset,
+            limit: limit,
+            attributes: ['attendeeId', 'displayNameFormat', 'fullName', 'firstName', 'lastName', 'score'],
+            order: [
+                ['score', 'DESC']
+            ]
+        });
+        for (var i = 0; i < list.length; i++) {
+            list[i].leaderboardIndex = offset + i + 1;
+        }
+        return list;
+    },
+    getLeaderboardPageNumForUser: async (attendeeId) => {
+        if (!attendeeId) return 0;
+
+        var list = await models.user.findAll({
+            attributes: ['attendeeId', 'score'],
+            order: [
+                ['score', 'DESC']
+            ]
+        });
+        var index = list.findIndex(user => user.attendeeId == attendeeId);
+        return Math.ceil(index / 25);
+    },
+    countLeaderboardPages: async () => {
+        var count = await models.user.count();
+        return Math.ceil(count / 25);
     }
 }
 
