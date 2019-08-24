@@ -271,7 +271,9 @@ var User = {
         return (numUpdated[0] > 0);
     },
     submitPassword: async (attendeeId, puzzleId, submittedPass) => {
-        var trimmedPass = submittedPass.string.substring(0, 70).toLowerCase();
+        if (!submittedPass || !puzzleId || !attendeeId)
+            return false;
+        var trimmedPass = submittedPass.substring(0, 70).toLowerCase();
         var puzzle = await Puzzle.get(puzzleId);
         if (!puzzle)
             return false;
@@ -282,37 +284,43 @@ var User = {
 
         if (trimmedPass == correctPass) {
             //Correct password - update in table
+            var user = await models.user.findOne(
+                {
+                    where: { attendeeId: parseInt(attendeeId) }
+                }
+            );
+
+            if (!user) 
+                return false;
+
             var updateStruct;
             if (puzzleId == 1)
-                updateStruct = {solution1: true};
+                user.solution1 = true;
             else if (puzzleId == 2)
-                updateStruct = {solution2: true};
+                user.solution2 = true;
             else if (puzzleId == 3)
-                updateStruct = {solution3: true};
+                user.solution3 = true;
             else if (puzzleId == 4)
-                updateStruct = {solution4: true};
+                user.solution4 = true;
             else if (puzzleId == 5)
-                updateStruct = {solution5: true};
+                user.solution5 = true;
             else if (puzzleId == 6)
-                updateStruct = {solution6: true};
+                user.solution6 = true;
             else if (puzzleId == 7)
-                updateStruct = {solution7: true};
+                user.solution7 = true;
             else if (puzzleId == 8)
-                updateStruct = {solution8: true};
+                user.solution8 = true;
             else if (puzzleId == 9)
-                updateStruct = {solution9: true};
+                user.solution9 = true;
 
-            if (updateStruct) {
-                var numUpdated = await models.user.update(
-                    updateStruct,
-                    {
-                        where: { attendeeId: parseInt(attendeeId) }
-                    });
-
-                return (numUpdated[0] > 0);
-            } else {
-                return false;
-            }
+            //Update solved count and available pts on puzzle
+            //score for this puzzle = [5,4,3,2,1,1,1...]
+            const userPoints = (puzzle.solvedCount >= 4) ? 1 : 5 - puzzle.solvedCount;
+            puzzle.solvedCount += 1;
+            puzzle.save();
+            user.score += userPoints;
+            user.save();
+            return true;
         } else {
             return false;
         }

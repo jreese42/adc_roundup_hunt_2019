@@ -161,10 +161,10 @@ router.get('/leaderboard', function(req, res) {
         locals.nameOpt2 = req.session.firstName.charAt(0) + ". " + req.session.lastName;
         locals.nameOpt3 = "Anonymous";
         if (page > 0)
-            locals.prevPage = "/leaderboard?page=" + (page-1);
+            locals.prevPage = "/leaderboard?page=" + (parseInt(page)-1);
         console.log("Page Count: " + pageCount + ". CurrPage: " + page);
-        if (pageCount > page)
-            locals.nextPage = "/leaderboard?page=" + (page+1);
+        if (pageCount >= page)
+            locals.nextPage = "/leaderboard?page=" + (parseInt(page)+1);
         res.render('leaderboard', locals);
     });
 });
