@@ -22,7 +22,10 @@ mixin navbar_sticky_light(active_page)
           else
             a#nav-link-laser.nav-link(href="/laser") Space Laser Management
         li.nav-item.nav
-          a#nav-link-leaderboard.nav-link(href="/leaderboard") Leaderboard
+          if active_page == "leaderboard"
+            a#nav-link-leaderboard.nav-link(href="/leaderboard").active Leaderboard
+          else
+            a#nav-link-leaderboard.nav-link(href="/leaderboard") Leaderboard
 
 mixin navbar_sticky_dark(active_page)
   nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark.pl-12
