@@ -1,0 +1,71 @@
+extends layout_light
+
+include mixins/blog/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog/blog_card.pug
+include mixins/blog/blog_footer.pug
+
+block content
+  .container
+    .row.align-items-center
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 Leaderboard
+  +navbar_sticky_light("")
+  .container
+    .row.offset-md-2.text-center
+      h3 Please select how you want your name to appear in the leaderboard.
+    .row.text-center
+      .col-md-3.offset-md-2
+        .btn.btn-secondary.nameOptionSelector(data-name-option="FirstNameLastName") #{nameOpt1}
+      .col-md-2
+        .btn.btn-secondary.nameOptionSelector(data-name-option="FirstInitialLastName") #{nameOpt2}
+      .col-md-3
+        .btn.btn-secondary.nameOptionSelector(data-name-option="Anonymous") #{nameOpt3}
+    .row
+      .col-md-10.offset-md-1.col-center.mt-3
+        h3 Current Standings 
+    .row.align-items-center 
+      .col-md-10.offset-md-1.col-center.mt-3
+        table.table.table-striped
+          thead
+            tr
+              th(scope="col") #
+              th(scope="col") Name
+              th(scope="col") Score
+          tbody
+            for leaderboard_entry in leaderboard_entries
+              if leaderboard_entry.isCurrentUser
+                tr.table-info
+                  td #{leaderboard_entry.index}
+                  td #{leaderboard_entry.name}
+                  if leaderboard_entry.score
+                    td #{leaderboard_entry.score}
+                  else
+                    td 0
+              else
+                tr
+                  td #{leaderboard_entry.index}
+                  td #{leaderboard_entry.name}
+                  if leaderboard_entry.score
+                    td #{leaderboard_entry.score}
+                  else
+                    td 0
+        //get list of all users, paginated
+        //jump to page containing current user, render that page
+        //table with users, table head, striped
+        //page selector at bottom
+        //highlight current user row
+    .row
+      .col-md-1.offset-md-1
+        if prevPage
+          a(href= prevPage) Previous Page
+      .col-md-7.d-sm-none.d-md-block
+      .col-md-1.offset-md-1
+        if nextPage
+          a(href= nextPage) Next Page
+
+
+  +blog_footer
+  
+  script(src='/js/leaderboard.js')

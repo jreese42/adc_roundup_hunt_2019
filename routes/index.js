@@ -133,6 +133,42 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
     });
 });
 
+router.get('/leaderboard', function(req, res) {
+    //get current user page in leaderboard
+    //return page of users
+        //index, name, points, isCurrentUser
+    //currentPage, pageCount
+    var db = req.app.get('db');
+    var page = req.query.page || 0;
+    var pagePromise = db.User.getLeaderboardPage(page);
+    var pageCountPromise = db.User.countLeaderboardPages();
+    
+    
+    Promise.all([pagePromise, pageCountPromise]).then( values => {
+        var leaderboardPage = values[0];
+        var pageCount = values[1];
+        var locals = {};
+        locals.leaderboard_entries = [];
+        for (var i=0; i<leaderboardPage.length; i++) {
+            locals.leaderboard_entries[i] = {
+                "index": (page*25) + i + 1,
+                "name": leaderboardPage[i].fullName,
+                "score": leaderboardPage[i].score,
+                "isCurrentUser": (leaderboardPage[i].attendeeId == parseInt(req.session.attendeeId))
+            };
+        }
+        locals.nameOpt1 = req.session.firstName + " " + req.session.lastName;
+        locals.nameOpt2 = req.session.firstName.charAt(0) + ". " + req.session.lastName;
+        locals.nameOpt3 = "Anonymous";
+        if (page > 0)
+            locals.prevPage = "/leaderboard?page=" + (page-1);
+        console.log("Page Count: " + pageCount + ". CurrPage: " + page);
+        if (pageCount > page)
+            locals.nextPage = "/leaderboard?page=" + (page+1);
+        res.render('leaderboard', locals);
+    });
+});
+
 router.get('/user/login', function(req, res) {
 
     var db = req.app.get('db');

@@ -316,6 +316,24 @@ var User = {
         } else {
             return false;
         }
+    },
+    getLeaderboardPage: async (page) => {
+        const offset = page * 25;
+        const limit = 25;
+        var list = models.user.findAll({
+            offset: offset,
+            limit: limit,
+            attributes: ['attendeeId', 'displayNameFormat', 'fullName', 'firstName', 'lastName', 'score'],
+            order: [
+                ['score', 'DESC']
+            ]
+        });
+        return list;
+    },
+    countLeaderboardPages: async () => {
+        var count = await models.user.count();
+        console.log("Count is " + count + ". Pages: " + Math.ceil(count / 25));
+        return Math.ceil(count / 25);
     }
 }
 
