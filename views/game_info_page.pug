@@ -6,7 +6,7 @@ block content
             h1 
                 img(src="img/ADCLogo.svg", alt="Alarm.com").inline-logo
                 |  RoundUP Hunt 2019
-            h3#countdownTimer The game will begin at 2:30pm!
+            h3#gameCountdownClock(data-start-time= startTime).text-center
         //- .parallax-container(data-parallax="scroll", data-image-src="./img/puppy1.jpg", data-bleed="20")
         .parallax-window(data-parallax="scroll", data-image-src="/img/space7.jpg", data-position="top", data-bleed="10")
         .slide_section#section-rules.container-dark
@@ -23,15 +23,15 @@ block content
                     .col-sm-4.offset-sm-1.order-sm-last
                         .circle-icon-light
                             i.fas.fa-stopwatch.fa-4x
-                    .col-sm-6
-                        p.help-text-light Challenges will be revealed here at predetermined times throughout the Roundup (beginning Friday morning, ending Saturday evening)
+                    .col-sm-6.mt-2
+                        p.help-text-light Challenges will be revealed here at predetermined times throughout Roundup (beginning Friday morning, ending Saturday evening)
 
                 .row.align-items-center.mt-3
                     .col-sm-4.offset-sm-1
                         .circle-icon-light
-                            i.fas.fa-handshake.fa-4x
+                            i.fas.fa-crown.fa-4x
                     .col-sm-6.mt-2
-                        p.help-text-light Some of the challenges may require exploring the surrounding area and collaborating with fellow Roundup attendees!
+                        p.help-text-light Solve the challenges faster than your colleagues to earn the most points!
                 
                 .row.align-items-center.mt-3
                     .col-sm-4.offset-sm-1.order-sm-last
@@ -46,24 +46,32 @@ block content
                 h1 Hints, Tips, and Tricks
             .container
                 .row.align-items-center.mt-3
+                    .col-sm-4.offset-sm-1
+                        .circle-icon-dark
+                            i.fas.fa-handshake.fa-4x
+                    .col-sm-6.mt-2
+                        p.help-text-dark Some of the challenges may require exploring the surrounding area and collaborating with fellow Roundup attendees!
+                
+                .row.align-items-center.mt-3
                     .col-sm-4.offset-sm-1.order-sm-last
                         .circle-icon-dark
                             i.fas.fa-lightbulb.fa-4x
                     .col-sm-6.mt-2
-                        p.help-text-dark In urna nisi, tempor vitae nulla efficitur, imperdiet ornare nisl. Nam lacus est, luctus at rhoncus non, tristique vel lectus. Pellentesque dictum purus et odio. 
+                        p.help-text-dark If you aren't sure how to solve a puzzle, take a step back and rethink it, or ask someone else to help out.
 
                 .row.align-items-center.mt-3
                     .col-sm-4.offset-sm-1
                         .circle-icon-dark
                             i.fas.fa-map.fa-4x
                     .col-sm-6.mt-2
-                        p.help-text-dark Donec vitae felis neque. Sed tristique lectus quis purus sagittis rutrum. Cras eget vulputate urna. 
+                        p.help-text-dark All challenges will start in this app, but not all challenges can be solved here.
+                
                 .row.align-items-center.mt-2
                     .col-sm-4.offset-sm-1.order-sm-last
                         .circle-icon-dark
                             i.fas.fa-question.fa-4x
                     .col-sm-6.mt-2
-                        p.help-text-dark Quisque congue scelerisque semper. Morbi tellus ante, viverra luctus aliquet ac, commodo ac nisi.
+                        p.help-text-dark Reach out to us online or in person with any issues.
         
         .parallax-window(data-parallax="scroll", data-image-src="/img/space5.jpg", data-position="top", data-bleed="10")
         .slide_section#section-contact.container-dark
@@ -106,21 +114,28 @@ block content
                     .col-sm-10.offset-sm-1
                         p This game is the result of many hours of design, development, and testing.  Thank you to everyone involved!
                     
-                .row.align-items-center.mt-1
+                .row.align-items-center.mt-2
                     .col-sm-8.offset-sm-2
-                        h4 Game Design by JD Reese
+                        h4 Game Design by 
+                            b JD Reese
                 
-                .row.align-items-center.mt-1
+                .row.align-items-center.mt-3
                     .col-sm-8.offset-sm-2
                         h4 Puzzle Design by 
-                        h5 Adam Feinstein
-                        h5 Alex Levine
-                        h5 Albert Lin
-                        h5 Samantha Mendis
-                        h5 JD Reese
-                        h5 Gavin Philips
+                        h5 
+                            b Adam Feinstein
+                        h5 
+                            b Alex Levine
+                        h5 
+                            b Albert Lin
+                        h5 
+                            b Samantha Mendis
+                        h5 
+                            b JD Reese
+                        h5 
+                            b Gavin Philips
                 
-                .row.align-items-center.mt-1
+                .row.align-items-center.mt-3
                     .col-sm-8.offset-sm-2
                         h4 
                             b Special Thanks

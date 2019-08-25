@@ -117,7 +117,7 @@ img.inline-logo {
         text-align: center;
         @include angle-edge($angle: 2, $angle-position-y: 'top', $angle-position-x: 'left');
         color: $color-offwhite;
-        background-color: $color-brightred;
+        background-color: $color-darkblue;
         top: -1px;
     }
     #titlebar-tips {

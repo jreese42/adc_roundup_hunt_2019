@@ -16,7 +16,6 @@ router.get('/', function(req, res, next) {
             if (!isNaN(forDate))
                 date = forDate;
         }
-        console.log(dateStartStr)
         var dateStart = new Date(dateStartStr);
         if (isNaN(dateStart) || date >= dateStart) {
             //Game is on! Send the blog page.
@@ -35,7 +34,10 @@ router.get('/', function(req, res, next) {
             });
         } else {
             //Game has not started yet, redirect to landing page
-            res.render('game_info_page');
+            var locals = {
+                startTime: dateStart.toISOString()
+            };
+            res.render('game_info_page', locals);
         }
     });
 
@@ -44,7 +46,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/about', function(req, res, next) {
-    res.render('game_info_page');
+    var db = req.app.get('db');
+    db.Strings.get("DATETIME_START").then( dateStartStr => {
+        var dateStart = new Date(dateStartStr);
+        if (isNaN(dateStart))
+            dateStart = new Date(Date.now());
+        var locals = {
+            startTime: dateStart.toISOString()
+        };
+        res.render('game_info_page', locals);
+    });
 });
 
 router.get('/laser', function(req, res) {
