@@ -1,7 +1,8 @@
 mixin navbar_sticky_light(active_page)
   nav.navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.pl-12
     .navbar-brand
-      img.navbar-logo(src="/img/gun_logo.png")
+      a(href="/")
+        img.navbar-logo(src="/img/gun_logo.png")
     button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbar-content", aria-controls="navbar-content", aria-expanded="false", aria-label="Toggle navigation")
       span.navbar-toggler-icon
     .collapse.navbar-collapse#navbar-content
@@ -30,7 +31,8 @@ mixin navbar_sticky_light(active_page)
 mixin navbar_sticky_dark(active_page)
   nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark.pl-12
     .navbar-brand
-      img.navbar-logo(src="/img/gun_logo.png").invert
+      a(href="/")
+        img.navbar-logo(src="/img/gun_logo.png").invert
     button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbar-content", aria-controls="navbar-content", aria-expanded="false", aria-label="Toggle navigation")
       span.navbar-toggler-icon
     .collapse.navbar-collapse#navbar-content
