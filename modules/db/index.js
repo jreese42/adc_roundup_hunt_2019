@@ -278,83 +278,90 @@ var User = {
         if (!puzzle)
             return false;
 
-        var correctPass = await Strings.get(puzzle.solutionReference);
-        if (!correctPass)
+        var correctPassRegex = await Strings.get(puzzle.solutionReference);
+        if (!correctPassRegex)
             return false;
+        try {
+            const passRe = new RegExp(correctPassRegex, 'i')
+            if (passRe.test(trimmedPass)) {
+                //Correct password - update in table
+                var user = await models.user.findOne(
+                    {
+                        where: { attendeeId: parseInt(attendeeId) }
+                    }
+                );
 
-        if (trimmedPass == correctPass) {
-            //Correct password - update in table
-            var user = await models.user.findOne(
-                {
-                    where: { attendeeId: parseInt(attendeeId) }
+                if (!user) 
+                    return false;
+
+                var userPoints = 0;
+                switch (puzzle.solvedCount) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        userPoints = 400;
+                        break;
+                    case 3:
+                    case 4:
+                        userPoints = 300;
+                        break;
+                    case 5:
+                        userPoints = 200;
+                        break;
+                    case 6: 
+                    default:
+                        userPoints = 100;
+                        break;
                 }
-            );
-
-            if (!user) 
+                
+                if (puzzleId == 1) {
+                    if (!user.solution1) user.score += userPoints;
+                    user.solution1 = true;
+                }
+                else if (puzzleId == 2) {
+                    if (!user.solution2) user.score += userPoints;
+                    user.solution2 = true;
+                }
+                else if (puzzleId == 3) {
+                    if (!user.solution3) user.score += userPoints;
+                    user.solution3 = true;
+                }
+                else if (puzzleId == 4) {
+                    if (!user.solution4) user.score += userPoints;
+                    user.solution4 = true;
+                }
+                else if (puzzleId == 5) {
+                    if (!user.solution5) user.score += userPoints;
+                    user.solution5 = true;
+                }
+                else if (puzzleId == 6) {
+                    if (!user.solution6) user.score += userPoints;
+                    user.solution6 = true;
+                }
+                else if (puzzleId == 7) {
+                    if (!user.solution7) user.score += userPoints;
+                    user.solution7 = true;
+                }
+                else if (puzzleId == 8) {
+                    if (!user.solution8) user.score += userPoints;
+                    user.solution8 = true;
+                }
+                else if (puzzleId == 9) {
+                    if (!user.solution9) user.score += userPoints;
+                    user.solution9 = true;
+                }
+                user.save();
+                puzzle.solvedCount += 1;
+                puzzle.save();
+                return true;
+            } else {
+                //Not a match
                 return false;
-
-            var userPoints = 0;
-            switch (puzzle.solvedCount) {
-                case 0:
-                case 1:
-                case 2:
-                    userPoints = 400;
-                    break;
-                case 3:
-                case 4:
-                    userPoints = 300;
-                    break;
-                case 5:
-                    userPoints = 200;
-                    break;
-                case 6: 
-                default:
-                    userPoints = 100;
-                    break;
             }
-            
-            if (puzzleId == 1) {
-                if (!user.solution1) user.score += userPoints;
-                user.solution1 = true;
-            }
-            else if (puzzleId == 2) {
-                if (!user.solution2) user.score += userPoints;
-                user.solution2 = true;
-            }
-            else if (puzzleId == 3) {
-                if (!user.solution3) user.score += userPoints;
-                user.solution3 = true;
-            }
-            else if (puzzleId == 4) {
-                if (!user.solution4) user.score += userPoints;
-                user.solution4 = true;
-            }
-            else if (puzzleId == 5) {
-                if (!user.solution5) user.score += userPoints;
-                user.solution5 = true;
-            }
-            else if (puzzleId == 6) {
-                if (!user.solution6) user.score += userPoints;
-                user.solution6 = true;
-            }
-            else if (puzzleId == 7) {
-                if (!user.solution7) user.score += userPoints;
-                user.solution7 = true;
-            }
-            else if (puzzleId == 8) {
-                if (!user.solution8) user.score += userPoints;
-                user.solution8 = true;
-            }
-            else if (puzzleId == 9) {
-                if (!user.solution9) user.score += userPoints;
-                user.solution9 = true;
-            }
-            user.save();
-            puzzle.solvedCount += 1;
-            puzzle.save();
-            return true;
-        } else {
-            return false;
+        } catch (ex) {
+            // Invalid regex
+            console.log('Invalid password regex, string=' + password)
+            return false
         }
     },
     getLeaderboardPage: async (page) => {
