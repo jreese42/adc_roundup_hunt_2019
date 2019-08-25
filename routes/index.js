@@ -8,7 +8,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     var db = req.app.get('db');
 
-    db.Strings.get("DATETIME_START").then( dateStartStr => {
+    db.Strings.get("DATETIME_START_UTC").then( dateStartStr => {
         var date = new Date(Date.now());
         //Admin option allows querying for a datetime that isn't now
         if (req.query.d && req.session.isAdmin) {
@@ -47,7 +47,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/about', function(req, res, next) {
     var db = req.app.get('db');
-    db.Strings.get("DATETIME_START").then( dateStartStr => {
+    db.Strings.get("DATETIME_START_UTC").then( dateStartStr => {
         var dateStart = new Date(dateStartStr);
         if (isNaN(dateStart))
             dateStart = new Date(Date.now());
