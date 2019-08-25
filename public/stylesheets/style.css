@@ -4669,8 +4669,8 @@ img.inline-logo {
     top: -500px;
     z-index: -1; }
 
-.parallax-container {
-  height: 10rem; }
+/* .parallax-container {
+  height: 10rem; } */
 
 .blog_header {
   margin-top: 3rem;

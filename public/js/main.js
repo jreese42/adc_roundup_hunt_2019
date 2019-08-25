@@ -48,4 +48,46 @@ $(document).ready(function() {
         
     });
 
+    //About Page
+    var countdownSeconds;
+    var countdownTimer;
+    if ($("#gameCountdownClock")){
+        console.log("Setting countdown")
+        var dateStart = new Date($("#gameCountdownClock").attr("data-start-time"));
+        var dateNow = new Date(Date.now());
+        if (!isNaN(dateStart)) {
+            if (dateNow < dateStart) {
+                var countdownSeconds = Math.floor(dateStart - dateNow) / 1000;
+                countdownTimer = setInterval(tickCountdownClock1s, 1000);
+
+            } else {
+                //already started
+                $("#gameCountdownClock").text("");
+            }
+        }
+    }
+
+    function tickCountdownClock1s() {
+        countdownSeconds -= 1;
+        if (countdownSeconds < 1) {
+            $("#gameCountdownClock").text("The game has started!");
+            clearInterval(countdownTimer);
+            return;
+        }
+
+        hours = Math.floor(countdownSeconds / 3600);
+        minutes = Math.floor(countdownSeconds / 60) % 60;
+        seconds = Math.floor(countdownSeconds) % 60;
+        if (hours < 10) hours = "0" + hours;
+        if (minutes < 10) minutes = "0" + minutes;
+        if (seconds < 10) seconds = "0" + seconds;
+        
+        if (hours >= 12)
+            $("#gameCountdownClock").text("Get ready, the game starts on Friday!");
+        else{
+            $("#gameCountdownClock").text(hours + ":" + minutes + ":" + seconds);
+        }
+    }
+
+
 });
