@@ -35,7 +35,8 @@ router.get('/', function(req, res, next) {
         } else {
             //Game has not started yet, redirect to landing page
             var locals = {
-                startTime: dateStart.toISOString()
+                startTime: dateStart.toISOString(),
+                gameHasStarted: false
             };
             res.render('game_info_page', locals);
         }
@@ -49,10 +50,12 @@ router.get('/about', function(req, res, next) {
     var db = req.app.get('db');
     db.Strings.get("DATETIME_START_UTC").then( dateStartStr => {
         var dateStart = new Date(dateStartStr);
+        var dateNow = new Date(Date.now());
         if (isNaN(dateStart))
-            dateStart = new Date(Date.now());
+            dateStart = dateNow;
         var locals = {
-            startTime: dateStart.toISOString()
+            startTime: dateStart.toISOString(),
+            gameHasStarted: (dateStart < dateNow)
         };
         res.render('game_info_page', locals);
     });

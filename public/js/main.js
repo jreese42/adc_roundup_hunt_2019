@@ -70,7 +70,8 @@ $(document).ready(function() {
     function tickCountdownClock1s() {
         countdownSeconds -= 1;
         if (countdownSeconds < 1) {
-            $("#gameCountdownClock").text("The game has started!");
+            $("#gameCountdownText").text("The game is live!");
+            $("#gameCountdownClock").html('<a href="/" class="btn btn-dark btn-lg">Go to the Game!</a>');
             clearInterval(countdownTimer);
             return;
         }
@@ -82,8 +83,11 @@ $(document).ready(function() {
         if (minutes < 10) minutes = "0" + minutes;
         if (seconds < 10) seconds = "0" + seconds;
         
-        if (hours >= 12)
-            $("#gameCountdownClock").text("Get ready, the game starts on Friday!");
+        if (hours >= 12) {
+            days = parseInt(Math.ceil(hours / 24));
+            plural = (days == 1) ? "" : "s";
+            $("#gameCountdownClock").text(days + " day" + plural);
+        }
         else{
             $("#gameCountdownClock").text(hours + ":" + minutes + ":" + seconds);
         }

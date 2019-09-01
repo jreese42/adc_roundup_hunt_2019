@@ -6,7 +6,12 @@ block content
             h1 
                 img(src="img/ADCLogo.svg", alt="Alarm.com").inline-logo
                 |  RoundUP Hunt 2019
-            h3#gameCountdownClock(data-start-time= startTime).text-center
+            if gameHasStarted
+                h6 The game is live!
+                a(href="/").btn.btn-dark.btn-lg Go to the Game!
+            else
+                h6#gameCountdownText The game begins in
+                h3#gameCountdownClock(data-start-time= startTime).text-center
         //- .parallax-container(data-parallax="scroll", data-image-src="./img/puppy1.jpg", data-bleed="20")
         .parallax-window(data-parallax="scroll", data-image-src="/img/space7.jpg", data-position="top", data-bleed="10")
         .slide_section#section-rules.container-dark

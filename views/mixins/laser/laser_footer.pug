@@ -2,8 +2,17 @@ mixin laser_footer()
   footer.page-footer
     .container-fluid.text-center.text-md-left
       .row
-        .col-md-4.mt-md-0.mt-3
-          h3 About
-        .col-md-4.mt-md-0.mt-3
-          h3 Links
+        .col-md-4.mt-3.offset-2
+          img(src="/img/rup_bw.png").rounded#footerLogo.my-2.mx-auto.d-block
+        .col-md-4.mx-0
+          h3.my-3 Links
+            ul.list-unstyled.ml-3
+              li
+                a(href="/").footer-link Blog
+              li
+                a(href="/about").footer-link About Page
+              li
+                a(href="/laser").footer-link Space Laser Management
+              li
+                a(href="/leaderboard").footer-link Leaderboard
     .footer-copyright.text-center.py-3 © 2019 Copyright RGB Enterprises

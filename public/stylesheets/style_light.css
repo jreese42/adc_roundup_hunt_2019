@@ -4762,3 +4762,9 @@ a.backButton {
 a.disabled {
   color: #6f7479;
   pointer-events: none; }
+
+#footerLogo {
+  width: 80px; }
+
+.footer-link {
+  font-size: 13px; }
