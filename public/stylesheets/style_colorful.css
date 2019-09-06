@@ -4697,3 +4697,12 @@ i.checkmark-glyph.error {
 
 i.checkmark-glyph.neutral {
   color: #323840; }
+
+#prizeImage {
+  width: 15rem;
+  margin-left: auto;
+  margin-right: auto; }
+  #prizeImage.disabled {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%); }

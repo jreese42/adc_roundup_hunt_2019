@@ -182,6 +182,54 @@ router.get('/user/login', function(req, res) {
 
     res.redirect('/');
 });
+
+router.get('/blog/entry/:entryId', function(req, res, next) {
+    var db = req.app.get('db');
+
+    var date = new Date(Date.now());
+    //Admin option allows querying for a datetime that isn't now
+    if (req.query.d && req.session.isAdmin) {
+        var forDate = new Date(req.query.d);
+        if (!isNaN(forDate))
+            date = forDate;
+    }
+    
+    db.BlogPost.getPostIfActive(req.params.entryId, date).then( blogPost => {
+        if (blogPost) {
+            blogPost.isNew = false;
+            var locals = {blog: {}};
+            locals.blog = blogPost;
+            res.render('blog_entry', locals);
+        } else {
+            res.status(404).render('error', { 
+                errorText: "Sorry, I couldn't find what you were looking for.", 
+                errorSubtext: "The page you tried to reach does not exist.  Please go back and try again."
+            });
+        }
+    });
+});
+
+router.get('/winner', function(req, res) {
+    // var db = req.app.get('db');
+    var db = req.app.get('db');
+
+    db.User.findUser(req.session.attendeeId).then( user => {
+        if (!user) {
+            res.status(401).render('error', { 
+                errorText: "No User Record Found", 
+                errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
+            });
+        } else {
+            var locals = {};
+            locals.prizeLevel = user.prizeLevel;
+            if (req.query.prizeLevel)
+                locals.prizeLevel = req.query.prizeLevel
+            console.log("Prize level is " + user.prizeLevel);
+            console.log(user)
+            res.render('winner_page', locals);
+        }
+    });
+});
 /* eslint-enable no-unused-vars */
 
 module.exports = router;

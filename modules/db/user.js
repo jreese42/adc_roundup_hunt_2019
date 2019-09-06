@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     solution7: {type: DataTypes.BOOLEAN, defaultValue: false},
     solution8: {type: DataTypes.BOOLEAN, defaultValue: false},
     solution9: {type: DataTypes.BOOLEAN, defaultValue: false},
-    prizeLevel: DataTypes.ENUM('none', 'bluesticker', 'yellowsticker', 'starsticker'),
+    prizeLevel: {type: DataTypes.ENUM('none', 'bluesticker', 'yellowsticker', 'starsticker'), defaultValue: 'none'},
     score: { type: DataTypes.INTEGER, defaultValue: 0},
     hasClaimedSticker: DataTypes.BOOLEAN,
   }, { sequelize, modelName: 'User' });
