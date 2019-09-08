@@ -45,6 +45,10 @@ var defaultStrings = [
         value: ""
     },
     {
+        referenceName: "DATETIME_END_UTC",
+        value: ""
+    },
+    {
         referenceName: "SOLUTION_REGEX_1",
         value: ""
     },
@@ -350,9 +354,87 @@ var User = {
                     if (!user.solution9) user.score += userPoints;
                     user.solution9 = true;
                 }
-                user.save();
+
+                //Update the user prizeLevel
+                /* Any Question right: Common Prize
+                 * Top 150 scores: Rare Prize
+                 * Top 50 scores: Top Prize
+                 */
+
+                //award the common prize
+                if (user.prizeLevel == "none")
+                    user.prizeLevel = "bluesticker";
+
+                var numFirstPrizes = 50;
+                var numSecondPrizes = 100;
+                //Get a list of the top attendeeIds by score
+                var prizes_before = await models.user.findAll({
+                    offset: 0,
+                    limit: numFirstPrizes + numSecondPrizes,
+                    attributes: ['attendeeId', 'score', 'prizeLevel'],
+                    order: [
+                        ['score', 'DESC']
+                    ]
+                });
+                var firstPrize_before = prizes_before.slice(0, numFirstPrizes);
+                var secondPrize_before = prizes_before.slice(numFirstPrizes, numFirstPrizes + numSecondPrizes);
+
+                //save the new scores back to the db
+                var userSavePromise = user.save();
                 puzzle.solvedCount += 1;
                 puzzle.save();
+
+                userSavePromise.then( () => {
+                    //recalculate the top players
+                    models.user.findAll({
+                        offset: 0,
+                        limit: numFirstPrizes + numSecondPrizes,
+                        attributes: ['attendeeId', 'score', 'prizeLevel'],
+                        order: [
+                            ['score', 'DESC']
+                        ]
+                    }).then ( prizes_after => {
+                        var firstPrize_after = prizes_after.slice(0, numFirstPrizes);
+                        var secondPrize_after = prizes_after.slice(numFirstPrizes, numFirstPrizes + numSecondPrizes);
+    
+                        for (var i = 0; i < firstPrize_before.length; i++) {
+                            //players that were in the old list, but not the new list get dropped
+                            if (!firstPrize_after.includes(firstPrize_before[i])) {
+                                var userToUpdate = firstPrize_before[i];
+                                userToUpdate.prizeLevel = "bluesticker";
+                                userToUpdate.save();
+                            }
+                        }
+    
+                        for (var i = 0; i < secondPrize_before.length; i++) {
+                            //players that were in the old list, but not the new list get dropped
+                            if (!secondPrize_after.includes(secondPrize_before[i])) {
+                                var userToUpdate = secondPrize_before[i];
+                                userToUpdate.prizeLevel = "bluesticker";
+                                userToUpdate.save();
+                            }
+                        }
+    
+                        for (var i = 0; i < firstPrize_after.length; i++) {
+                            //players in the new list but not in the old list get set                    
+                            if (!firstPrize_before.includes(firstPrize_after[i])) {
+                                var userToUpdate = firstPrize_after[i];
+                                userToUpdate.prizeLevel = "starsticker";
+                                userToUpdate.save();
+                            }
+                        }
+    
+                        for (var i = 0; i < secondPrize_after.length; i++) {
+                            //players in the new list but not in the old list get set                    
+                            if (!secondPrize_before.includes(secondPrize_after[i])) {
+                                var userToUpdate = secondPrize_after[i];
+                                userToUpdate.prizeLevel = "yellowsticker";
+                                userToUpdate.save();
+                            }
+                        }
+                    });
+                });
+                
                 return true;
             } else {
                 //Not a match
@@ -360,12 +442,12 @@ var User = {
             }
         } catch (ex) {
             // Invalid regex
-            console.log('Invalid password regex, string=' + password)
-            return false
+            console.log(ex.message)
+            console.log('Invalid password regex, string=' + correctPassRegex)
+            return false;
         }
     },
     getLeaderboardPage: async (page) => {
-        console.log("get loeaderboard page " + page);
         page = parseInt(page, 10);
         if (page < 1)
             page = 1;

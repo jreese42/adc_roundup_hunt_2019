@@ -97,7 +97,7 @@ a {
 .angled-jumbotron {
     color: #fff;
     background-color: $color-brightblue2;
-    font-family: $font-title-main;
+    font-family: $font-accent;
     text-align: center;
     padding: 10% 0;
     @include angle-edge($angle: 2, $angle-position-y: 'bottom', $angle-position-x: 'left');

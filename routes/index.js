@@ -145,11 +145,20 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
 router.get('/leaderboard', function(req, res) {
     var db = req.app.get('db');
     var pageCountPromise = db.User.countLeaderboardPages();
+    var userPromise =  db.User.findUser(req.session.attendeeId);
     var startPagePromise = db.User.getLeaderboardPageNumForUser(req.session.attendeeId);
+    var datePromise = db.Strings.get("DATETIME_END_UTC");
     
-    Promise.all([pageCountPromise, startPagePromise]).then( values => {
+    Promise.all([pageCountPromise, startPagePromise, datePromise, userPromise]).then( values => {
         var pageCount = values[0];
         var startPage = values[1];
+        var user = values[3];
+        
+        var dateEnd = new Date(values[2]);
+        var dateNow = new Date(Date.now());
+        if (isNaN(dateEnd))
+            dateEnd = dateNow;
+        
         var locals = {};
         var firstName = (req.session.firstName) ? req.session.firstName : "";
         var lastName = (req.session.lastName) ? req.session.lastName : "";
@@ -157,8 +166,10 @@ router.get('/leaderboard', function(req, res) {
         locals.nameOpt1 = firstName + " " + lastName;
         locals.nameOpt2 = firstName.charAt(0) + ". " + lastName;
         locals.nameOpt3 = "Anonymous";
+        locals.currentNameOpt = user.displayNameFormat;
         locals.currentPage = startPage || "0";
         locals.pageCount = pageCount;
+        locals.gameOver = (dateEnd <= dateNow);
         res.render('leaderboard', locals);
     });
 });
@@ -212,20 +223,30 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
 router.get('/winner', function(req, res) {
     // var db = req.app.get('db');
     var db = req.app.get('db');
+    var datePromise = db.Strings.get("DATETIME_END_UTC");
+    var userPromise = db.User.findUser(req.session.attendeeId);
 
-    db.User.findUser(req.session.attendeeId).then( user => {
+    Promise.all([datePromise, userPromise]).then( array => {
+        var user;
+        if (array[1])
+            user = array[1];
+
         if (!user) {
             res.status(401).render('error', { 
                 errorText: "No User Record Found", 
                 errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
             });
         } else {
+            var dateEnd = new Date(array[0]);
+            var dateNow = new Date(Date.now());
+            if (isNaN(dateEnd))
+                dateEnd = dateNow;
+
             var locals = {};
             locals.prizeLevel = user.prizeLevel;
+            locals.scoresCalculating =  (dateEnd > dateNow);
             if (req.query.prizeLevel)
                 locals.prizeLevel = req.query.prizeLevel
-            console.log("Prize level is " + user.prizeLevel);
-            console.log(user)
             res.render('winner_page', locals);
         }
     });
