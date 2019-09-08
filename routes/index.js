@@ -246,7 +246,8 @@ router.get('/winner', function(req, res) {
             locals.prizeLevel = user.prizeLevel;
             locals.scoresCalculating =  (dateEnd > dateNow);
             if (req.query.prizeLevel)
-                locals.prizeLevel = req.query.prizeLevel
+                locals.prizeLevel = req.query.prizeLevel;
+            locals.hasClaimedSticker = user.hasClaimedSticker;
             res.render('winner_page', locals);
         }
     });

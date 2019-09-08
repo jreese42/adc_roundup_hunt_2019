@@ -96,6 +96,16 @@ var set_displaynameformat = (req, res) => {
     });
 }
 
+var set_hasclaimedsticker = (req, res) => {
+    var db = req.app.get('db');
+    console.log("User is claiming sticker")
+    db.User.setHasClaimedSticker(req.user.attendeeId, true)
+    .then( result => {
+        console.log(result)
+        res.send(result);
+    });
+}
+
 var submit_password = (req, res) => {
     var db = req.app.get('db');
     db.User.submitPassword(req.user.attendeeId, req.body.solutionId, req.body.password)
@@ -262,6 +272,10 @@ router.post('/user/:attendeeId/name', [authenticator, for_userid, set_custom_nam
 //Set Name Display Option
 router.post('/user/me/displayNameFormat', [for_me, set_displaynameformat]);
 router.post('/user/:attendeeId/displayNameFormat', [authenticator, for_userid, set_displaynameformat]);
+
+//Set Has Claimed Sticker
+router.post('/user/me/claimPrize', [for_me, set_hasclaimedsticker]);
+router.post('/user/:attendeeId/claimPrize', [authenticator, for_userid, set_hasclaimedsticker]);
 
 //Submit password
 router.post('/user/me/submitPassword', [for_me, submit_password]);

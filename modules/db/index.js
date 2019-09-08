@@ -274,6 +274,16 @@ var User = {
         });
         return (numUpdated[0] > 0);
     },
+    setHasClaimedSticker: async (attendeeId, hasClaimedSticker) => {
+        var numUpdated = await models.user.update(
+        {
+            hasClaimedSticker: hasClaimedSticker
+        },
+        {
+            where: { attendeeId: parseInt(attendeeId) }
+        });
+        return (numUpdated[0] > 0);
+    },
     submitPassword: async (attendeeId, puzzleId, submittedPass) => {
         if (!submittedPass || !puzzleId || !attendeeId)
             return false;

@@ -52,7 +52,6 @@ $(document).ready(function() {
     var countdownSeconds;
     var countdownTimer;
     if ($("#gameCountdownClock")){
-        console.log("Setting countdown")
         var dateStart = new Date($("#gameCountdownClock").attr("data-start-time"));
         var dateNow = new Date(Date.now());
         if (!isNaN(dateStart)) {
