@@ -46,7 +46,9 @@ module.exports = (sequelize, DataTypes) => {
     solution9: {type: DataTypes.BOOLEAN, defaultValue: false},
     prizeLevel: {type: DataTypes.ENUM('none', 'bluesticker', 'yellowsticker', 'starsticker'), defaultValue: 'none'},
     score: { type: DataTypes.INTEGER, defaultValue: 0},
-    hasClaimedSticker: {type: DataTypes.BOOLEAN, defaultValue: false}
+    hasClaimedSticker: {type: DataTypes.BOOLEAN, defaultValue: false},
+    blogSeenList: {type: DataTypes.ARRAY(DataTypes.INTEGER), defaultValue: []},
+    blogSolvedList: {type: DataTypes.ARRAY(DataTypes.INTEGER), defaultValue: []}
   }, { sequelize, modelName: 'User' });
 
   return User;

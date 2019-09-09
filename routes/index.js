@@ -19,14 +19,18 @@ router.get('/', function(req, res, next) {
         var dateStart = new Date(dateStartStr);
         if (isNaN(dateStart) || date >= dateStart) {
             //Game is on! Send the blog page.
-            db.BlogPost.getActivePosts(date).then( blogList => {
+            var blogsPromise = db.BlogPost.getActivePosts(date);
+            var seenAndSolvedPromise = db.User.getSeenAndSolvedBlogs(req.session.attendeeId);
+            Promise.all([blogsPromise, seenAndSolvedPromise]).then( values => {
+                var blogList = values[0];
+                var seenAndSolved = values[1];
+
                 var locals = {
                     blog_posts: []
                 };
-            
                 for (var i=0; i<blogList.length; i++){
                     blogList[i].entryUrl = "/blog/entry/" + blogList[i].blogId;
-                    blogList[i].isNew = false;
+                    blogList[i].isNew = (!seenAndSolved.seen.includes(parseInt(blogList[i].blogId)));
                     locals.blog_posts[i] = blogList[i];
                 }
             
@@ -133,6 +137,7 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
             var locals = {blog: {}};
             locals.blog = blogPost;
             res.render('blog_entry', locals);
+            db.User.markBlogSeen(req.session.attendeeId, req.params.entryId).then(() => {console.log("seen marked")});
         } else {
             res.status(404).render('error', { 
                 errorText: "Sorry, I couldn't find what you were looking for.", 
@@ -192,32 +197,6 @@ router.get('/user/login', function(req, res) {
     req.session.lastName = req.query.lastName || "";
 
     res.redirect('/');
-});
-
-router.get('/blog/entry/:entryId', function(req, res, next) {
-    var db = req.app.get('db');
-
-    var date = new Date(Date.now());
-    //Admin option allows querying for a datetime that isn't now
-    if (req.query.d && req.session.isAdmin) {
-        var forDate = new Date(req.query.d);
-        if (!isNaN(forDate))
-            date = forDate;
-    }
-    
-    db.BlogPost.getPostIfActive(req.params.entryId, date).then( blogPost => {
-        if (blogPost) {
-            blogPost.isNew = false;
-            var locals = {blog: {}};
-            locals.blog = blogPost;
-            res.render('blog_entry', locals);
-        } else {
-            res.status(404).render('error', { 
-                errorText: "Sorry, I couldn't find what you were looking for.", 
-                errorSubtext: "The page you tried to reach does not exist.  Please go back and try again."
-            });
-        }
-    });
 });
 
 router.get('/winner', function(req, res) {

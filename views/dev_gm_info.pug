@@ -1,0 +1,27 @@
+extends layout_light
+
+include mixins/blog/blog_header.pug
+include mixins/navbar_sticky.pug
+include mixins/blog/blog_card.pug
+include mixins/blog/blog_footer.pug
+
+block content
+  .container
+    .row.align-items-center
+      .col-md-6.col-center.text-center.align-middle
+        .blog_header.align-middle
+          h1 Game Info
+    
+    .row.align-items-center
+      .col-md-2.offset-md-2
+        a(href="/admin").backButton
+          i.fas.fa-chevron-left.fa-2x
+          |  Back     
+    .row
+      .col-md-8.offset-md-2
+        h2 Players
+    .row
+      .col-md-8.offset-md-2
+        p Total Players: #{totalPlayerCount}
+
+  +blog_footer

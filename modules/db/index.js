@@ -149,6 +149,7 @@ var Defaults = {
 
 
 //validating communcation to the database 
+console.log("Connecting to database.  Dialect = " + sequelize.getDialect());
 sequelize.authenticate().then(() => {
     console.log('Connection established successfully.');
     }).catch(err => {
@@ -329,40 +330,40 @@ var User = {
                 }
                 
                 if (puzzleId == 1) {
-                    if (!user.solution1) user.score += userPoints;
-                    user.solution1 = true;
+                    if (!user.solution1) user.set('score', user.score + userPoints);
+                    user.set('solution1', true);
                 }
                 else if (puzzleId == 2) {
-                    if (!user.solution2) user.score += userPoints;
-                    user.solution2 = true;
+                    if (!user.solution2) user.set('score', user.score + userPoints);
+                    user.set('solution2', true);
                 }
                 else if (puzzleId == 3) {
-                    if (!user.solution3) user.score += userPoints;
-                    user.solution3 = true;
+                    if (!user.solution3) user.set('score', user.score + userPoints);
+                    user.set('solution3', true);
                 }
                 else if (puzzleId == 4) {
-                    if (!user.solution4) user.score += userPoints;
-                    user.solution4 = true;
+                    if (!user.solution4) user.set('score', user.score + userPoints);
+                    user.set('solution4', true);
                 }
                 else if (puzzleId == 5) {
-                    if (!user.solution5) user.score += userPoints;
-                    user.solution5 = true;
+                    if (!user.solution5) user.set('score', user.score + userPoints);
+                    user.set('solution5', true);
                 }
                 else if (puzzleId == 6) {
-                    if (!user.solution6) user.score += userPoints;
-                    user.solution6 = true;
+                    if (!user.solution6) user.set('score', user.score + userPoints);
+                    user.set('solution6', true);
                 }
                 else if (puzzleId == 7) {
-                    if (!user.solution7) user.score += userPoints;
-                    user.solution7 = true;
+                    if (!user.solution7) user.set('score', user.score + userPoints);
+                    user.set('solution7', true);
                 }
                 else if (puzzleId == 8) {
-                    if (!user.solution8) user.score += userPoints;
-                    user.solution8 = true;
+                    if (!user.solution8) user.set('score', user.score + userPoints);
+                    user.set('solution8', true);
                 }
                 else if (puzzleId == 9) {
-                    if (!user.solution9) user.score += userPoints;
-                    user.solution9 = true;
+                    if (!user.solution9) user.set('score', user.score + userPoints);
+                    user.set('solution9', true);
                 }
 
                 //Update the user prizeLevel
@@ -373,7 +374,7 @@ var User = {
 
                 //award the common prize
                 if (user.prizeLevel == "none")
-                    user.prizeLevel = "bluesticker";
+                    user.set('prizeLevel', "bluesticker");
 
                 var numFirstPrizes = 50;
                 var numSecondPrizes = 100;
@@ -391,7 +392,7 @@ var User = {
 
                 //save the new scores back to the db
                 var userSavePromise = user.save();
-                puzzle.solvedCount += 1;
+                puzzle.set('solvedCount', puzzle.solvedCount + 1);
                 puzzle.save();
 
                 userSavePromise.then( () => {
@@ -411,7 +412,7 @@ var User = {
                             //players that were in the old list, but not the new list get dropped
                             if (!firstPrize_after.includes(firstPrize_before[i])) {
                                 var userToUpdate = firstPrize_before[i];
-                                userToUpdate.prizeLevel = "bluesticker";
+                                userToUpdate.set('prizeLevel', "bluesticker");
                                 userToUpdate.save();
                             }
                         }
@@ -420,7 +421,7 @@ var User = {
                             //players that were in the old list, but not the new list get dropped
                             if (!secondPrize_after.includes(secondPrize_before[i])) {
                                 var userToUpdate = secondPrize_before[i];
-                                userToUpdate.prizeLevel = "bluesticker";
+                                userToUpdate.set('prizeLevel', "bluesticker");
                                 userToUpdate.save();
                             }
                         }
@@ -429,7 +430,7 @@ var User = {
                             //players in the new list but not in the old list get set                    
                             if (!firstPrize_before.includes(firstPrize_after[i])) {
                                 var userToUpdate = firstPrize_after[i];
-                                userToUpdate.prizeLevel = "starsticker";
+                                userToUpdate.set('prizeLevel', "starsticker");
                                 userToUpdate.save();
                             }
                         }
@@ -438,7 +439,7 @@ var User = {
                             //players in the new list but not in the old list get set                    
                             if (!secondPrize_before.includes(secondPrize_after[i])) {
                                 var userToUpdate = secondPrize_after[i];
-                                userToUpdate.prizeLevel = "yellowsticker";
+                                userToUpdate.set('prizeLevel', "yellowsticker");
                                 userToUpdate.save();
                             }
                         }
@@ -491,6 +492,36 @@ var User = {
     countLeaderboardPages: async () => {
         var count = await models.user.count();
         return Math.ceil(count / 25);
+    },
+    countPlayers: async () => {
+        var count = await models.user.count();
+        return count;
+    },
+    getSeenAndSolvedBlogs: async (attendeeId) => {
+        var user = await models.user.findByPk(parseInt(attendeeId)).catch(() => {return null;});
+        var ret = {};
+        if (user) {
+            ret.seen = user.blogSeenList;
+            ret.solved = user.blogSolvedList;
+        } else {
+            ret.seen = [];
+            ret.solved = [];
+        }
+        return ret;
+    },
+    markBlogSeen: async (attendeeId, blogId) => {
+        models.user.findByPk(parseInt(attendeeId)).then( (user) => {
+            if (user) {
+                if (!user.blogSeenList.includes(blogId)) {
+                        var newList = user.blogSeenList;
+                        newList.push(parseInt(blogId));
+                        user.set('blogSeenList', newList);
+                    user.save();
+                }
+            }
+        }).catch(() => {
+            ;
+        });
     }
 }
 
