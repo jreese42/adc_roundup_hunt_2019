@@ -85,31 +85,51 @@ router.get('/laser', function(req, res) {
                 var secQuestion3 = db.Strings.get("SECURITY_QUESTION_3");
                 var secQuestion4 = db.Strings.get("SECURITY_QUESTION_4");
                 var secQuestion5 = db.Strings.get("SECURITY_QUESTION_5");
-                Promise.all([secQuestion1,secQuestion2,secQuestion3,secQuestion4,secQuestion5])
-                .then( securityQuestions => {
+                var dateStartPromise = db.Strings.get("DATETIME_START_UTC");
+                var dateEndPromise = db.Strings.get("DATETIME_END_UTC");
+                Promise.all([secQuestion1,secQuestion2,secQuestion3,secQuestion4,secQuestion5,dateStartPromise,dateEndPromise])
+                .then( values => {
+                    var dateStart = new Date(values[5]);
+                    var dateEnd = new Date(values[6]);
+                    var dateNow = new Date(Date.now());
+                    var laserChargePercent = 60;
+                    if (!isNaN(dateStart) && !isNaN(dateEnd)) {
+                        if (dateNow < dateStart)
+                            laserChargePercent = 10;
+                        else if (dateNow > dateEnd)
+                            laserChargePercent = 95;
+                        else {
+                            elapsedTime = (dateNow.getTime() - dateStart.getTime());
+                            totalTime = (dateEnd.getTime() - dateStart.getTime());
+                            laserChargePercent = Math.round(Math.round((elapsedTime / totalTime) * 10000) / 105);
+                            if (laserChargePercent < 10) laserChargePercent = 10;
+                        }
+                    }
+
                     locals = {
                         securityQuestions: [
                             {
-                                questionText: securityQuestions[0],
+                                questionText: values[0],
                                 alreadySolved: user.solution1
                             },
                             {
-                                questionText: securityQuestions[1],
+                                questionText: values[1],
                                 alreadySolved: user.solution2
                             },
                             {
-                                questionText: securityQuestions[2],
+                                questionText: values[2],
                                 alreadySolved: user.solution3
                             },
                             {
-                                questionText: securityQuestions[3],
+                                questionText: values[3],
                                 alreadySolved: user.solution4
                             },
                             {
-                                questionText: securityQuestions[4],
+                                questionText: values[4],
                                 alreadySolved: user.solution5
                             }
                         ],
+                        laserChargePercent: laserChargePercent,
                         title: "Laser Management Console"
                     };
         

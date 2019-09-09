@@ -55,7 +55,7 @@ block content
           .card-body
             h3.text-warning Charging Laser...
             .progress
-              .progress-bar.progress-bar-striped.progress-bar-animated(role="progressbar", style="width: 60%", aria-valuenow="100", aria-valuemin="0", aria-valuemax="100") 60%
+              .progress-bar.progress-bar-striped.progress-bar-animated(role="progressbar", style="width: " + laserChargePercent +"%", aria-valuenow=laserChargePercent, aria-valuemin="0", aria-valuemax="100") #{laserChargePercent}%
    
     each question, index in securityQuestions
       .row
