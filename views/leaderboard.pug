@@ -11,17 +11,27 @@ block content
       .col-md-6.col-center.text-center.align-middle
         .blog_header.align-middle
           h1 Leaderboard
-  +navbar_sticky_light("leaderboard")
+  if gameOver
+    +navbar_sticky_light_gameover("leaderboard")
+  else
+    +navbar_sticky_light("leaderboard")
   .container
-    .row.offset-md-2.text-center.mt-4
-      h3 Please select how you want your name to appear in the leaderboard.
-    .row.text-center
-      .col-md-3.offset-md-2
-        .btn.btn-secondary.nameOptionSelector(data-name-option="FirstNameLastName") #{nameOpt1}
-      .col-md-2
-        .btn.btn-secondary.nameOptionSelector(data-name-option="FirstInitialLastName") #{nameOpt2}
-      .col-md-3
-        .btn.btn-secondary.nameOptionSelector(data-name-option="Anonymous") #{nameOpt3}
+    if gameOver
+      .row.offset-xl-2.mt-4
+        .col-xl-2.offset-xl-2
+          a(href="/winner").backButton
+            i.fas.fa-chevron-left.fa-2x
+            |  Back to Prize Page
+    if currentNameOpt == "Unknown"
+      .row.offset-md-2.text-center.mt-4
+        h3 Please select how you want your name to appear in the leaderboard.
+      .row.text-center
+        .col-sm-3.offset-sm-2.mt-2
+          .btn.btn-secondary.nameOptionSelector(data-name-option="FirstNameLastName") #{nameOpt1}
+        .col-sm-3.mt-2
+          .btn.btn-secondary.nameOptionSelector(data-name-option="FirstInitialLastName") #{nameOpt2}
+        .col-sm-3.mt-2
+          .btn.btn-secondary.nameOptionSelector(data-name-option="Anonymous") #{nameOpt3}
     .row.mt-3
       .col-md-10.offset-md-1.col-center.mt-3
         h3 Current Standings 
@@ -48,6 +58,29 @@ block content
         a.mx-3(href="#")#link_nextPage Next >
         a.ml-3(href="#")#link_lastPage Last >>
 
+    if currentNameOpt != "Unknown"
+      .row.offset-md-2.text-center.mt-4
+        a(href="#nameSelector", data-toggle="collapse", aria-expanded="false", aria-controls="nameSelector") Click here to change how your name appears in the leaderboard...
+      .collapse#nameSelector
+        .container
+          .row.offset-md-2.text-center.mt-4
+            h3 Please select how you want your name to appear in the leaderboard.
+          .row.text-center
+            .col-sm-3.offset-sm-2.mt-2
+              if currentNameOpt == "FirstNameLastName"
+                .btn.btn-dark.nameOptionSelector(data-name-option="FirstNameLastName") #{nameOpt1}
+              else
+                .btn.btn-secondary.nameOptionSelector(data-name-option="FirstNameLastName") #{nameOpt1}
+            .col-sm-3.mt-2
+              if currentNameOpt == "FirstInitialLastName"
+                .btn.btn-dark.nameOptionSelector(data-name-option="FirstInitialLastName") #{nameOpt2}
+              else
+                .btn.btn-secondary.nameOptionSelector(data-name-option="FirstInitialLastName") #{nameOpt2}
+            .col-sm-3.mt-2
+              if currentNameOpt == "Anonymous"
+                .btn.btn-dark.nameOptionSelector(data-name-option="Anonymous") #{nameOpt3}
+              else
+                .btn.btn-secondary.nameOptionSelector(data-name-option="Anonymous") #{nameOpt3}
 
   +blog_footer
   

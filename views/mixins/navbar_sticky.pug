@@ -54,3 +54,24 @@ mixin navbar_sticky_dark(active_page)
             a#nav-link-laser.nav-link(href="/laser") Space Laser Management
         li.nav-item.nav
           a#nav-link-leaderboard.nav-link(href="/leaderboard") Leaderboard
+
+
+mixin navbar_sticky_light_gameover(active_page)
+  nav.navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.pl-12
+    .navbar-brand
+      a(href="/")
+        img.navbar-logo(src="/img/gun_logo.png")
+    button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbar-content", aria-controls="navbar-content", aria-expanded="false", aria-label="Toggle navigation")
+      span.navbar-toggler-icon
+    .collapse.navbar-collapse#navbar-content
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          if active_page == "prize"
+            a#nav-link-home.nav-link.active(href="/winner") Prize Page
+          else
+            a#nav-link-home.nav-link(href="/winner") Prize Page
+        li.nav-item.nav
+          if active_page == "leaderboard"
+            a#nav-link-leaderboard.nav-link(href="/leaderboard").active Leaderboard
+          else
+            a#nav-link-leaderboard.nav-link(href="/leaderboard") Leaderboard

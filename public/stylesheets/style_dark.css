@@ -4561,3 +4561,9 @@ img.invert {
 .progress {
   height: 28px;
   font: 16px "Tajawal", sans-serif; }
+
+#footerLogo {
+  width: 80px; }
+
+.footer-link {
+  font-size: 13px; }

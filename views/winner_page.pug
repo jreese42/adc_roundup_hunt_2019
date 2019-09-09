@@ -1,0 +1,197 @@
+extends layout_colorful
+
+block content
+    .game_info_container
+        .angled-jumbotron
+            h1 
+                img(src="img/ADCLogo.svg", alt="Alarm.com").inline-logo
+                |  RoundUP Hunt 2019
+            h3 Thank you for playing!
+        .parallax-window(data-parallax="scroll", data-image-src="/img/space7.jpg", data-position="top", data-bleed="10")
+        .slide_section#section-rules.container-dark
+            #titlebar-rules
+                if prizeLevel != "none"
+                    h1 You're a Winner!
+                else
+                    h1 Thanks for Playing!
+            .container
+                if prizeLevel == "none"
+                    .row.align-items-center.mt-3
+                        .col-sm-6.offset-sm-2.mx-auto
+                            img#prizeImage.disabled(src="/img/prize3.png").my-4.mx-auto
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            h3.text-light The game has ended
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            p.text-light.text-center Unfortunately you didn't qualify for a prize, but we hope you had fun.  Contact the Gamemasters with any questions, comments or concerns.
+                        .col-sm-8.offset-sm-2
+                else if scoresCalculating
+                    .row.align-items-center.mt-3
+                        .col-sm-6.offset-sm-2.mx-auto
+                            img#prizeImage.disabled(src="/img/prize3.png").my-4
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            h3.text-light Results are still being calculated...
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            p.text-light.text-center Check back here after 9pm for details on claiming your prize!
+                        .col-sm-8.offset-sm-2
+                else if prizeLevel == "starsticker"
+                    if !hasClaimedSticker
+                        .row.align-items-center.mt-3
+                            .col-sm-6.offset-sm-2.mx-auto
+                                img#prizeImage(src="/img/prize1.png").my-4
+                        .collapse#claimPrizeCollapse
+                            .row.align-items-center.mt-3
+                                .col-sm-8.offset-sm-2.mx-auto
+                                    p.text-light Click the button below when you receive your prize.  This cannot be undone!
+                                    #btnClaimPrize.btn.btn-info.btn-lg.mb-4 I received my sticker
+                    else
+                        .row.align-items-center.mt-3
+                            .col-sm-6.offset-sm-2.mx-auto
+                                img#prizeImage.disabled(src="/img/prize1.png").my-4
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            h3.text-light Congratulations! 
+                            h5.text-light You were in the top 50 players!
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            p.text-light This top prize sticker is only awarded to the highest scoring players in the game.  Display it proudly!
+                else if prizeLevel == "yellowsticker"
+                    if !hasClaimedSticker
+                        .row.align-items-center.mt-3
+                            .col-sm-6.offset-sm-2.mx-auto
+                                img#prizeImage(src="/img/prize2.png").my-4
+                        .collapse#claimPrizeCollapse
+                            .row.align-items-center.mt-3
+                                .col-sm-8.offset-sm-2.mx-auto
+                                    p.text-light Click the button below when you receive your prize.  This cannot be undone!
+                                    #btnClaimPrize.btn.btn-info.btn-lg.mb-4 I receved my sticker
+                    else
+                        .row.align-items-center.mt-3
+                            .col-sm-6.offset-sm-2.mx-auto
+                                img#prizeImage.disabled(src="/img/prize2.png").my-4
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            h3.text-light Congratulations!  
+                            h5.text-light You were in the top 150 players!
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            p.text-light This prize sticker is awarded to the highest scoring players in the game.  Display it proudly!
+                else
+                    if !hasClaimedSticker
+                        .row.align-items-center.mt-3
+                            .col-sm-6.offset-sm-2.mx-auto
+                                img#prizeImage(src="/img/prize3.png").my-4
+                        .collapse#claimPrizeCollapse
+                            .row.align-items-center.mt-3
+                                .col-sm-8.offset-sm-2.mx-auto
+                                    p.text-light Click the button below when you receive your prize.  This cannot be undone!
+                                    #btnClaimPrize.btn.btn-info.btn-lg.mb-4 I receved my sticker
+                    else
+                        .row.align-items-center.mt-3
+                            .col-sm-6.offset-sm-2.mx-auto
+                                img#prizeImage.disabled(src="/img/prize3.png").my-4
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            h3.text-light Congratulations!
+                    .row.align-items-center.mt-3
+                        .col-sm-8.offset-sm-2
+                            p.text-light This prize sticker is yours for playing the game.  Display it proudly!
+
+                if prizeLevel != "none"
+                    if !hasClaimedSticker
+                        .row.align-items-center.mt-5
+                            .col-sm-6.offset-sm-3
+                                h3.text-light Collecting Your Prize
+                            .col-sm-8.offset-sm-2
+                                p.text-light.text-center Visit us in the main lobby on Sunday Morning between 9am and 11am.
+                                p.text-light.text-center You can also find Adam Feinstein, Alex Levine, Albert Lin, Samantha Mendis, JD Reese, or Gavin Philips in person to claim your prize.
+                    else
+                        .row.align-items-center.mt-5
+                            .col-sm-6.offset-sm-3
+                                h3.text-light Prize Claimed!
+                .row.align-items-center.my-4
+                    .col-sm-12
+                        a(href="/leaderboard").btn.btn-info.btn-lg.mx-auto View Leaderboard
+
+        .parallax-window(data-parallax="scroll", data-image-src="/img/space5.jpg", data-position="top", data-bleed="10")
+        .slide_section#section-contact.container-dark
+            #titlebar-contact
+                h1 Contact Us
+            .container
+                .row.align-items-center.mt-3
+                    .col-sm-2.offset-sm-2
+                        .circle-icon-light.small
+                            i.fas.fa-paper-plane.fa-3x
+                    .col-sm-6.mt-2
+                        p.help-text-light RoundUPHunt@alarm.com
+                .row.align-items-center
+                    .col-sm-2.order-sm-last
+                        .circle-icon-light.small
+                            i.fab.fa-twitter.fa-3x
+                    .col-sm-6.mt-2.offset-sm-2
+                        p.justify-right.help-text-light @rounduphunt
+
+                .row.align-items-center
+                    .col-sm-2.offset-sm-2
+                        .circle-icon-light.small
+                            i.fab.fa-instagram.fa-3x
+                    .col-sm-6.mt-2
+                        p.help-text-light @rounduphunt
+
+                .row.align-items-center
+                    .col-sm-2.order-sm-last
+                        .circle-icon-light.small
+                            i.fas.fa-users.fa-3x
+                    .col-sm-6.offset-sm-2.mt-2
+                        p.help-text-light @rounduphunt
+
+        .parallax-window(data-parallax="scroll", data-image-src="/img/space7.jpg", data-position="top", data-bleed="10")
+        .slide_section#section-acknowledgements.container-light
+            #titlebar-acknowledgements
+                h1 Acknowledgements
+            .container#section-acknowledgements
+                .row.align-items-center.mt-3
+                    .col-sm-10.offset-sm-1
+                        p This game is the result of many hours of design, development, and testing.  Thank you to everyone involved!
+                    
+                .row.align-items-center.mt-2
+                    .col-sm-8.offset-sm-2
+                        h4 Game Design by 
+                            b JD Reese
+                
+                .row.align-items-center.mt-3
+                    .col-sm-8.offset-sm-2
+                        h4 Puzzle Design by 
+                        h5 
+                            b Adam Feinstein
+                        h5 
+                            b Alex Levine
+                        h5 
+                            b Albert Lin
+                        h5 
+                            b Samantha Mendis
+                        h5 
+                            b JD Reese
+                        h5 
+                            b Gavin Philips
+                
+                .row.align-items-center.mt-3
+                    .col-sm-8.offset-sm-2
+                        h4 
+                            b Special Thanks
+                
+                .row.align-items-center.mt-1
+                    .col-sm-8.offset-sm-2
+                        h6 Kristin Jones, Dan Lozano, Hope King, and everyone who helped test during the trial runs.
+                    
+                .row.align-items-center.mt-2
+                    .col-sm-8.offset-sm-2.mb-3
+                        h3
+                            b Thank you for playing!
+        
+        .parallax-window(data-parallax="scroll", data-image-src="/img/space3.jpg", data-position="bottom", data-bleed="10").small
+
+    script(src='/js/winner_page.js')

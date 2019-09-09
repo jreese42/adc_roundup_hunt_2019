@@ -31,10 +31,5 @@ module.exports = {
             // Game hasn't started, no reason to hit the db
             return;
         }
-
-        // TODO - Query should be something like:
-        // `SELECT event_id, event_time FROM events WHERE event_time > ${gameDuration} ORDER BY event_id ASC LIMIT 1`
-        // Basically, pull the first event -after- the current game time, and from that we can update nextEventTime
-        // (startTime + the event_time column) and latestEventId (event_id - 1, assuming they're numerical and sequential).
     }
 };

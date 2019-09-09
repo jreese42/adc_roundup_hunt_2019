@@ -4464,7 +4464,7 @@ a {
 .angled-jumbotron {
   color: #fff;
   background-color: #52BFDF;
-  font-family: "Rubik", sans-serif;
+  font-family: "Baloo Bhaina", sans-serif;
   text-align: center;
   padding: 10% 0;
   position: relative;
@@ -4497,7 +4497,6 @@ img.inline-logo {
   overflow: hidden;
   clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%);
   color: #eaebeb;
-  background-color: #F20986;
   background-color: #3D6EB5;
   top: -1px; }
   @supports not (clip-path: polygon(0 calc(0% + 4vw), 100% 0, 100% 100%, 0 100%)) {
@@ -4698,3 +4697,12 @@ i.checkmark-glyph.error {
 
 i.checkmark-glyph.neutral {
   color: #323840; }
+
+#prizeImage {
+  width: 15rem;
+  margin-left: auto;
+  margin-right: auto; }
+  #prizeImage.disabled {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%); }

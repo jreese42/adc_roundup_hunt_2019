@@ -19,14 +19,18 @@ router.get('/', function(req, res, next) {
         var dateStart = new Date(dateStartStr);
         if (isNaN(dateStart) || date >= dateStart) {
             //Game is on! Send the blog page.
-            db.BlogPost.getActivePosts(date).then( blogList => {
+            var blogsPromise = db.BlogPost.getActivePosts(date);
+            var seenAndSolvedPromise = db.User.getSeenAndSolvedBlogs(req.session.attendeeId);
+            Promise.all([blogsPromise, seenAndSolvedPromise]).then( values => {
+                var blogList = values[0];
+                var seenAndSolved = values[1];
+
                 var locals = {
                     blog_posts: []
                 };
-            
                 for (var i=0; i<blogList.length; i++){
                     blogList[i].entryUrl = "/blog/entry/" + blogList[i].blogId;
-                    blogList[i].isNew = false;
+                    blogList[i].isNew = (!seenAndSolved.seen.includes(parseInt(blogList[i].blogId)));
                     locals.blog_posts[i] = blogList[i];
                 }
             
@@ -35,7 +39,8 @@ router.get('/', function(req, res, next) {
         } else {
             //Game has not started yet, redirect to landing page
             var locals = {
-                startTime: dateStart.toISOString()
+                startTime: dateStart.toISOString(),
+                gameHasStarted: false
             };
             res.render('game_info_page', locals);
         }
@@ -49,10 +54,12 @@ router.get('/about', function(req, res, next) {
     var db = req.app.get('db');
     db.Strings.get("DATETIME_START_UTC").then( dateStartStr => {
         var dateStart = new Date(dateStartStr);
+        var dateNow = new Date(Date.now());
         if (isNaN(dateStart))
-            dateStart = new Date(Date.now());
+            dateStart = dateNow;
         var locals = {
-            startTime: dateStart.toISOString()
+            startTime: dateStart.toISOString(),
+            gameHasStarted: (dateStart < dateNow)
         };
         res.render('game_info_page', locals);
     });
@@ -78,31 +85,51 @@ router.get('/laser', function(req, res) {
                 var secQuestion3 = db.Strings.get("SECURITY_QUESTION_3");
                 var secQuestion4 = db.Strings.get("SECURITY_QUESTION_4");
                 var secQuestion5 = db.Strings.get("SECURITY_QUESTION_5");
-                Promise.all([secQuestion1,secQuestion2,secQuestion3,secQuestion4,secQuestion5])
-                .then( securityQuestions => {
+                var dateStartPromise = db.Strings.get("DATETIME_START_UTC");
+                var dateEndPromise = db.Strings.get("DATETIME_END_UTC");
+                Promise.all([secQuestion1,secQuestion2,secQuestion3,secQuestion4,secQuestion5,dateStartPromise,dateEndPromise])
+                .then( values => {
+                    var dateStart = new Date(values[5]);
+                    var dateEnd = new Date(values[6]);
+                    var dateNow = new Date(Date.now());
+                    var laserChargePercent = 60;
+                    if (!isNaN(dateStart) && !isNaN(dateEnd)) {
+                        if (dateNow < dateStart)
+                            laserChargePercent = 10;
+                        else if (dateNow > dateEnd)
+                            laserChargePercent = 95;
+                        else {
+                            elapsedTime = (dateNow.getTime() - dateStart.getTime());
+                            totalTime = (dateEnd.getTime() - dateStart.getTime());
+                            laserChargePercent = Math.round(Math.round((elapsedTime / totalTime) * 10000) / 105);
+                            if (laserChargePercent < 10) laserChargePercent = 10;
+                        }
+                    }
+
                     locals = {
                         securityQuestions: [
                             {
-                                questionText: securityQuestions[0],
+                                questionText: values[0],
                                 alreadySolved: user.solution1
                             },
                             {
-                                questionText: securityQuestions[1],
+                                questionText: values[1],
                                 alreadySolved: user.solution2
                             },
                             {
-                                questionText: securityQuestions[2],
+                                questionText: values[2],
                                 alreadySolved: user.solution3
                             },
                             {
-                                questionText: securityQuestions[3],
+                                questionText: values[3],
                                 alreadySolved: user.solution4
                             },
                             {
-                                questionText: securityQuestions[4],
+                                questionText: values[4],
                                 alreadySolved: user.solution5
                             }
                         ],
+                        laserChargePercent: laserChargePercent,
                         title: "Laser Management Console"
                     };
         
@@ -130,6 +157,7 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
             var locals = {blog: {}};
             locals.blog = blogPost;
             res.render('blog_entry', locals);
+            db.User.markBlogSeen(req.session.attendeeId, req.params.entryId);
         } else {
             res.status(404).render('error', { 
                 errorText: "Sorry, I couldn't find what you were looking for.", 
@@ -142,11 +170,20 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
 router.get('/leaderboard', function(req, res) {
     var db = req.app.get('db');
     var pageCountPromise = db.User.countLeaderboardPages();
+    var userPromise =  db.User.findUser(req.session.attendeeId);
     var startPagePromise = db.User.getLeaderboardPageNumForUser(req.session.attendeeId);
+    var datePromise = db.Strings.get("DATETIME_END_UTC");
     
-    Promise.all([pageCountPromise, startPagePromise]).then( values => {
+    Promise.all([pageCountPromise, startPagePromise, datePromise, userPromise]).then( values => {
         var pageCount = values[0];
         var startPage = values[1];
+        var user = values[3];
+        
+        var dateEnd = new Date(values[2]);
+        var dateNow = new Date(Date.now());
+        if (isNaN(dateEnd))
+            dateEnd = dateNow;
+        
         var locals = {};
         var firstName = (req.session.firstName) ? req.session.firstName : "";
         var lastName = (req.session.lastName) ? req.session.lastName : "";
@@ -154,8 +191,10 @@ router.get('/leaderboard', function(req, res) {
         locals.nameOpt1 = firstName + " " + lastName;
         locals.nameOpt2 = firstName.charAt(0) + ". " + lastName;
         locals.nameOpt3 = "Anonymous";
+        locals.currentNameOpt = user.displayNameFormat;
         locals.currentPage = startPage || "0";
         locals.pageCount = pageCount;
+        locals.gameOver = (dateEnd <= dateNow);
         res.render('leaderboard', locals);
     });
 });
@@ -178,6 +217,39 @@ router.get('/user/login', function(req, res) {
     req.session.lastName = req.query.lastName || "";
 
     res.redirect('/');
+});
+
+router.get('/winner', function(req, res) {
+    // var db = req.app.get('db');
+    var db = req.app.get('db');
+    var datePromise = db.Strings.get("DATETIME_END_UTC");
+    var userPromise = db.User.findUser(req.session.attendeeId);
+
+    Promise.all([datePromise, userPromise]).then( array => {
+        var user;
+        if (array[1])
+            user = array[1];
+
+        if (!user) {
+            res.status(401).render('error', { 
+                errorText: "No User Record Found", 
+                errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
+            });
+        } else {
+            var dateEnd = new Date(array[0]);
+            var dateNow = new Date(Date.now());
+            if (isNaN(dateEnd))
+                dateEnd = dateNow;
+
+            var locals = {};
+            locals.prizeLevel = user.prizeLevel;
+            locals.scoresCalculating =  (dateEnd > dateNow);
+            if (req.query.prizeLevel)
+                locals.prizeLevel = req.query.prizeLevel;
+            locals.hasClaimedSticker = user.hasClaimedSticker;
+            res.render('winner_page', locals);
+        }
+    });
 });
 /* eslint-enable no-unused-vars */
 

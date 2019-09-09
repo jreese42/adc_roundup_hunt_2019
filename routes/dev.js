@@ -78,4 +78,16 @@ router.get('/database', function(req, res)
   res.render('dev_db_mgmt');
 });
 
+router.get('/gameinfo', function(req, res) 
+{
+  var db = req.app.get('db');
+  var userCountPromise = db.User.countPlayers();
+  Promise.all([userCountPromise]).then( values => {
+    userCount = values[0];
+    var locals = {}
+    locals.totalPlayerCount = userCount;
+    res.render('dev_gm_info', locals);
+  });
+});
+
 module.exports = router;
