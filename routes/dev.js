@@ -83,7 +83,6 @@ router.get('/gameinfo', function(req, res)
   var db = req.app.get('db');
   var userCountPromise = db.User.countPlayers();
   Promise.all([userCountPromise]).then( values => {
-    console.log(values)
     userCount = values[0];
     var locals = {}
     locals.totalPlayerCount = userCount;

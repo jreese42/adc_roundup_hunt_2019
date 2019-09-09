@@ -13,7 +13,6 @@ $(document).ready(function() {
     }
 
     $( "#btnClaimPrize" ).click(function(event) {
-        console.log("Click!")
         $.ajax({
             url: "/api/user/me/claimPrize",
             method: 'POST'

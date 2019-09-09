@@ -98,10 +98,8 @@ var set_displaynameformat = (req, res) => {
 
 var set_hasclaimedsticker = (req, res) => {
     var db = req.app.get('db');
-    console.log("User is claiming sticker")
     db.User.setHasClaimedSticker(req.user.attendeeId, true)
     .then( result => {
-        console.log(result)
         res.send(result);
     });
 }

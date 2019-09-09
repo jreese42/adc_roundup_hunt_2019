@@ -157,7 +157,7 @@ router.get('/blog/entry/:entryId', function(req, res, next) {
             var locals = {blog: {}};
             locals.blog = blogPost;
             res.render('blog_entry', locals);
-            db.User.markBlogSeen(req.session.attendeeId, req.params.entryId).then(() => {console.log("seen marked")});
+            db.User.markBlogSeen(req.session.attendeeId, req.params.entryId);
         } else {
             res.status(404).render('error', { 
                 errorText: "Sorry, I couldn't find what you were looking for.", 
