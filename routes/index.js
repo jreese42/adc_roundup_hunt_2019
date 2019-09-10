@@ -8,7 +8,25 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     var db = req.app.get('db');
 
-    db.Strings.get("DATETIME_START_UTC").then( dateStartStr => {
+    var userPromise = db.User.findUser(req.session.attendeeId);
+    var dateStartPromise = db.Strings.get("DATETIME_START_UTC");
+    var dateEndPromise = db.Strings.get("DATETIME_END_UTC");
+    Promise.all([userPromise, dateStartPromise, dateEndPromise]).then( values => {
+        var user = values[0];
+        var dateStartStr = values[1];
+        var dateEndStr = values[2];
+
+        if (!user) {
+            res.status(401).render('error', { 
+                errorText: "No User Record Found", 
+                errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
+            });
+        }
+        if (user.solution6) {
+            //User has already input the final password. Skip to the prize page.
+            res.redirect('/winner');
+        }
+
         var date = new Date(Date.now());
         //Admin option allows querying for a datetime that isn't now
         if (req.query.d && req.session.isAdmin) {
@@ -16,6 +34,13 @@ router.get('/', function(req, res, next) {
             if (!isNaN(forDate))
                 date = forDate;
         }
+
+        var dateEnd = new Date(dateEndStr);
+        if (!isNaN(dateEnd) && date > dateEnd) {
+            //Game is over, redirect to the prize page
+            res.redirect('/winner');
+        }
+
         var dateStart = new Date(dateStartStr);
         if (isNaN(dateStart) || date >= dateStart) {
             //Game is on! Send the blog page.
@@ -202,6 +227,9 @@ router.get('/leaderboard', function(req, res) {
 router.get('/user/login', function(req, res) {
 
     var db = req.app.get('db');
+    console.log("User login: id=" + req.query.attendeeId + 
+                ", firstname=" + req.query.firstName +
+                ", lastname=" + req.query.lastName);
 
     db.User.checkExists(req.query.attendeeId).then( exists => {
         if (!exists) {
