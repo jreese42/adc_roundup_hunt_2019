@@ -30,7 +30,7 @@ block content
         form.form-inline#form_findUser
           .form-group
             label(for="findUser_attendeeIdField") Attendee ID
-            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#findUser_attendeeIdField
+            input(type="text", name="attendeeId", placeholder="Enter Attendee ID").form-control#findUser_attendeeIdField
 
           button(type="submit").btn.btn-primary Submit
     .row.mt-3
@@ -42,7 +42,7 @@ block content
         .col-md-3.offset-md-1
           .form-group
             label(for="createUser_attendeeIdField") Attendee ID
-            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#createUser_attendeeIdField
+            input(type="text", name="attendeeId", placeholder="Enter Attendee ID").form-control#createUser_attendeeIdField
         
         .col-md-3
           .form-group
@@ -65,7 +65,7 @@ block content
         form.form-inline#form_deleteUser
           .form-group
             label(for="deleteUser_attendeeIdField") Attendee ID
-            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#deleteUser_attendeeIdField
+            input(type="text", name="attendeeId", placeholder="Enter Attendee ID").form-control#deleteUser_attendeeIdField
 
           button(type="submit").btn.btn-primary Submit
 
@@ -77,7 +77,7 @@ block content
         form.form-inline#form_setUserName
           .form-group
             label(for="setUserName_attendeeIdField") Attendee ID
-            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#setUserName_attendeeIdField
+            input(type="text", name="attendeeId", placeholder="Enter Attendee ID").form-control#setUserName_attendeeIdField
           .form-group
             input(type="text", name="customName", placeholder="Custom Name...").form-control#setUserName_propertyField
 
@@ -91,7 +91,7 @@ block content
         form.form-inline#form_setDisplayFormat
           .form-group
             label(for="setDisplayFormat_attendeeIdField") Attendee ID
-            input(type="number", name="attendeeId", placeholder="Enter Attendee ID").form-control#setDisplayFormat_attendeeIdField
+            input(type="text", name="attendeeId", placeholder="Enter Attendee ID").form-control#setDisplayFormat_attendeeIdField
           .form-group
             label(for="setDisplayFormat_propertyField") Display Format
             select(name="displayNameFormat").form-control#setDisplayFormat_propertyField

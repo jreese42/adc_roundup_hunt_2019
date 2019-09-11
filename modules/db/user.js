@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Sequelize.Model {};
   User.init({
-    attendeeId: {type: DataTypes.INTEGER, primaryKey: true},
+    attendeeId: {type: DataTypes.STRING(50), primaryKey: true},
     firstName: DataTypes.STRING(255),
     lastName: DataTypes.STRING(255),
     displayNameFormat: {
