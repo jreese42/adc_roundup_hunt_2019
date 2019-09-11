@@ -83,7 +83,7 @@ $(document).ready(function() {
         if (seconds < 10) seconds = "0" + seconds;
         
         if (hours >= 12) {
-            days = parseInt(Math.ceil(hours / 24));
+            days = parseInt(Math.floor(hours / 24));
             plural = (days == 1) ? "" : "s";
             $("#gameCountdownClock").text(days + " day" + plural);
         }
