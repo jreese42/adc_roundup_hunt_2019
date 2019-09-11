@@ -240,7 +240,7 @@ router.get('/user/login', function(req, res) {
         }
     });
     
-    req.session.attendeeId = req.query.attendeeId || 0;
+    req.session.attendeeId = req.query.attendeeId || "0";
     req.session.firstName = req.query.firstName || "";
     req.session.lastName = req.query.lastName || "";
 

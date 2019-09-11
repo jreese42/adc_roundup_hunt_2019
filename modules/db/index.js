@@ -223,19 +223,19 @@ var Strings = {
 /* User Management */
 var User = {
     findUser: async (attendeeId) => {
-        var user = await models.user.findByPk(parseInt(attendeeId)).catch(() => {return null;});
+        var user = await models.user.findByPk(attendeeId).catch(() => {return null;});
         return user;
     },
     createUser: async (attendeeId, first, last) => {
         var user = await models.user.findOrCreate(
             { 
-                where: { attendeeId: parseInt(attendeeId) },
+                where: { attendeeId: attendeeId },
                 defaults: {firstName:first, lastName: last}
             });
         return user[1];
     },
     checkExists: async (attendeeId) => {
-        var count = await models.user.count({ where: { attendeeId: parseInt(attendeeId) } });
+        var count = await models.user.count({ where: { attendeeId: attendeeId } });
         if (count != 0) {
             return true;
         }
@@ -244,7 +244,7 @@ var User = {
     deleteUser: async (attendeeId) => {
         var numDestroyed = await models.user.destroy(
         {
-            where: { attendeeId: parseInt(attendeeId) }
+            where: { attendeeId: attendeeId }
         });
         return (numDestroyed > 0);
     },
@@ -254,7 +254,7 @@ var User = {
             fullName: fullName
         },
         {
-            where: { attendeeId: parseInt(attendeeId) }
+            where: { attendeeId: attendeeId }
         });
         return (numUpdated[0] > 0);
     },
@@ -271,7 +271,7 @@ var User = {
             displayNameFormat: displayNameFormat
         },
         {
-            where: { attendeeId: parseInt(attendeeId) }
+            where: { attendeeId: attendeeId }
         });
         return (numUpdated[0] > 0);
     },
@@ -281,7 +281,7 @@ var User = {
             hasClaimedSticker: hasClaimedSticker
         },
         {
-            where: { attendeeId: parseInt(attendeeId) }
+            where: { attendeeId: attendeeId }
         });
         return (numUpdated[0] > 0);
     },
@@ -302,7 +302,7 @@ var User = {
                 //Correct password - update in table
                 var user = await models.user.findOne(
                     {
-                        where: { attendeeId: parseInt(attendeeId) }
+                        where: { attendeeId: attendeeId }
                     }
                 );
 
@@ -498,7 +498,7 @@ var User = {
         return count;
     },
     getSeenAndSolvedBlogs: async (attendeeId) => {
-        var user = await models.user.findByPk(parseInt(attendeeId)).catch(() => {return null;});
+        var user = await models.user.findByPk(attendeeId).catch(() => {return null;});
         var ret = {};
         if (user) {
             ret.seen = user.blogSeenList;
@@ -510,7 +510,7 @@ var User = {
         return ret;
     },
     markBlogSeen: async (attendeeId, blogId) => {
-        models.user.findByPk(parseInt(attendeeId)).then( (user) => {
+        models.user.findByPk(attendeeId).then( (user) => {
             if (user) {
                 if (!user.blogSeenList.includes(blogId)) {
                         var newList = user.blogSeenList;

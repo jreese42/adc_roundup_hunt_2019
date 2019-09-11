@@ -124,7 +124,7 @@ var get_leaderboard_page = (req, res) => {
                 "index": leaderboardPage[i].leaderboardIndex,
                 "name": leaderboardPage[i].fullName,
                 "score": leaderboardPage[i].score,
-                "isCurrentUser": (leaderboardPage[i].attendeeId == parseInt(req.session.attendeeId))
+                "isCurrentUser": (leaderboardPage[i].attendeeId == req.session.attendeeId)
             };
         }
         res.send(response);
