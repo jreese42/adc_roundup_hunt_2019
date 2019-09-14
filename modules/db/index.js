@@ -7,6 +7,9 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+const numFirstPrizes = 50;
+const numSecondPrizes = 100;
+
 //If production and DATABASE_URL is set, use postgres without logging
 //If not production and DATABASE_URL is set, use postgres with logging
 //If not production and no DATABASE_URL, fall back to sqlite3
@@ -376,8 +379,6 @@ var User = {
                 if (user.prizeLevel == "none")
                     user.set('prizeLevel', "bluesticker");
 
-                var numFirstPrizes = 50;
-                var numSecondPrizes = 100;
                 //Get a list of the top attendeeIds by score
                 var prizes_before = await models.user.findAll({
                     offset: 0,
@@ -547,6 +548,53 @@ var User = {
             }
         }).catch(() => {
             ;
+        });
+    },
+    recalculateAllPrizes: async () => {
+        var firstPrizePromise = models.user.findAll(
+            {
+                order: [
+                    ['score', 'DESC']
+                ],
+                where: {
+                    score: {
+                      [Op.gt]: 0
+                    }
+                },
+                attributes: ['attendeeId', 'score', 'prizeLevel'],
+                offset: 0,
+                limit: numFirstPrizes,
+            }
+        );
+
+        var secondPrizePromise = models.user.findAll(
+            {
+                order: [
+                    ['score', 'DESC']
+                ],
+                where: {
+                    score: {
+                      [Op.gt]: 0
+                    }
+                },
+                attributes: ['attendeeId', 'score', 'prizeLevel'],
+                offset: numFirstPrizes,
+                limit: numSecondPrizes,
+            }
+        );
+
+        Promise.all([firstPrizePromise, secondPrizePromise]).then( values => {
+            firstPrize = values[0];
+            secondPrize = values[1];
+            for (var i = 0; i < firstPrize.length; i++) {
+                firstPrize[i].set('prizeLevel', 'starsticker');
+                firstPrize[i].save();
+            }
+            
+            for (var i = 0; i < secondPrize.length; i++) {
+                secondPrize[i].set('prizeLevel', 'yellowsticker');
+                secondPrize[i].save();
+            }
         });
     }
 }

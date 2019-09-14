@@ -248,6 +248,14 @@ var db_resync_puzzles = (req, res) => {
     });
 }
 
+var db_recalc_prizes = (req, res) => {
+    var db = req.app.get('db');
+    db.User.recalculateAllPrizes()
+    .then( () => {
+        res.send(true);
+    });
+}
+
 router.get('/user/me/', [for_me, get_user]);
 router.get('/user/:attendeeId/', [for_userid, get_user]);
 
@@ -297,11 +305,12 @@ router.get('/string/:referenceName', [authenticator, get_string]);
 router.post('/string/:referenceName', [authenticator, set_string]);
 router.post('/string/:referenceName/delete', [authenticator, delete_string]);
 
-//string
+//database management
 router.delete('/db/syncStrings', [authenticator, db_resync_strings]);
 router.delete('/db/syncUsers', [authenticator, db_resync_users]);
 router.delete('/db/syncBlogPosts', [authenticator, db_resync_blogposts]);
 router.delete('/db/syncPuzzles', [authenticator, db_resync_puzzles]);
+router.post('/db/recalculatePrizes', [authenticator, db_recalc_prizes]);
 
 /* eslint-enable no-unused-vars */
 
