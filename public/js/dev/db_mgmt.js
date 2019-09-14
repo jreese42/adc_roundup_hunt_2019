@@ -41,4 +41,13 @@ $(document).ready(function() {
         });
     });
 
+    $( "#btnCalcPrizes" ).click(function(event) {
+        $.ajax({
+            url: "/api/db/recalculatePrizes",
+            method: 'POST'
+        }).done(function(data) {
+           console.log("Prizes Calculated Successfully");
+        });
+    });
+
 });
