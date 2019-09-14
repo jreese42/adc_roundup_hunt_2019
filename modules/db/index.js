@@ -383,6 +383,11 @@ var User = {
                     offset: 0,
                     limit: numFirstPrizes + numSecondPrizes,
                     attributes: ['attendeeId', 'score', 'prizeLevel'],
+                    where: {
+                        score: {
+                          [Op.gt]: 0
+                        }
+                    },
                     order: [
                         ['score', 'DESC']
                     ]
@@ -400,7 +405,12 @@ var User = {
                     models.user.findAll({
                         offset: 0,
                         limit: numFirstPrizes + numSecondPrizes,
-                        attributes: ['attendeeId', 'score', 'prizeLevel'],
+                        attributes: ['attendeeId', 'score', 'prizeLevel'],  
+                        where: {
+                            score: {
+                              [Op.gt]: 0
+                            }
+                        },
                         order: [
                             ['score', 'DESC']
                         ]
