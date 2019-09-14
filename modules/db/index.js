@@ -433,10 +433,6 @@ var User = {
                         for (var i = 0; i < secondPrize_after.length; i++) {
                             secondPrize_after_ids.push(secondPrize_after[i].get('attendeeId'));
                         }
-                        console.log(firstPrize_before);
-                        console.log(firstPrize_after);
-                        console.log(secondPrize_before);
-                        console.log(secondPrize_after);
     
                         for (var i = 0; i < firstPrize_before.length; i++) {
                             //players that were in the old list, but not the new list get dropped
