@@ -376,7 +376,7 @@ var User = {
                 if (user.prizeLevel == "none")
                     user.set('prizeLevel', "bluesticker");
 
-                var numFirstPrizes = 50;
+                var numFirstPrizes = 2;
                 var numSecondPrizes = 100;
                 //Get a list of the top attendeeIds by score
                 var prizes_before = await models.user.findAll({
@@ -394,6 +394,14 @@ var User = {
                 });
                 var firstPrize_before = prizes_before.slice(0, numFirstPrizes);
                 var secondPrize_before = prizes_before.slice(numFirstPrizes, numFirstPrizes + numSecondPrizes);
+                var firstPrize_before_ids = [];
+                var secondPrize_before_ids = [];
+                for (var i = 0; i < firstPrize_before.length; i++) {
+                    firstPrize_before_ids.push(firstPrize_before[i].get('attendeeId'));
+                }
+                for (var i = 0; i < secondPrize_before.length; i++) {
+                    secondPrize_before_ids.push(secondPrize_before[i].get('attendeeId'));
+                }
 
                 //save the new scores back to the db
                 var userSavePromise = user.save();
@@ -417,10 +425,18 @@ var User = {
                     }).then ( prizes_after => {
                         var firstPrize_after = prizes_after.slice(0, numFirstPrizes);
                         var secondPrize_after = prizes_after.slice(numFirstPrizes, numFirstPrizes + numSecondPrizes);
+                        var firstPrize_after_ids = [];
+                        var secondPrize_after_ids = [];
+                        for (var i = 0; i < firstPrize_after.length; i++) {
+                            firstPrize_after_ids.push(firstPrize_after[i].get('attendeeId'));
+                        }
+                        for (var i = 0; i < secondPrize_after.length; i++) {
+                            secondPrize_after_ids.push(secondPrize_after[i].get('attendeeId'));
+                        }
     
                         for (var i = 0; i < firstPrize_before.length; i++) {
                             //players that were in the old list, but not the new list get dropped
-                            if (!firstPrize_after.includes(firstPrize_before[i])) {
+                            if (!firstPrize_after_ids.includes(firstPrize_before[i].get('attendeeId'))) {
                                 var userToUpdate = firstPrize_before[i];
                                 userToUpdate.set('prizeLevel', "bluesticker");
                                 userToUpdate.save();
@@ -429,7 +445,7 @@ var User = {
     
                         for (var i = 0; i < secondPrize_before.length; i++) {
                             //players that were in the old list, but not the new list get dropped
-                            if (!secondPrize_after.includes(secondPrize_before[i])) {
+                            if (!secondPrize_after_ids.includes(secondPrize_before[i].get('attendeeId'))) {
                                 var userToUpdate = secondPrize_before[i];
                                 userToUpdate.set('prizeLevel', "bluesticker");
                                 userToUpdate.save();
@@ -438,7 +454,7 @@ var User = {
     
                         for (var i = 0; i < firstPrize_after.length; i++) {
                             //players in the new list but not in the old list get set                    
-                            if (!firstPrize_before.includes(firstPrize_after[i])) {
+                            if (!firstPrize_before_ids.includes(firstPrize_after[i].get('attendeeId'))) {
                                 var userToUpdate = firstPrize_after[i];
                                 userToUpdate.set('prizeLevel', "starsticker");
                                 userToUpdate.save();
@@ -447,7 +463,7 @@ var User = {
     
                         for (var i = 0; i < secondPrize_after.length; i++) {
                             //players in the new list but not in the old list get set                    
-                            if (!secondPrize_before.includes(secondPrize_after[i])) {
+                            if (!secondPrize_before_ids.includes(secondPrize_after[i].get('attendeeId'))) {
                                 var userToUpdate = secondPrize_after[i];
                                 userToUpdate.set('prizeLevel', "yellowsticker");
                                 userToUpdate.save();
