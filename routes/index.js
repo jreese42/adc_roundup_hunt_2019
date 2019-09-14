@@ -19,7 +19,8 @@ router.get('/', function(req, res, next) {
         if (!user) {
             res.status(401).render('error', { 
                 errorText: "No User Record Found", 
-                errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
+                errorSubtext: "I could not locate a user record for you.  Try reopening the Space Laser link from the RoundUP app, or disable Data Saving mode in your browser settings.",
+                attendeeId: req.session.attendeeId
             });
         }
         if (user.solution6) {
@@ -38,7 +39,7 @@ router.get('/', function(req, res, next) {
         var dateEnd = new Date(dateEndStr);
         if (!isNaN(dateEnd) && date > dateEnd) {
             //Game is over, redirect to the prize page
-            res.redirect('/winner');
+            return res.redirect('/winner');
         }
 
         var dateStart = new Date(dateStartStr);
@@ -98,7 +99,8 @@ router.get('/laser', function(req, res) {
         if (!user) {
             res.status(401).render('error', { 
                 errorText: "No User Record Found", 
-                errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
+                errorSubtext: "I could not locate a user record for you.  Try reopening the Space Laser link from the RoundUP app, or disable Data Saving mode in your browser settings.",
+                attendeeId: req.session.attendeeId
             });
         }
         else {
@@ -261,7 +263,8 @@ router.get('/winner', function(req, res) {
         if (!user) {
             res.status(401).render('error', { 
                 errorText: "No User Record Found", 
-                errorSubtext: "I could not locate a user record for you.  Please try again or contact the Gamemasters."
+                errorSubtext: "I could not locate a user record for you.  Try reopening the Space Laser link from the RoundUP app, or disable Data Saving mode in your browser settings.",
+                attendeeId: req.session.attendeeId
             });
         } else {
             var dateEnd = new Date(array[0]);
