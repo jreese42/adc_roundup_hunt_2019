@@ -376,7 +376,7 @@ var User = {
                 if (user.prizeLevel == "none")
                     user.set('prizeLevel', "bluesticker");
 
-                var numFirstPrizes = 2;
+                var numFirstPrizes = 50;
                 var numSecondPrizes = 100;
                 //Get a list of the top attendeeIds by score
                 var prizes_before = await models.user.findAll({
