@@ -16,6 +16,9 @@ block content
       .col-md-10.ml-3
         h2 #{errorText}
         p #{errorSubtext}
+        p.text-secondary  If you continue to have issues contact us via twitter (@adcrounduphunt) or email (ADCRoundUPHunt@gmail.com).
+        if attendeeId
+          p.text-muted Attendee ID: #{attendeeId}
     .row
 
   +blog_footer
