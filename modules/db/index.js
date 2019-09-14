@@ -556,6 +556,11 @@ var User = {
                 order: [
                     ['score', 'DESC']
                 ],
+                where: {
+                    score: {
+                      [Op.gt]: 0
+                    }
+                },
                 attributes: ['attendeeId', 'score', 'prizeLevel'],
                 offset: 0,
                 limit: numFirstPrizes,
@@ -567,6 +572,11 @@ var User = {
                 order: [
                     ['score', 'DESC']
                 ],
+                where: {
+                    score: {
+                      [Op.gt]: 0
+                    }
+                },
                 attributes: ['attendeeId', 'score', 'prizeLevel'],
                 offset: numFirstPrizes,
                 limit: numSecondPrizes,
