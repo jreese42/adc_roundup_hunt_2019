@@ -313,23 +313,20 @@ var User = {
                     return false;
 
                 var userPoints = 0;
-                switch (puzzle.solvedCount) {
-                    case 0:
-                    case 1:
-                    case 2:
-                        userPoints = 400;
-                        break;
-                    case 3:
-                    case 4:
-                        userPoints = 300;
-                        break;
-                    case 5:
-                        userPoints = 200;
-                        break;
-                    case 6: 
-                    default:
-                        userPoints = 100;
-                        break;
+                var solvedCount = puzzle.get('solvedCount');
+                //Points schema
+                //1st - 20th solver = 400 pts
+                //21st - 50th solver = 300 pts
+                //51st - 120th solver = 200 pts
+                //100th+ solver = 100 pts
+                if (solvedCount < 20) {
+                    userPoints = 400;
+                } else if (solvedCount >= 20 && solvedCount < 50 ) {
+                    userPoints = 300;
+                } else if (solvedCount >= 50 && solvedCount < 120 ) {
+                    userPoints = 200;
+                } else if (solvedCount >= 120) {
+                    userPoints = 100;
                 }
                 
                 if (puzzleId == 1) {
