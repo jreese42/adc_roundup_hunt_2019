@@ -71,9 +71,6 @@ router.get('/', function(req, res, next) {
             res.render('game_info_page', locals);
         }
     });
-
-    
-
 });
 
 router.get('/about', function(req, res, next) {
@@ -94,16 +91,28 @@ router.get('/about', function(req, res, next) {
 router.get('/laser', function(req, res) {
 
     var db = req.app.get('db');
-
-    db.User.findUser(req.session.attendeeId).then( user => {
+    var dateTimePromise = db.Strings.get("DATETIME_START_UTC")
+    var userPromise = db.User.findUser(req.session.attendeeId)
+    Promise.all([dateTimePromise, userPromise]).then( values => {
+        var user = values[1];
+        var dateStart = new Date(values[0]);        
+        var date = new Date(Date.now());
+        //Admin option allows querying for a datetime that isn't now
+        if (req.query.d && req.session.isAdmin) {
+            var forDate = new Date(req.query.d);
+            if (!isNaN(forDate))
+                date = forDate;
+        }
+        
         if (!user) {
-            res.status(401).render('error', { 
+            return res.status(401).render('error', { 
                 errorText: "No User Record Found", 
                 errorSubtext: "I could not locate a user record for you.  Try reopening the Space Laser link from the RoundUP app, or disable Data Saving mode in your browser settings.",
                 attendeeId: req.session.attendeeId
             });
-        }
-        else {
+        }    
+        else if (isNaN(dateStart) || date >= dateStart) {
+            //Game is on! Send the laser page
             if (user.solution1 && user.solution2 && user.solution3 && user.solution4 && user.solution5) {
                 res.render('laser_meltdown');
             } else {
@@ -163,6 +172,13 @@ router.get('/laser', function(req, res) {
                     res.render('laser_mgmt_page', locals);
                 })
             }
+        } else {
+            //Game has not started yet, show an error
+            return res.status(401).render('error', { 
+                errorText: "Why are you here?", 
+                errorSubtext: "The game hasn't started yet!",
+                errorSubtext2: "You weren't supposed to find this.  We like your enthusiasm, but try to not spoil the game for others while poking around. Report any vulnerabilities to the gamemasters."
+            });
         }
     });
 });
@@ -252,13 +268,22 @@ router.get('/user/login', function(req, res) {
 router.get('/winner', function(req, res) {
     // var db = req.app.get('db');
     var db = req.app.get('db');
-    var datePromise = db.Strings.get("DATETIME_END_UTC");
+    var dateStartPromise = db.Strings.get("DATETIME_START_UTC")
+    var dateEndPromise = db.Strings.get("DATETIME_END_UTC");
     var userPromise = db.User.findUser(req.session.attendeeId);
 
-    Promise.all([datePromise, userPromise]).then( array => {
+    Promise.all([dateStartPromise, dateEndPromise, userPromise]).then( array => {
         var user;
-        if (array[1])
-            user = array[1];
+        if (array[2])
+            user = array[2];
+
+        var date = new Date(Date.now());
+        //Admin option allows querying for a datetime that isn't now
+        if (req.query.d && req.session.isAdmin) {
+            var forDate = new Date(req.query.d);
+            if (!isNaN(forDate))
+                date = forDate;
+        }
 
         if (!user) {
             res.status(401).render('error', { 
@@ -267,10 +292,28 @@ router.get('/winner', function(req, res) {
                 attendeeId: req.session.attendeeId
             });
         } else {
-            var dateEnd = new Date(array[0]);
+            var dateStart = new Date(array[0]);
+            var dateEnd = new Date(array[1]);
             var dateNow = new Date(Date.now());
+            //Admin option allows querying for a datetime that isn't now
+            if (req.query.d && req.session.isAdmin) {
+                var forDate = new Date(req.query.d);
+                if (!isNaN(forDate))
+                    dateNow = forDate;
+            }
             if (isNaN(dateEnd))
                 dateEnd = dateNow;
+            if (isNaN(dateStart))
+                dateStart = dateNow;
+                
+            if (dateNow < dateStart) {
+                //Game has not started yet, show an error
+                return res.status(401).render('error', { 
+                    errorText: "Why are you here?", 
+                    errorSubtext: "The game hasn't started yet!",
+                    errorSubtext2: "You weren't supposed to find this.  We like your enthusiasm, but try to not spoil the game for others while poking around. Report any vulnerabilities to the gamemasters."
+                });
+            }
 
             var locals = {};
             locals.prizeLevel = user.prizeLevel;
