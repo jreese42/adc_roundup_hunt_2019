@@ -12,12 +12,9 @@ const shouldValidate = process.env.NODE_ENV !== 'test';
 /* eslint-disable no-unused-vars */
 router.post('/voice', twilio.webhook({ validate: shouldValidate }), (req, res) => {
     var db = req.app.get('db');
-    db.Strings.get("TWILIO_TWIML_VOICE_RESPONSE").then( responseString => {
-        const response = new VoiceResponse();
-
-        response.say(responseString);
+    db.Strings.get("TWILIO_TWIML_VOICE_RESPONSE").then( responseTwiml => {
         res.set('Content-Type', 'text/xml');
-        res.send(response.toString());
+        res.send(responseTwiml); //This assumes TWILIO_TWIML_VOICE_RESPONSE is properly formatted TwiML
     });
 });
 
