@@ -228,13 +228,13 @@ router.get('/leaderboard', function(req, res) {
             dateEnd = dateNow;
         
         var locals = {};
-        var firstName = (req.session.firstName) ? req.session.firstName : "";
+        var firstName = (req.session.firstName) ? req.session.firstName : "Unknown";
         var lastName = (req.session.lastName) ? req.session.lastName : "";
 
         locals.nameOpt1 = firstName + " " + lastName;
         locals.nameOpt2 = firstName.charAt(0) + ". " + lastName;
         locals.nameOpt3 = "Anonymous";
-        locals.currentNameOpt = user.displayNameFormat;
+        locals.currentNameOpt = (user) ? user.displayNameFormat : "firstNameLastName";
         locals.currentPage = startPage || "0";
         locals.pageCount = pageCount;
         locals.gameOver = (dateEnd <= dateNow);
