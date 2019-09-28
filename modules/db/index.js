@@ -315,13 +315,18 @@ var User = {
                 //21st - 50th solver = 300 pts
                 //51st - 120th solver = 200 pts
                 //100th+ solver = 100 pts
+                //After tradeshow:
+                //1st - 20th solver = 400 pts
+                //21st - 30th solver = 300 pts
+                //31st - 40th solver = 200 pts
+                //41th+ solver = 100 pts
                 if (solvedCount < 20) {
                     userPoints = 400;
-                } else if (solvedCount >= 20 && solvedCount < 50 ) {
+                } else if (solvedCount >= 20 && solvedCount < 30 ) {
                     userPoints = 300;
-                } else if (solvedCount >= 50 && solvedCount < 120 ) {
+                } else if (solvedCount >= 30 && solvedCount < 40 ) {
                     userPoints = 200;
-                } else if (solvedCount >= 120) {
+                } else if (solvedCount >= 40) {
                     userPoints = 100;
                 }
                 
