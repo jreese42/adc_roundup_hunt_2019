@@ -3,7 +3,7 @@ $(document).ready(function() {
     var timeoutId = 0;
 
     $('#prizeImage').on('mousedown', function() {
-        timeoutId = setTimeout(showClaimUi, 1500);
+        timeoutId = setTimeout(showClaimUi, 100);
     }).on('mouseup mouseleave', function() {
         clearTimeout(timeoutId);
     });
