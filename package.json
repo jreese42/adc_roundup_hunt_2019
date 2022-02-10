@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "eslint": "^6.3.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "node-sass-middleware": "^0.11.0",
     "stylelint": "^10.1.0",
     "stylelint-scss": "^3.10.1"
